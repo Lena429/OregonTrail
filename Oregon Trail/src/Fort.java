@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+//why is nothing working :(
 public class Fort {
 	private String name;
 	private boolean visited;
