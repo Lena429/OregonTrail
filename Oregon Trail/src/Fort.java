@@ -14,7 +14,7 @@ public class Fort {
 	
 	public void visit(Wagon wagon) {
 		this.visited = true;
-		System.out.println("You've arried at " + this.name +". What would you like to do?");
+		System.out.println("You've arrived at " + this.name +". What would you like to do?");
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
 			System.out.println("\nOptions:");
@@ -43,11 +43,12 @@ public class Fort {
 		System.out.println("You continue your journey from the fort.");	
 			}
 		}
+	}
 		
 		private void shop(Wagon wagon) {
 			System.out.println(" ");
 		}
-		}
+	}
 		
 		private void talkToPeople() {
 			
