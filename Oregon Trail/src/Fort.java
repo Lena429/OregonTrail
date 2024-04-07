@@ -12,6 +12,7 @@ public class Fort {
 		return name;
 	}
 	
+	//hoping this commit works 
 	public void visit(Wagon wagon) {
 		this.visited = true;
 		System.out.println("You've arrived at " + this.name +". What would you like to do?");
