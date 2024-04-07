@@ -49,7 +49,7 @@ public class Fort {
 		private void shop(Wagon wagon) {
 			System.out.println(" ");
 		}
-	}
+	
 		
 		private void talkToPeople() {
 			
@@ -63,4 +63,4 @@ public class Fort {
 			
 		}
 	}
-}
+
