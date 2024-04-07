@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+//why is nothing working :(
 public class Fort {
 	private String name;
 	private boolean visited;
@@ -49,7 +51,7 @@ public class Fort {
 		private void shop(Wagon wagon) {
 			System.out.println(" ");
 		}
-	}
+	
 		
 		private void talkToPeople() {
 			
@@ -63,4 +65,4 @@ public class Fort {
 			
 		}
 	}
-}
+
