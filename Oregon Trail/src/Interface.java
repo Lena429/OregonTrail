@@ -127,12 +127,6 @@ public class Interface {
 		frameTwo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameTwo.setVisible(false);
 		
-		frameThree = new JFrame();
-		frameThree.setBounds(100, 100, 1289, 767);
-		frameThree.setTitle("OPTIONS");
-		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameThree.setVisible(false);
-		
 		//ComboBox for miles per day/pace
 		JComboBox<String> paceComboBox= new JComboBox<String>();
 		paceComboBox.addActionListener(new ActionListener() {
@@ -210,6 +204,40 @@ public class Interface {
 				clock.start();
 			}
 		});
+
+                //This is frame three stuff
+		frameThree = new JFrame();
+		frameThree.setBounds(100, 100, 1289, 767);
+		frameThree.setTitle("OPTIONS");
+		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameThree.setVisible(false);
+		
+		JLabel Gossip = new JLabel("");
+		Gossip.setBounds(204, 24, 654, 13);
+		
+		JButton Talking = new JButton("Talk to people");
+		Talking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Gossip.setText("I heard someone threatned to run other people over if they got in the way of his cattle. How rude!");
+			}
+		});
+		Talking.setBounds(32, 20, 133, 21);
+		
+		JButton Rest = new JButton("Rest");
+		Rest.setBounds(32, 138, 133, 21);
+		
+		JButton LookAround = new JButton("Look Around");
+		LookAround.setBounds(32, 76, 133, 21);
+		
+		JPanel PanelThree = new JPanel();
+		PanelThree.setLayout(null);
+		PanelThree.add(Gossip);
+		PanelThree.add(Talking);
+		PanelThree.add(Rest);
+		PanelThree.add(LookAround);
+		frameThree.getContentPane().add(PanelThree);
+
+
 		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		startTrvlBtn.setBounds(26, 570, 258, 125);
 		frame.getContentPane().add(startTrvlBtn);
