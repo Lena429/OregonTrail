@@ -9,12 +9,16 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -29,11 +33,12 @@ public class Interface {
 	private JLabel trvlSpeedQtyLbl;
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
-	private Equipment toys		= new Equipment("Toys", 5, 5);
+	private Equipment toys		  = new Equipment("Toys", 5, 5);
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
-	private Equipment water		= new Equipment("Water", 200, 1);
-	private Food food			= new Food("Food", 1, 900, true);
+	private Equipment water		  = new Equipment("Water", 200, 1);
+	private Food food			      = new Food("Food", 1, 900, true);
 	private JLabel foodQtyLbl;
+	private JFrame frameTwo;
 
 	/**
 	 * Launch the application.
@@ -46,6 +51,7 @@ public class Interface {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -91,6 +97,22 @@ public class Interface {
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		frameTwo = new JFrame();
+		frameTwo.setBounds(100,100,1289,767);
+		frameTwo.setTitle("OPTIONS");
+		frameTwo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameTwo.setVisible(false);
+		
+		JComboBox<String> paceComboBox= new JComboBox<String>();
+		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
+		paceComboBox.setBounds(10, 127, 395, 51);
+		frameTwo.getContentPane().add(paceComboBox);
+		
+		JPanel panel = new JPanel();
+		panel.add(paceComboBox);
+		frameTwo.add(panel);
+		
 		
 		JButton startTrvlBtn = new JButton("Start Travel");
 		startTrvlBtn.addActionListener(new ActionListener() {
@@ -187,6 +209,7 @@ public class Interface {
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
+				frameTwo.setVisible(true);
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
