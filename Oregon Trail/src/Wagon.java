@@ -63,10 +63,10 @@ public class Wagon {
 	/**
 	 * makes all the variable names and weight into a string for display. 
 	 */
-	public String displayingInventory(ArrayList<Equipment> wagon ) {
+	public String displayingInventory() {
 		String inventory = "";
 	for(int i = 0; i < wagon.size(); i++) { 
-	    inventory = inventory +  wagon.get(i).getName() + " " + wagon.get(i).getQuantity();
+	    inventory = inventory +  wagon.get(i).getName() + ": " + wagon.get(i).getQuantity() + "\n";
 	} 
 	return inventory;
 	}

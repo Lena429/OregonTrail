@@ -135,4 +135,12 @@ public class Travel {
 		
 	    return formattedDate;
 	}
+	
+	public String getDate() {
+		// format the date and return the string
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+	    String formattedDate = startDate.format(formatter);
+	    
+	    return formattedDate;
+	}
 }

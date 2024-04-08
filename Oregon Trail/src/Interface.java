@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -35,7 +36,6 @@ public class Interface {
 	private JLabel trvlSpeedQtyLbl;
 	private JLabel foodQtyLbl;
 	private JFrame frameTwo;
-	private JLabel inventoryLbl;
 	private JLabel dateQtyLbl;
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
@@ -43,7 +43,6 @@ public class Interface {
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
 	private Equipment water		= new Equipment("Water", 200, 1);
 	private Food food		    = new Food("Food", 1, 900, true);
-	private int counter = 1;
 	private Fort fort1			= new Fort("Fort 1", 200);
 	private Fort fort2			= new Fort("Fort 2", 300);
 	private JLabel milToQtyLbl;
@@ -131,7 +130,9 @@ public class Interface {
 			}
 		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
-		paceComboBox.setBounds(10, 127, 395, 51);
+		paceComboBox.setBounds(300, 346, 152, 54);
+		paceComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+
 		
 		JComboBox<String> rationsComboBox = new JComboBox<String>();
 		rationsComboBox.addActionListener(new ActionListener() {
@@ -140,16 +141,56 @@ public class Interface {
 			}
 		});
 		rationsComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Bare Bones", "Meager", "Filling"}));
-		rationsComboBox.setBounds(10, 594, 258, 125);
+		rationsComboBox.setBounds(300, 200, 220, 54);
+		rationsComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+
+		JTextArea inventory = new JTextArea();
+		inventory.setEditable(false); // Optional: make the text area read-only
+		inventory.setWrapStyleWord(true);
+		inventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		inventory.setBounds(575, 108, 671, 505);
 		
-		inventoryLbl = new JLabel("Wagon Inventory: ");
-		inventoryLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		inventoryLbl.setBounds(415, 189, 137, 51);
+		JLabel changeRatLbl = new JLabel("Change Rations:");
+		changeRatLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		changeRatLbl.setBounds(10, 187, 275, 86);
+		changeRatLbl.setHorizontalAlignment(SwingConstants.TRAILING);
+		
+		JLabel changePaceLbl = new JLabel("Change Pace:");
+		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		changePaceLbl.setBounds(10, 333, 275, 86);
+		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
+
+		JLabel dateLbl_2 = new JLabel("Date:");
+		dateLbl_2.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		dateLbl_2.setBounds(586, 631, 93, 51);
+		
+		JLabel dateQtyLbl_2 = new JLabel(travel.getDate());
+		dateQtyLbl_2.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		dateQtyLbl_2.setBounds(676, 631, 284, 51);
+		
+		JButton restBtn = new JButton("Rest");
+		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		restBtn.setBounds(180, 521, 189, 62);
+		restBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				travel.updateDate();
+				wagon.removeItem(food, travel.getRations() * 4);
+				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
+				dateQtyLbl_2.setText(travel.getDate());
+				dateQtyLbl.setText(travel.getDate());
+			}
+		});
 		
 		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.add(inventory);
+		panel.add(changePaceLbl);
 		panel.add(paceComboBox);
+		panel.add(changeRatLbl);
 		panel.add(rationsComboBox);
-		panel.add(inventoryLbl);
+		panel.add(dateLbl_2);
+		panel.add(dateQtyLbl_2);
+		panel.add(restBtn);
 		frameTwo.getContentPane().add(panel);
 		
 		JButton startTrvlBtn = new JButton("Start Travel");
@@ -159,7 +200,7 @@ public class Interface {
 			}
 		});
 		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		startTrvlBtn.setBounds(10, 594, 258, 125);
+		startTrvlBtn.setBounds(26, 570, 258, 125);
 		frame.getContentPane().add(startTrvlBtn);
 		
 		JLabel foodLbl = new JLabel("Food (lbs):");
@@ -243,16 +284,18 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
 				frameTwo.setVisible(true);
-				//inventoryLbl.setText(wagon.displayingInventory(wagon));  //this currently does not work. Fix it. this is to display the string for the label.
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+				dateQtyLbl_2.setText(travel.getDate());
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		stopTrvlBtn.setBounds(278, 594, 258, 125);
+		stopTrvlBtn.setBounds(294, 570, 258, 125);
 		frame.getContentPane().add(stopTrvlBtn);
 		
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/trailPic.jpg"));
 		JLabel trailImage = new JLabel(icon);
 		trailImage.setBounds(562, 108, 684, 511);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
+		
 	}
 }
