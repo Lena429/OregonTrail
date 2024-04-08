@@ -102,6 +102,8 @@ public class Interface {
 		} else if (!fort1.hasvisited()){
 			milToQtyLbl.setText("visiting");
 			fort1.updatevisited();
+			frameThree.setVisibile(true);
+			clock.stop();
 			// we need to open a new frame here. this could possibly be in a different function for legibility
 		} else {
 			fort2.updateMilesAway(travel.getPace());
