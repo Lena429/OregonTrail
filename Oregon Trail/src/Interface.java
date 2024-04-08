@@ -11,12 +11,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 public class Interface {
 
 	private JFrame frame;
+	private Timer clock;
+	private Travel travel = new Travel();
+	private JLabel milTrvlQtyLbl;
+	private JLabel rationsQtyLbl;
+	private JLabel trvlSpeedQtyLbl;
 
 	/**
 	 * Launch the application.
@@ -34,13 +43,28 @@ public class Interface {
 		});
 	}
 
+
 	/**
 	 * Create the application.
 	 */
 	public Interface() {
 		initialize();
+		clock = new javax.swing.Timer(3000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				clockActionPerformed(evt);
+			}
+		});
 	}
 
+	public void clockActionPerformed(ActionEvent evt) {
+		milTrvlQtyLbl.setText(travel.updateMilesTravelled() + "");
+		trvlSpeedQtyLbl.setText(travel.getPace() + "");
+		rationsQtyLbl.setText(travel.getRations() + "");
+		// increment day
+		// subtract rations
+		// update miles
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -51,6 +75,11 @@ public class Interface {
 		frame.getContentPane().setLayout(null);
 		
 		JButton startTrvlBtn = new JButton("Start Travel");
+		startTrvlBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clock.start();
+			}
+		});
 		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		startTrvlBtn.setBounds(10, 594, 258, 125);
 		frame.getContentPane().add(startTrvlBtn);
@@ -90,12 +119,12 @@ public class Interface {
 		foodQtyLbl.setBounds(415, 127, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);
 		
-		JLabel rationsQtyLbl = new JLabel("rat");
+		rationsQtyLbl = new JLabel("rat");
 		rationsQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		rationsQtyLbl.setBounds(415, 189, 137, 51);
 		frame.getContentPane().add(rationsQtyLbl);
 		
-		JLabel milTrvlQtyLbl = new JLabel("mil");
+		milTrvlQtyLbl = new JLabel("mil");
 		milTrvlQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		milTrvlQtyLbl.setBounds(415, 251, 137, 51);
 		frame.getContentPane().add(milTrvlQtyLbl);
@@ -105,7 +134,7 @@ public class Interface {
 		milToQtyLbl.setBounds(415, 313, 137, 51);
 		frame.getContentPane().add(milToQtyLbl);
 		
-		JLabel trvlSpeedQtyLbl = new JLabel("spd");
+		trvlSpeedQtyLbl = new JLabel("spd");
 		trvlSpeedQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		trvlSpeedQtyLbl.setBounds(415, 375, 137, 51);
 		frame.getContentPane().add(trvlSpeedQtyLbl);
@@ -137,6 +166,11 @@ public class Interface {
 		frame.getContentPane().add(dateQtyLbl);
 		
 		JButton stopTrvlBtn = new JButton("Stop Travel");
+		stopTrvlBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clock.stop();
+			}
+		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		stopTrvlBtn.setBounds(278, 594, 258, 125);
 		frame.getContentPane().add(stopTrvlBtn);

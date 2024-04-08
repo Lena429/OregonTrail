@@ -1,7 +1,7 @@
 /**
- * Item.java
- * lilly was here 
- * The Item class stores an item including its name, weight, and quantity. 
+ * Equipment.java
+ * 
+ * The Equipment class stores an item including its name, weight, and quantity. 
  *  
  * @author - Lena Frate
  * @version 1.1.1 - 25 March 2024
