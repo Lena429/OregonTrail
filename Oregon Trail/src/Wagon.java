@@ -59,6 +59,18 @@ public class Wagon {
 		totalWeight = totalWeight - (weight*quantity);
 	}
 	
+	
+	/**
+	 * makes all the variable names and weight into a string for display. 
+	 */
+	public String displayingInventory(ArrayList<Equipment> wagon ) {
+		String inventory = "";
+	for(int i = 0; i < wagon.size(); i++) { 
+	    inventory = inventory +  wagon.get(i).getName() + " " + wagon.get(i).getQuantity();
+	} 
+	return inventory;
+	}
+	
 	/**
 	 * returns the total weight of the wagon
 	 * @return totalWeight - the total weight of the wagon

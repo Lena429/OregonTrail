@@ -133,8 +133,6 @@ public class Interface {
 		panel.add(inventoryLbl);
 		frameTwo.add(panel);
 		
-		
-		
 		JButton startTrvlBtn = new JButton("Start Travel");
 		startTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -231,6 +229,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
 				frameTwo.setVisible(true);
+				inventoryLbl.setText(wagon.displayingInventory(wagon));  //this currently does not work. Fix it. this is to display the string for the label.
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
