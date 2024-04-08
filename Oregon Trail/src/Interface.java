@@ -9,12 +9,16 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -26,6 +30,7 @@ public class Interface {
 	private JLabel milTrvlQtyLbl;
 	private JLabel rationsQtyLbl;
 	private JLabel trvlSpeedQtyLbl;
+	private JFrame frameTwo;
 
 	/**
 	 * Launch the application.
@@ -38,6 +43,7 @@ public class Interface {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -73,6 +79,22 @@ public class Interface {
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		frameTwo = new JFrame();
+		frameTwo.setBounds(100,100,1289,767);
+		frameTwo.setTitle("OPTIONS");
+		frameTwo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameTwo.setVisible(false);
+		
+		JComboBox<String> paceComboBox= new JComboBox<String>();
+		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
+		paceComboBox.setBounds(10, 127, 395, 51);
+		frameTwo.getContentPane().add(paceComboBox);
+		
+		JPanel panel = new JPanel();
+		panel.add(paceComboBox);
+		frameTwo.add(panel);
+		
 		
 		JButton startTrvlBtn = new JButton("Start Travel");
 		startTrvlBtn.addActionListener(new ActionListener() {
@@ -169,6 +191,7 @@ public class Interface {
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
+				frameTwo.setVisible(true);
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
