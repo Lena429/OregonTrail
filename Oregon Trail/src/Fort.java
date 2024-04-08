@@ -4,10 +4,46 @@ import java.util.Scanner;
 public class Fort {
 	private String name;
 	private boolean visited;
+	private int milesAway;
 	
-	public Fort(String name) {
+	public Fort(String name, int miles) {
 		this.name = name;
 		this.visited = false;
+		this.milesAway = miles;
+	}
+	
+	/**
+	 * 
+	 */
+	public void updateMilesAway(int pace) {
+		milesAway -= pace;
+		if (milesAway < 0) milesAway = 0;
+	}
+	
+	public int getMilesAway() {
+		return milesAway;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean arrivedAtLandmark() {
+		if (milesAway == 0) return true;
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean hasvisited() {
+		return visited;
+	}
+	
+	public void updatevisited() {
+		visited = true;
 	}
 	
 	public String getName() {

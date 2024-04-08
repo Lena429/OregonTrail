@@ -33,15 +33,20 @@ public class Interface {
 	private JLabel milTrvlQtyLbl;
 	private JLabel rationsQtyLbl;
 	private JLabel trvlSpeedQtyLbl;
+	private JLabel foodQtyLbl;
+	private JFrame frameTwo;
+	private JLabel inventoryLbl;
+	private JLabel dateQtyLbl;
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
 	private Equipment toys		= new Equipment("Toys", 5, 5);
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
 	private Equipment water		= new Equipment("Water", 200, 1);
 	private Food food		    = new Food("Food", 1, 900, true);
-	private JLabel foodQtyLbl;
-	private JFrame frameTwo;
-	private JLabel inventoryLbl;
+	private int counter = 1;
+	private Fort fort1			= new Fort("Fort 1", 200);
+	private Fort fort2			= new Fort("Fort 2", 300);
+	private JLabel milToQtyLbl;
 
 	/**
 	 * Launch the application.
@@ -74,7 +79,7 @@ public class Interface {
 		wagon.addItem(water);
 		wagon.addItem(food);
 		
-		clock = new javax.swing.Timer(3000, new ActionListener() {
+		clock = new javax.swing.Timer(2000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				clockActionPerformed(evt);
 			}
@@ -82,14 +87,26 @@ public class Interface {
 	}
 
 	public void clockActionPerformed(ActionEvent evt) {
+		// update labels
 		milTrvlQtyLbl.setText(travel.updateMilesTravelled() + "");
 		trvlSpeedQtyLbl.setText(travel.getPace() + "");
 		rationsQtyLbl.setText(travel.displayRations());
 		wagon.removeItem(food, travel.getRations() * 4);
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
-		// increment day
-		// subtract rations
-		// update miles
+		dateQtyLbl.setText(travel.updateDate() + "");
+		
+		// determine if user arrived at a landmark
+		fort1.updateMilesAway(travel.getPace());
+		if (!fort1.arrivedAtLandmark()) {
+			milToQtyLbl.setText(fort1.getMilesAway() + "");
+		} else if (!fort1.hasvisited()){
+			milToQtyLbl.setText("visiting");
+			fort1.updatevisited();
+			// we need to open a new frame here. this could possibly be in a different function for legibility
+		} else {
+			fort2.updateMilesAway(travel.getPace());
+			milToQtyLbl.setText(fort2.getMilesAway() + "");
+		}
 	}
 	
 	/**
@@ -116,10 +133,6 @@ public class Interface {
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
 		paceComboBox.setBounds(10, 127, 395, 51);
 		
-		JPanel panel = new JPanel();
-		panel.add(paceComboBox);
-		frameTwo.getContentPane().add(panel);
-
 		JComboBox<String> rationsComboBox = new JComboBox<String>();
 		rationsComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +150,7 @@ public class Interface {
 		panel.add(paceComboBox);
 		panel.add(rationsComboBox);
 		panel.add(inventoryLbl);
-		frameTwo.add(panel);
+		frameTwo.getContentPane().add(panel);
 		
 		JButton startTrvlBtn = new JButton("Start Travel");
 		startTrvlBtn.addActionListener(new ActionListener() {
@@ -151,62 +164,62 @@ public class Interface {
 		
 		JLabel foodLbl = new JLabel("Food (lbs):");
 		foodLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		foodLbl.setBounds(10, 127, 395, 51);
+		foodLbl.setBounds(10, 160, 395, 51);
 		frame.getContentPane().add(foodLbl);
 		
 		JLabel rationsLbl = new JLabel("Rations:");
 		rationsLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		rationsLbl.setBounds(10, 189, 395, 51);
+		rationsLbl.setBounds(10, 222, 395, 51);
 		frame.getContentPane().add(rationsLbl);
 		
 		JLabel milesTravelledLbl = new JLabel("Miles Travelled:");
 		milesTravelledLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		milesTravelledLbl.setBounds(10, 251, 395, 51);
+		milesTravelledLbl.setBounds(10, 284, 395, 51);
 		frame.getContentPane().add(milesTravelledLbl);
 		
 		JLabel milesToNextLbl = new JLabel("Miles to Next Landmark:");
 		milesToNextLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		milesToNextLbl.setBounds(10, 313, 395, 51);
+		milesToNextLbl.setBounds(10, 346, 395, 51);
 		frame.getContentPane().add(milesToNextLbl);
 		
 		JLabel travelSpeedLbl = new JLabel("Travel Speed:");
 		travelSpeedLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		travelSpeedLbl.setBounds(10, 375, 395, 51);
+		travelSpeedLbl.setBounds(10, 408, 395, 51);
 		frame.getContentPane().add(travelSpeedLbl);
 		
 		JLabel weatherLbl = new JLabel("Weather:");
 		weatherLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		weatherLbl.setBounds(10, 437, 395, 51);
+		weatherLbl.setBounds(10, 470, 395, 51);
 		frame.getContentPane().add(weatherLbl);
 		
-		foodQtyLbl = new JLabel("food");
+		foodQtyLbl = new JLabel("900");
 		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		foodQtyLbl.setBounds(415, 127, 137, 51);
+		foodQtyLbl.setBounds(415, 160, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);
 		
-		rationsQtyLbl = new JLabel("rat");
+		rationsQtyLbl = new JLabel("Filling");
 		rationsQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		rationsQtyLbl.setBounds(415, 189, 137, 51);
+		rationsQtyLbl.setBounds(415, 222, 137, 51);
 		frame.getContentPane().add(rationsQtyLbl);
 		
-		milTrvlQtyLbl = new JLabel("mil");
+		milTrvlQtyLbl = new JLabel("0");
 		milTrvlQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		milTrvlQtyLbl.setBounds(415, 251, 137, 51);
+		milTrvlQtyLbl.setBounds(415, 284, 137, 51);
 		frame.getContentPane().add(milTrvlQtyLbl);
 		
-		JLabel milToQtyLbl = new JLabel("mil");
+		milToQtyLbl = new JLabel("200");
 		milToQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		milToQtyLbl.setBounds(415, 313, 137, 51);
+		milToQtyLbl.setBounds(415, 346, 137, 51);
 		frame.getContentPane().add(milToQtyLbl);
 		
-		trvlSpeedQtyLbl = new JLabel("spd");
+		trvlSpeedQtyLbl = new JLabel("12");
 		trvlSpeedQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		trvlSpeedQtyLbl.setBounds(415, 375, 137, 51);
+		trvlSpeedQtyLbl.setBounds(415, 408, 137, 51);
 		frame.getContentPane().add(trvlSpeedQtyLbl);
 		
 		JLabel wthrQtyLbl = new JLabel("Good");
 		wthrQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		wthrQtyLbl.setBounds(415, 437, 137, 51);
+		wthrQtyLbl.setBounds(415, 470, 137, 51);
 		frame.getContentPane().add(wthrQtyLbl);
 		
 		JLabel titleLbl = new JLabel("Oregon Trail");
@@ -217,12 +230,12 @@ public class Interface {
 		
 		JLabel dateLbl = new JLabel("Date:");
 		dateLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		dateLbl.setBounds(10, 499, 395, 51);
+		dateLbl.setBounds(586, 631, 93, 51);
 		frame.getContentPane().add(dateLbl);
 		
-		JLabel dateQtyLbl = new JLabel("oot");
+		dateQtyLbl = new JLabel("March 1, 1860");
 		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		dateQtyLbl.setBounds(415, 499, 137, 51);
+		dateQtyLbl.setBounds(676, 631, 284, 51);
 		frame.getContentPane().add(dateQtyLbl);
 		
 		JButton stopTrvlBtn = new JButton("Stop Travel");
@@ -230,7 +243,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
 				frameTwo.setVisible(true);
-				inventoryLbl.setText(wagon.displayingInventory(wagon));  //this currently does not work. Fix it. this is to display the string for the label.
+				//inventoryLbl.setText(wagon.displayingInventory(wagon));  //this currently does not work. Fix it. this is to display the string for the label.
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
@@ -239,7 +252,7 @@ public class Interface {
 		
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/trailPic.jpg"));
 		JLabel trailImage = new JLabel(icon);
-		trailImage.setBounds(562, 121, 684, 511);
+		trailImage.setBounds(562, 108, 684, 511);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
 	}
 }

@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JComboBox;
 
 /**
@@ -9,9 +12,8 @@ public class Travel {
 	private int rations;
 	private int speed;
 	private int milesTravelled = 0;
-	private int month = 3;
-	private int day = 1;
-	private int year = 1860;
+	private LocalDate startDate = LocalDate.of(1860, 3, 1);
+	private LocalDate nextDate;
 	
 	/*
 	 * Creates a Travel object containing default rations (3) and speed (12) values
@@ -118,8 +120,19 @@ public class Travel {
 		return milesTravelled;
 	}
 	
-	
-	public void incrementDate() {
+	/**
+	 * 
+	 * 
+	 */
+	public String updateDate() {
+		// increment the date and store as new start date
+		nextDate = startDate.plusDays(1);
+		startDate = nextDate;
 		
+		// format the date and return the string
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+	    String formattedDate = nextDate.format(formatter);
+		
+	    return formattedDate;
 	}
 }
