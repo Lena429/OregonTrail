@@ -1,3 +1,5 @@
+import javax.swing.JComboBox;
+
 /**
  * changePace, displayMilesTraveled, displayDate
  * 
@@ -23,9 +25,42 @@ public class Travel {
 	 * sets the miles traveled per day
 	 * @param speed - the miles traveled per day
 	 */
-	public void setPace(int speed) {
-		this.speed = speed;
+	public void setPace(JComboBox<String> paceComboBox) {
+		//checks to see if selected. 
+				String item = paceComboBox.getSelectedItem().toString();
+				//Depending on what the person selects it will return the integer version of that number
+				if (item.equals("12")) {
+					this.speed = 12;
+				}
+				else if (item.equals("13")) {
+					this.speed = 13;
+				}
+				else if (item.equals("14")) {
+					this.speed = 14; 
+				}
+				else if (item.equals("15")) {
+					this.speed = 15;
+				}
+				else if (item.equals("16")) {
+					this.speed =  16;
+				}
+				else if (item.equals("17")) {
+					this.speed = 17;
+				}
+				else if (item.equals("18")) {
+					this.speed = 18;
+				}
+				else if (item.equals("19")) {
+					this.speed = 19;
+				}
+				else {
+					this.speed = 20;
+				}
 	}
+	
+	
+	
+	
 	
 	/**
 	 * 
@@ -38,8 +73,18 @@ public class Travel {
 	 * sets the rations per person
 	 * @param rations - how much food (lbs) a person consumes per day
 	 */
-	public void setRations(int rations) {
-		this.rations = rations;
+	public void setRations(JComboBox<String> rationsComboBox) {
+		String item = rationsComboBox.getSelectedItem().toString();
+
+		if (item.equals("Bare Bones")) {
+			this.rations = 1;
+		}
+		else if (item.equals("Meager")) {
+			this.rations = 2;
+		}
+		else {
+			this.rations = 3;
+		}
 	}
 	
 	/**

@@ -35,12 +35,13 @@ public class Interface {
 	private JLabel trvlSpeedQtyLbl;
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
-	private Equipment toys		  = new Equipment("Toys", 5, 5);
+	private Equipment toys		= new Equipment("Toys", 5, 5);
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
-	private Equipment water		  = new Equipment("Water", 200, 1);
-	private Food food			      = new Food("Food", 1, 900, true);
+	private Equipment water		= new Equipment("Water", 200, 1);
+	private Food food		    = new Food("Food", 1, 900, true);
 	private JLabel foodQtyLbl;
 	private JFrame frameTwo;
+	private JLabel inventoryLbl;
 
 	/**
 	 * Launch the application.
@@ -107,13 +108,36 @@ public class Interface {
 		frameTwo.setVisible(false);
 		
 		JComboBox<String> paceComboBox= new JComboBox<String>();
+		paceComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				travel.setPace(paceComboBox);
+			}
+		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
 		paceComboBox.setBounds(10, 127, 395, 51);
 		
 		JPanel panel = new JPanel();
 		panel.add(paceComboBox);
 		frameTwo.getContentPane().add(panel);
+
+		JComboBox<String> rationsComboBox = new JComboBox<String>();
+		rationsComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				travel.setRations(rationsComboBox);
+			}
+		});
+		rationsComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Bare Bones", "Meager", "Filling"}));
+		rationsComboBox.setBounds(10, 594, 258, 125);
 		
+		inventoryLbl = new JLabel("Wagon Inventory: ");
+		inventoryLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		inventoryLbl.setBounds(415, 189, 137, 51);
+		
+		JPanel panel = new JPanel();
+		panel.add(paceComboBox);
+		panel.add(rationsComboBox);
+		panel.add(inventoryLbl);
+		frameTwo.add(panel);
 		
 		JButton startTrvlBtn = new JButton("Start Travel");
 		startTrvlBtn.addActionListener(new ActionListener() {
@@ -206,6 +230,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
 				frameTwo.setVisible(true);
+				inventoryLbl.setText(wagon.displayingInventory(wagon));  //this currently does not work. Fix it. this is to display the string for the label.
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
