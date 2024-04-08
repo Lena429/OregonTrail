@@ -23,9 +23,17 @@ public class Interface {
 	private JFrame frame;
 	private Timer clock;
 	private Travel travel = new Travel();
+	private Wagon wagon	  = new Wagon();
 	private JLabel milTrvlQtyLbl;
 	private JLabel rationsQtyLbl;
 	private JLabel trvlSpeedQtyLbl;
+	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
+	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
+	private Equipment toys		= new Equipment("Toys", 5, 5);
+	private Equipment blankets	= new Equipment("Blankets", 2, 5);
+	private Equipment water		= new Equipment("Water", 200, 1);
+	private Food food			= new Food("Food", 1, 900, true);
+	private JLabel foodQtyLbl;
 
 	/**
 	 * Launch the application.
@@ -49,6 +57,14 @@ public class Interface {
 	 */
 	public Interface() {
 		initialize();
+		
+		wagon.addItem(wagWheel);
+		wagon.addItem(wagAxle);
+		wagon.addItem(toys);
+		wagon.addItem(blankets);
+		wagon.addItem(water);
+		wagon.addItem(food);
+		
 		clock = new javax.swing.Timer(3000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				clockActionPerformed(evt);
@@ -59,7 +75,9 @@ public class Interface {
 	public void clockActionPerformed(ActionEvent evt) {
 		milTrvlQtyLbl.setText(travel.updateMilesTravelled() + "");
 		trvlSpeedQtyLbl.setText(travel.getPace() + "");
-		rationsQtyLbl.setText(travel.getRations() + "");
+		rationsQtyLbl.setText(travel.displayRations());
+		wagon.removeItem(food, travel.getRations() * 4);
+		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		// increment day
 		// subtract rations
 		// update miles
@@ -114,7 +132,7 @@ public class Interface {
 		weatherLbl.setBounds(10, 437, 395, 51);
 		frame.getContentPane().add(weatherLbl);
 		
-		JLabel foodQtyLbl = new JLabel("food");
+		foodQtyLbl = new JLabel("food");
 		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		foodQtyLbl.setBounds(415, 127, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);

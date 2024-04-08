@@ -43,7 +43,7 @@ public class Travel {
 	 * 
 	 * @return
 	 */
-	public String getRations() {
+	public String displayRations() {
 		String ratWords = "";
 		switch(rations) {
 		case 1: ratWords = "Bare Bones"; break;
@@ -51,6 +51,14 @@ public class Travel {
 		case 3: ratWords = "Filling"; break;
 		}
 		return ratWords;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getRations() {
+		return rations;
 	}
 	
 	/**
