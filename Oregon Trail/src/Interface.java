@@ -6,10 +6,12 @@
  */
 
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -113,6 +115,10 @@ public class Interface {
 		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
 		paceComboBox.setBounds(10, 127, 395, 51);
+		
+		JPanel panel = new JPanel();
+		panel.add(paceComboBox);
+		frameTwo.getContentPane().add(panel);
 
 		JComboBox<String> rationsComboBox = new JComboBox<String>();
 		rationsComboBox.addActionListener(new ActionListener() {
@@ -203,11 +209,6 @@ public class Interface {
 		wthrQtyLbl.setBounds(415, 437, 137, 51);
 		frame.getContentPane().add(wthrQtyLbl);
 		
-		JLabel lblNewLabel_6 = new JLabel("PICTURE HERE");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 86));
-		lblNewLabel_6.setBounds(630, 208, 607, 341);
-		frame.getContentPane().add(lblNewLabel_6);
-		
 		JLabel titleLbl = new JLabel("Oregon Trail");
 		titleLbl.setFont(new Font("Felix Titling", Font.PLAIN, 50));
 		titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -235,5 +236,10 @@ public class Interface {
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		stopTrvlBtn.setBounds(278, 594, 258, 125);
 		frame.getContentPane().add(stopTrvlBtn);
+		
+        ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/trailPic.jpg"));
+		JLabel trailImage = new JLabel(icon);
+		trailImage.setBounds(562, 121, 684, 511);
+		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
 	}
 }

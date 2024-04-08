@@ -9,6 +9,9 @@ public class Travel {
 	private int rations;
 	private int speed;
 	private int milesTravelled = 0;
+	private int month = 3;
+	private int day = 1;
+	private int year = 1860;
 	
 	/*
 	 * Creates a Travel object containing default rations (3) and speed (12) values
@@ -115,4 +118,8 @@ public class Travel {
 		return milesTravelled;
 	}
 	
+	
+	public void incrementDate() {
+		
+	}
 }
