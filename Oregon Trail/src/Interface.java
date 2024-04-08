@@ -36,6 +36,7 @@ public class Interface {
 	private JLabel trvlSpeedQtyLbl;
 	private JLabel foodQtyLbl;
 	private JFrame frameTwo;
+	private JFrame frameThree; 
 	private JLabel dateQtyLbl;
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
@@ -117,12 +118,20 @@ public class Interface {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		//This is frame two stuff
 		frameTwo = new JFrame();
 		frameTwo.setBounds(100,100,1289,767);
 		frameTwo.setTitle("OPTIONS");
 		frameTwo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameTwo.setVisible(false);
 		
+		frameThree = new JFrame();
+		frameThree.setBounds(100, 100, 1289, 767);
+		frameThree.setTitle("OPTIONS");
+		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameThree.setVisible(false);
+		
+		//ComboBox for miles per day/pace
 		JComboBox<String> paceComboBox= new JComboBox<String>();
 		paceComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +142,7 @@ public class Interface {
 		paceComboBox.setBounds(300, 346, 152, 54);
 		paceComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 
-		
+		//ComboBox for rations/how much the user would like to eat per day 
 		JComboBox<String> rationsComboBox = new JComboBox<String>();
 		rationsComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
