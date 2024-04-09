@@ -5,6 +5,7 @@
  * 
  * @author - Lena Frate
  * @author - Lillyan Stewart
+ * @author - Sarah Slusher
  * @version 1.1.1 - April 7 2024
  */
 public class Food extends Equipment {

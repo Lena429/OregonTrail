@@ -9,8 +9,6 @@
  * @author - Sarah Slusher
  * @version 1.1.1 - April 7 2024
  */
-
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 

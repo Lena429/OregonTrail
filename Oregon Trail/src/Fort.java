@@ -22,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 public class Fort {
 	private Wagon wagon;        // The wagon associated with the fort
 	private String name;        // The name of the fort
