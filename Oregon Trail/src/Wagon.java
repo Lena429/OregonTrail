@@ -18,10 +18,9 @@ public class Wagon {
 	private int consumableWeight = 0;
 	
 	/**
-	 * 
+	 * Creates an Wagon object
 	 */
-	public Wagon() {
-	}
+	public Wagon() {}
 	
 	/**
 	 * adds an item to the wagon array and adds its weight to the total weight of the wagon. If the item is also nutritional,
