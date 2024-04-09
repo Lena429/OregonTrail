@@ -366,7 +366,7 @@ public class Interface {
 		frameImage.setVisible(false);
 		
 		// image for look around at fort
-		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
+		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/image_2024-04-09_124455387.png"));
 		JLabel fortImage = new JLabel(image);
 		fortImage.setBounds(562, 108, 684, 511);
 		
