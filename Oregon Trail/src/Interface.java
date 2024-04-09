@@ -6,6 +6,7 @@
  * 
  * @author - Lillyan Stewart
  * @author - Lena Frate
+ * @author - Sarah Slusher
  * @version 1.1.1 - April 7 2024
  */
 
@@ -47,9 +48,9 @@ public class Interface {
 	private Equipment toys		= new Equipment("Toys", 5, 5);
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
 	private Equipment water		= new Equipment("Water", 200, 1);
-	private Food food		    = new Food("Food", 1, 900, true);
-	private Fort fort1			= new Fort("Fort 1", 200);
-	private Fort fort2			= new Fort("Fort 2", 300);
+	private Food food	        = new Food("Food", 1, 900, true);
+	private Fort fort1		= new Fort("Kanesville", 200, wagon);
+	private Fort fort2		= new Fort("Mormon Graveyard", 300, wagon);
 	private JLabel milToQtyLbl;
 
 	/**
@@ -101,20 +102,28 @@ public class Interface {
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
-		// determine if user arrived at a landmark
+		// determine if user arrived at a fort1
 		fort1.updateMilesAway(travel.getPace());
 		if (!fort1.arrivedAtLandmark()) {
 			milToQtyLbl.setText(fort1.getMilesAway() + "");
 		} else if (!fort1.hasvisited()){
 			milToQtyLbl.setText("visiting");
 			fort1.updatevisited();
+			clock.stop();//clock stops when entering a fort 
 			frameThree.setVisible(true);
-			clock.stop();
-		// we need to open a new frame here. this could possibly be in a different function for legibility
+			fortName.setText("Welcome to " + fort1.getName()); // Display the greeting message
 		} else {
-			fort2.updateMilesAway(travel.getPace());
-			milToQtyLbl.setText(fort2.getMilesAway() + "");
-		}
+		    // Check if the player has arrived at fort2
+		    fort2.updateMilesAway(travel.getPace());
+		    if (!fort2.arrivedAtLandmark()) {
+		        milToQtyLbl.setText(fort2.getMilesAway() + "");
+		    } else if (!fort2.hasvisited()){
+		        milToQtyLbl.setText("visiting");
+		        fort2.updatevisited();
+		        clock.stop(); // Clock stops when entering a fort
+		        frameThree.setVisible(true); // Open a new frame here
+		        fortName.setText("Welcome to " + fort2.getName()); // Display the greeting message
+		    }
 	}
 	
 	/**
@@ -220,13 +229,13 @@ public class Interface {
 			}
 		});
 
-        //This is frame three setup
+        //This is fort stuff
 		frameThree = new JFrame();
 		frameThree.setBounds(100, 100, 1289, 767);
-		frameThree.setTitle("OPTIONS");
+		frameThree.setTitle("FORT");
 		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameThree.setVisible(false);
-
+		
 		frameImage = new JFrame();
 		frameImage.setBounds(100, 100, 1289, 767);
 		frameImage.setTitle("Look Around");
@@ -239,16 +248,18 @@ public class Interface {
 		fortImage.setBounds(562, 108, 684, 511);
 		
 		JLabel Gossip = new JLabel("");
-		Gossip.setBounds(204, 24, 654, 13);
+		Gossip.setBounds(187, 146, 654, 13);
 		
+		//player talks to other people inside fort
+		//randomly selected phrases from Fort Class
 		JButton Talking = new JButton("Talk to people");
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String phrase = fort1.generateRandomPhrase();
-                		Gossip.setText(phrase);
+                Gossip.setText(phrase);
 			}
 		});
-		Talking.setBounds(32, 20, 133, 21);
+		Talking.setBounds(31, 138, 133, 21);
 		
 		//player decides to rest in the fort
 		JButton Rest = new JButton("Rest");
@@ -261,7 +272,7 @@ public class Interface {
 				dateQtyLbl.setText(travel.getDate());
 			}
 		});
-		Rest.setBounds(32, 138, 133, 21);
+		Rest.setBounds(31, 256, 133, 21);
 		
 		//player decides to look around at fort
 		JButton LookAround = new JButton("Look Around");
@@ -270,17 +281,32 @@ public class Interface {
 				frameImage.setVisible(true);
 			}
 		});
-		LookAround.setBounds(32, 76, 133, 21);
+		LookAround.setBounds(31, 194, 133, 21);
 		
-		//Panel for components for frame three. 
+		JButton Shop = new JButton("Shop");
+		Shop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fort1.displayItemsForSale();
+			}
+		});
+		Shop.setBounds(31, 310, 133, 21);
+		
+	    fortName = new JLabel(" ");
+		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
+		fortName.setBounds(343, 11, 569, 86);
+		
 		JPanel PanelThree = new JPanel();
 		PanelThree.setLayout(null);
 		PanelThree.add(Gossip);
 		PanelThree.add(Talking);
 		PanelThree.add(Rest);
 		PanelThree.add(LookAround);
+		PanelThree.add(dateLbl_2);
+		PanelThree.add(dateQtyLbl_2);
+		PanelThree.add(fortName);
+		PanelThree.add(Shop);
 		frameThree.getContentPane().add(PanelThree);
-
+		
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(null);
 		imagePanel.add(fortImage);
