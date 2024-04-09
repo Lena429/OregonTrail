@@ -16,7 +16,7 @@ public class Travel {
 	private int rations;
 	private int speed;
 	private int milesTravelled = 0;
-	private LocalDate startDate = LocalDate.of(1860, 3, 1);
+	private LocalDate startDate = LocalDate.of(1853, 3, 1);
 	private LocalDate nextDate;
 	
 	/*
