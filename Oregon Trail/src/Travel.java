@@ -12,11 +12,6 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.JComboBox;
 
-/**
- * changePace, displayMilesTraveled, displayDate
- * 
- * 
- */
 public class Travel {
 	private int rations;
 	private int speed;

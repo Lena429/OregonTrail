@@ -28,13 +28,13 @@ public class Fort {
 	};
 
 
-        /**
-         * Constructs a new Fort object with the specified name, distance, and associated wagon.
-         * 
-         * @param name The name of the fort
-         * @param miles Distance of the fort from the wagon party
-         * @param wagon The wagon associated with the fort
-         */
+    /**
+     * Constructs a new Fort object with the specified name, distance, and associated wagon.
+     * 
+     * @param name The name of the fort
+     * @param miles Distance of the fort from the wagon party
+     * @param wagon The wagon associated with the fort
+     */
 	public Fort(String name, int miles, Wagon wagon) {
 		this.name = name;
 		this.visited = false;
@@ -43,27 +43,28 @@ public class Fort {
 	}
 	
 	/**
-         * Updates the distance of the fort from the wagon party based on the pace.
-         * 
-         * @param pace The pace at which the wagon party is traveling
-         */
+     * Updates the distance of the fort from the wagon party based on the pace.
+     * 
+     * @param pace The pace at which the wagon party is traveling
+     */
 	public void updateMilesAway(int pace) {
 		milesAway -= pace;
 		if (milesAway < 0) milesAway = 0;
 	}
 
-       /**
-        * Retrieves the distance of the fort from the wagon party.
-        * 
-        * @return The distance of the fort from the wagon party
-        */
+   /**
+    * Retrieves the distance of the fort from the wagon party.
+    * 
+    * @return The distance of the fort from the wagon party
+    */
 	public int getMilesAway() {
 		return milesAway;
 	}
 	
 	/**
+	 * Checks if the wagon party has arrived at the fort.
 	 * 
-	 * @return
+	 * @return true if they have and false otherwise
 	 */
 	public boolean arrivedAtLandmark() {
 		if (milesAway == 0) return true;
@@ -72,57 +73,55 @@ public class Fort {
 	}
 	
 	/**
-         * Checks if the wagon party has arrived at the fort.
-         * 
-         * @return True if the wagon party has arrived at the fort, otherwise false
-         */
+     * Checks if the wagon party has already been to the fort
+     * 
+     * @return True if the wagon party has already been there, otherwise false
+     */
 	public boolean hasvisited() {
 		return visited;
 	}
 
 	/**
-         * Marks the fort as visited by the wagon party.
-         */
+     * Marks the fort as visited by the wagon party.
+     */
 	public void updatevisited() {
 		visited = true;
 	}
 
 	/**
-         * Retrieves the name of the fort.
-         * 
-         * @return The name of the fort
-         */
+     * Retrieves the name of the fort.
+     * 
+     * @return The name of the fort
+     */
 	public String getName() {
 		return name;
 	}
 	
 	/**
-         * Simulates the wagon party visiting the fort.
-         * 
-         * @param wagon The wagon object associated with the fort
-         */ 
+     * Simulates the wagon party visiting the fort.
+     * 
+     * @param wagon The wagon object associated with the fort
+     */ 
 	public void visit(Wagon wagon) {
 		this.visited = true;
-		
-		}
 	}
 
-        /**
-         * Generates a random phrase for conversation at the fort.
-         * 
-         * @return A randomly selected phrase for conversation
-         */
+    /**
+     * Generates a random phrase for conversation at the fort.
+     * 
+     * @return A randomly selected phrase for conversation
+     */
 	public String generateRandomPhrase() {
 	        Random random = new Random();
 	        int index = random.nextInt(phrases.length);
 	        return phrases[index];
 	 }
 
-        /**
-         * Simulates shopping for items at the fort.
-         * 
-         * @return A list of equipment items available for sale at the fort
-         */
+    /**
+     * Simulates shopping for items at the fort.
+     * 
+     * @return A list of equipment items available for sale at the fort
+     */
 	public List<Equipment> shop(){
 		List<Equipment> itemsForSale = new ArrayList<>();
 		itemsForSale.add(new Food("Apple", 10, 1, true));
@@ -131,9 +130,9 @@ public class Fort {
 		return itemsForSale;
 	}
 
-        /**
-         * Displays the items available for sale at the fort in a graphical window.
-         */
+    /**
+     * Displays the items available for sale at the fort in a graphical window.
+     */
 	public void displayItemsForSale() {
         List<Equipment> itemsForSale = shop();
         JFrame shopWindow = new JFrame("Items for Sale at " + name);

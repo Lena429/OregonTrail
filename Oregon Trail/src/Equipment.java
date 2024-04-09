@@ -38,14 +38,26 @@ public class Equipment {
 		return weight;
 	}
 	
+	/**
+	 * adds the specified amount to the quantity of the item
+	 * @param quantity - the amount to be added
+	 */
 	public void addQuantity(int quantity) {
 		this.quantity += quantity;
 	}
 	
+	/**
+	 * removes the specified amount from the quantity of the item
+	 * @param quantity
+	 */
 	public void removeQuantity(int quantity) {
 		this.quantity -= quantity;
 	}
 	
+	/**
+	 * returns the quantity of the item
+	 * @return quantity - the amount of the item in the wagon
+	 */
 	public int getQuantity() {
 		return quantity;
 	}

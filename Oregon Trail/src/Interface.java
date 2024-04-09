@@ -33,6 +33,7 @@ import javax.swing.Timer;
 public class Interface {
 
 	private JFrame frame;
+	private JFrame frameImage;
 	private Timer clock;
 	private Travel travel = new Travel();
 	private Wagon wagon	  = new Wagon();
@@ -43,6 +44,7 @@ public class Interface {
 	private JFrame frameTwo;
 	private JFrame frameThree; 
 	private JLabel dateQtyLbl;
+	private JLabel fortName;
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
 	private Equipment toys		= new Equipment("Toys", 5, 5);
@@ -124,6 +126,7 @@ public class Interface {
 		        frameThree.setVisible(true); // Open a new frame here
 		        fortName.setText("Welcome to " + fort2.getName()); // Display the greeting message
 		    }
+		}
 	}
 	
 	/**
@@ -243,9 +246,9 @@ public class Interface {
 		frameImage.setVisible(false);
 		
 		//image for look around at fort
-		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
-		JLabel fortImage = new JLabel(image);
-		fortImage.setBounds(562, 108, 684, 511);
+		// ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
+		//JLabel fortImage = new JLabel(image);
+		//fortImage.setBounds(562, 108, 684, 511);
 		//Label to hold generated phrases of conversation
 		JLabel Gossip = new JLabel("");
 		Gossip.setBounds(187, 146, 654, 13);
@@ -293,7 +296,7 @@ public class Interface {
 		});
 		Shop.setBounds(31, 310, 133, 21);
 		//Greeting header for the fort frames
-	        fortName = new JLabel(" ");
+	    fortName = new JLabel(" ");
 		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
 		fortName.setBounds(343, 11, 569, 86);
 		//panel to hold all fort objects to the frame
@@ -303,6 +306,12 @@ public class Interface {
 		PanelThree.add(Talking);
 		PanelThree.add(Rest);
 		PanelThree.add(LookAround);
+		
+		
+		// cannot just take the label from frame 2 because now it does not show up there
+		
+		
+		
 		PanelThree.add(dateLbl_2);
 		PanelThree.add(dateQtyLbl_2);
 		PanelThree.add(fortName);
@@ -311,7 +320,7 @@ public class Interface {
 		//panel for the fort images 
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(null);
-		imagePanel.add(fortImage);
+		//imagePanel.add(fortImage);
 		frameImage.getContentPane().add(imagePanel);
 
 		//Start travel again button. 
