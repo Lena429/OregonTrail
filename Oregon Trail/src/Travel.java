@@ -69,10 +69,6 @@ public class Travel {
 				}
 	}
 	
-	
-	
-	
-	
 	/**
 	 *  Gets the current pace
 	 *  @return speed that it is set at. 
