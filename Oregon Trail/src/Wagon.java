@@ -1,3 +1,12 @@
+/**
+ * Wagon.java
+ * 
+ * The wagon class keeps track of the total food, total weight, adds items, removes items, and displays total weight. 
+ *  
+ * @author - Lena Frate
+ * @author - Lillyan Stewart 
+ * @version 1.1.1 - April 7 2024
+ */
 import java.util.ArrayList;
 
 public class Wagon {

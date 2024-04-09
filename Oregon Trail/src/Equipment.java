@@ -4,7 +4,8 @@
  * The Equipment class stores an item including its name, weight, and quantity. 
  *  
  * @author - Lena Frate
- * @version 1.1.1 - 25 March 2024
+ * @author - Lillyan Stewart 
+ * @version 1.1.1 - April 7 2024
  */
 public class Equipment {
 

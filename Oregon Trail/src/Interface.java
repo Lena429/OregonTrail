@@ -1,8 +1,12 @@
 /**
  * Interface.java
  * 
- * @author
- * @version 1.1.1 - 7 April 2024
+ * This is the main area for the user to play the Oregon Trail game. It includes a clock that passes and 
+ * is used to represent the days changing. It opens different frames depending on how to user interacts. 
+ * 
+ * @author - Lillyan Stewart
+ * @author - Lena Frate
+ * @version 1.1.1 - April 7 2024
  */
 
 
@@ -72,6 +76,7 @@ public class Interface {
 	public Interface() {
 		initialize();
 		
+		//Preloaded wagon 
 		wagon.addItem(wagWheel);
 		wagon.addItem(wagAxle);
 		wagon.addItem(toys);
@@ -86,6 +91,7 @@ public class Interface {
 		});
 	}
 
+	//Clock action event that updates the time
 	public void clockActionPerformed(ActionEvent evt) {
 		// update labels
 		milTrvlQtyLbl.setText(travel.updateMilesTravelled() + "");
@@ -102,9 +108,9 @@ public class Interface {
 		} else if (!fort1.hasvisited()){
 			milToQtyLbl.setText("visiting");
 			fort1.updatevisited();
-			frameThree.setVisibile(true);
+			frameThree.setVisible(true);
 			clock.stop();
-			// we need to open a new frame here. this could possibly be in a different function for legibility
+		// we need to open a new frame here. this could possibly be in a different function for legibility
 		} else {
 			fort2.updateMilesAway(travel.getPace());
 			milToQtyLbl.setText(fort2.getMilesAway() + "");
@@ -115,12 +121,13 @@ public class Interface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//This is frame one setup
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		//This is frame two stuff
+		//This is frame two (wagon inventory, pace, and rations) setup
 		frameTwo = new JFrame();
 		frameTwo.setBounds(100,100,1289,767);
 		frameTwo.setTitle("OPTIONS");
@@ -149,22 +156,26 @@ public class Interface {
 		rationsComboBox.setBounds(300, 200, 220, 54);
 		rationsComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 
+		//Inventory of the wagon 
 		JTextArea inventory = new JTextArea();
 		inventory.setEditable(false); // Optional: make the text area read-only
 		inventory.setWrapStyleWord(true);
 		inventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		inventory.setBounds(575, 108, 671, 505);
 		
+		//Label for changing rations combobox
 		JLabel changeRatLbl = new JLabel("Change Rations:");
 		changeRatLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		changeRatLbl.setBounds(10, 187, 275, 86);
 		changeRatLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 		
+		//Label for frame two changing pace combobox
 		JLabel changePaceLbl = new JLabel("Change Pace:");
 		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		changePaceLbl.setBounds(10, 333, 275, 86);
 		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 
+		//Label for frame one date label
 		JLabel dateLbl_2 = new JLabel("Date:");
 		dateLbl_2.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		dateLbl_2.setBounds(586, 631, 93, 51);
@@ -173,19 +184,22 @@ public class Interface {
 		dateQtyLbl_2.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		dateQtyLbl_2.setBounds(676, 631, 284, 51);
 		
+		//A button that will allow you to rest.
+		//		When you rest food decreases and a day will pass everytime button is pushed.
 		JButton restBtn = new JButton("Rest");
 		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		restBtn.setBounds(180, 521, 189, 62);
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
-				wagon.removeItem(food, travel.getRations() * 4);
+				wagon.removeItem(food, travel.getRations() * 4); 
 				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl_2.setText(travel.getDate());
 				dateQtyLbl.setText(travel.getDate());
 			}
 		});
 		
+		//Panel with added components for frame two 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.add(inventory);
@@ -198,6 +212,7 @@ public class Interface {
 		panel.add(restBtn);
 		frameTwo.getContentPane().add(panel);
 		
+		//Start travelling again button for frame one
 		JButton startTrvlBtn = new JButton("Start Travel");
 		startTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,7 +220,7 @@ public class Interface {
 			}
 		});
 
-                //This is frame three stuff
+        //This is frame three setup
 		frameThree = new JFrame();
 		frameThree.setBounds(100, 100, 1289, 767);
 		frameThree.setTitle("OPTIONS");
@@ -257,6 +272,7 @@ public class Interface {
 		});
 		LookAround.setBounds(32, 76, 133, 21);
 		
+		//Panel for components for frame three. 
 		JPanel PanelThree = new JPanel();
 		PanelThree.setLayout(null);
 		PanelThree.add(Gossip);
@@ -270,7 +286,7 @@ public class Interface {
 		imagePanel.add(fortImage);
 		frameImage.getContentPane().add(imagePanel);
 
-
+		//Start travel again button. 
 		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		startTrvlBtn.setBounds(26, 570, 258, 125);
 		frame.getContentPane().add(startTrvlBtn);
@@ -351,6 +367,8 @@ public class Interface {
 		dateQtyLbl.setBounds(676, 631, 284, 51);
 		frame.getContentPane().add(dateQtyLbl);
 		
+		//When this stop button is pushed, the clock is stopped and frame two auto pops up. 
+		//		Displays inventory 
 		JButton stopTrvlBtn = new JButton("Stop Travel");
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -364,6 +382,7 @@ public class Interface {
 		stopTrvlBtn.setBounds(294, 570, 258, 125);
 		frame.getContentPane().add(stopTrvlBtn);
 		
+		//Picture of the trail that the wagon is travelling
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/trailPic.jpg"));
 		JLabel trailImage = new JLabel(icon);
 		trailImage.setBounds(562, 108, 684, 511);
