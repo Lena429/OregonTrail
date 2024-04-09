@@ -1,10 +1,14 @@
-import java.util.Scanner;
+import java.util.Random;
 
 //why is nothing working :(
 public class Fort {
 	private String name;
 	private boolean visited;
 	private int milesAway;
+	//phrases for talking to people
+	private String[] phrases = {
+			"I'm hoping the weather stays nice", "Have you seen that large caravan up ahead?", "I heard the flu is going around, so be careful!"
+	};
 	
 	public Fort(String name, int miles) {
 		this.name = name;
@@ -53,34 +57,7 @@ public class Fort {
 	//hoping this commit works 
 	public void visit(Wagon wagon) {
 		this.visited = true;
-		System.out.println("You've arrived at " + this.name +". What would you like to do?");
-		Scanner scanner = new Scanner(System.in);
-		while(true) {
-			System.out.println("\nOptions:");
-			System.out.println("1. Shop");
-			System.out.println("2. Talk to people");
-			System.out.println("3. Look Around");
-			System.out.println("4. Rest");
-			System.out.println("5. Continue Traveling");
-			System.out.println("Enter your choice (1-5):");
-			String choice = scanner.nextLine();
-			
-			switch(choice) {
-			case "1":
-                shop(wagon);
-                break;
-            case "2":
-                talkToPeople();
-                break;
-            case "3":
-                lookAround();
-                break;
-            case "4":
-                rest(wagon);
-                break;
-	    case "5":
-		System.out.println("You continue your journey from the fort.");	
-			}
+		
 		}
 	}
 		
@@ -88,14 +65,12 @@ public class Fort {
 			System.out.println(" ");
 		}
 	
-		
-		private void talkToPeople() {
-			
-		}
-		
-		private void lookAround() {
-			
-		}
+	public String generateRandomPhrase() {
+	        Random random = new Random();
+	        int index = random.nextInt(phrases.length);
+	        return phrases[index];
+	    }
+	
 		
 		private void rest(Wagon wagon) {
 			
