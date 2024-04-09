@@ -211,6 +211,17 @@ public class Interface {
 		frameThree.setTitle("OPTIONS");
 		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameThree.setVisible(false);
+
+		frameImage = new JFrame();
+		frameImage.setBounds(100, 100, 1289, 767);
+		frameImage.setTitle("Look Around");
+		frameImage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameImage.setVisible(false);
+		
+		//image for look around at fort
+		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
+		JLabel fortImage = new JLabel(image);
+		fortImage.setBounds(562, 108, 684, 511);
 		
 		JLabel Gossip = new JLabel("");
 		Gossip.setBounds(204, 24, 654, 13);
@@ -218,15 +229,32 @@ public class Interface {
 		JButton Talking = new JButton("Talk to people");
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gossip.setText("I heard someone threatned to run other people over if they got in the way of his cattle. How rude!");
+				String phrase = fort1.generateRandomPhrase();
+                		Gossip.setText(phrase);
 			}
 		});
 		Talking.setBounds(32, 20, 133, 21);
 		
+		//player decides to rest in the fort
 		JButton Rest = new JButton("Rest");
+		Rest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				travel.updateDate();
+				wagon.removeItem(food, travel.getRations() * 4);
+				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
+				dateQtyLbl_2.setText(travel.getDate());
+				dateQtyLbl.setText(travel.getDate());
+			}
+		});
 		Rest.setBounds(32, 138, 133, 21);
 		
+		//player decides to look around at fort
 		JButton LookAround = new JButton("Look Around");
+		LookAround.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameImage.setVisible(true);
+			}
+		});
 		LookAround.setBounds(32, 76, 133, 21);
 		
 		JPanel PanelThree = new JPanel();
@@ -236,6 +264,11 @@ public class Interface {
 		PanelThree.add(Rest);
 		PanelThree.add(LookAround);
 		frameThree.getContentPane().add(PanelThree);
+
+		JPanel imagePanel = new JPanel();
+		imagePanel.setLayout(null);
+		imagePanel.add(fortImage);
+		frameImage.getContentPane().add(imagePanel);
 
 
 		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
