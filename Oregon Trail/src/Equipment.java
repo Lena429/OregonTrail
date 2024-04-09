@@ -13,8 +13,11 @@ public class Equipment {
 	private int weight; 
 	private int quantity;
 
-	/*
+	/**
 	 * Creates an Item object containing a name and weight
+	 * @param name - the name of the item
+	 * @param weight - the weight of the item
+	 * @param quantity - quantity of the item
 	 */
 	public Equipment(String name, int weight, int quantity) {
 		this.name = name;

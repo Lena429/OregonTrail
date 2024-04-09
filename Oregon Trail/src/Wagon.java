@@ -70,13 +70,14 @@ public class Wagon {
 	
 	/**
 	 * makes all the variable names and weight into a string for display. 
+	 * @return inventory - a string containing the formatted contents of the wagon to be displayed
 	 */
 	public String displayingInventory() {
 		String inventory = "";
-	for(int i = 0; i < wagon.size(); i++) { 
-	    inventory = inventory +  wagon.get(i).getName() + ": " + wagon.get(i).getQuantity() + "\n";
-	} 
-	return inventory;
+		for(int i = 0; i < wagon.size(); i++) { 
+		    inventory = inventory +  wagon.get(i).getName() + ": " + wagon.get(i).getQuantity() + "\n";
+		} 
+		return inventory;
 	}
 	
 	/**

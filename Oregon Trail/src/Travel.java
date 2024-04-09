@@ -2,7 +2,7 @@
  * Travel.java
  * 
  * The Travel class changes speed, rations, updates the date, and updates miles travelled. 
- *  
+ * The resource consumption was determined by Chapter 16 of You Have Died of Dysentery.
  * @author - Lena Frate
  * @author - Lillyan Stewart 
  * @version 1.1.1 - April 7 2024
@@ -16,7 +16,7 @@ public class Travel {
 	private int rations;
 	private int speed;
 	private int milesTravelled = 0;
-	private LocalDate startDate = LocalDate.of(1860, 3, 1);
+	private LocalDate startDate = LocalDate.of(1853, 3, 1);
 	private LocalDate nextDate;
 	
 	/*

@@ -1,9 +1,14 @@
 /**
+ * Fort.java
+ * 
  * The Fort class represents a fort or landmark on the journey, 
  * which the wagon party can visit during their journey. 
  * It contains information about the fort's name, distance away from the wagon party, 
  * and whether it has been visited or not.
+ * 
  * @author - Sarah Slusher
+ * @author - Lena Frate
+ * @author - Lillyan Stewart
  * @version- 1.1 April 8 2024 
  */
 import java.awt.event.ActionEvent;
@@ -32,7 +37,6 @@ public class Fort {
 
     /**
      * Constructs a new Fort object with the specified name, distance, and associated wagon.
-     * 
      * @param name The name of the fort
      * @param miles Distance of the fort from the wagon party
      * @param wagon The wagon associated with the fort
@@ -46,7 +50,6 @@ public class Fort {
 	
 	/**
      * Updates the distance of the fort from the wagon party based on the pace.
-     * 
      * @param pace The pace at which the wagon party is traveling
      */
 	public void updateMilesAway(int pace) {
@@ -56,7 +59,6 @@ public class Fort {
 
    /**
     * Retrieves the distance of the fort from the wagon party.
-    * 
     * @return The distance of the fort from the wagon party
     */
 	public int getMilesAway() {
@@ -65,7 +67,6 @@ public class Fort {
 	
 	/**
 	 * Checks if the wagon party has arrived at the fort.
-	 * 
 	 * @return true if they have and false otherwise
 	 */
 	public boolean arrivedAtLandmark() {
@@ -76,7 +77,6 @@ public class Fort {
 	
 	/**
      * Checks if the wagon party has already been to the fort
-     * 
      * @return True if the wagon party has already been there, otherwise false
      */
 	public boolean hasvisited() {
@@ -92,7 +92,6 @@ public class Fort {
 
 	/**
      * Retrieves the name of the fort.
-     * 
      * @return The name of the fort
      */
 	public String getName() {
@@ -101,7 +100,6 @@ public class Fort {
 	
 	/**
      * Simulates the wagon party visiting the fort.
-     * 
      * @param wagon The wagon object associated with the fort
      */ 
 	public void visit(Wagon wagon) {
@@ -110,7 +108,6 @@ public class Fort {
 
     /**
      * Generates a random phrase for conversation at the fort.
-     * 
      * @return A randomly selected phrase for conversation
      */
 	public String generateRandomPhrase() {
@@ -121,7 +118,6 @@ public class Fort {
 
     /**
      * Simulates shopping for items at the fort.
-     * 
      * @return A list of equipment items available for sale at the fort
      */
 	public List<Equipment> shop(){
