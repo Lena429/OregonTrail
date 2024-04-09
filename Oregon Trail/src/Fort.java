@@ -9,17 +9,32 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-//why is nothing working :(
+/**
+ * The Fort class represents a fort or landmark on the journey, 
+ * which the wagon party can visit during their journey. 
+ * It contains information about the fort's name, distance away from the wagon party, 
+ * and whether it has been visited or not.
+ * @author - Sarah Slusher
+ */
 public class Fort {
-	private Wagon wagon;
-	private String name;
-	private boolean visited;
-	private int milesAway;
+	private Wagon wagon;        // The wagon associated with the fort
+	private String name;        // The name of the fort
+	private boolean visited;    // Indicates if the fort has been visited or not
+	private int milesAway;     // Distance of the fort from the wagon party
+	
 	//phrases for talking to people
 	private String[] phrases = {
 			"I'm hoping the weather stays nice", "Have you seen that large caravan up ahead?", "I heard the flu is going around, so be careful!"
 	};
-	
+
+
+        /**
+         * Constructs a new Fort object with the specified name, distance, and associated wagon.
+         * 
+         * @param name The name of the fort
+         * @param miles Distance of the fort from the wagon party
+         * @param wagon The wagon associated with the fort
+         */
 	public Fort(String name, int miles, Wagon wagon) {
 		this.name = name;
 		this.visited = false;
@@ -28,13 +43,20 @@ public class Fort {
 	}
 	
 	/**
-	 * 
-	 */
+         * Updates the distance of the fort from the wagon party based on the pace.
+         * 
+         * @param pace The pace at which the wagon party is traveling
+         */
 	public void updateMilesAway(int pace) {
 		milesAway -= pace;
 		if (milesAway < 0) milesAway = 0;
 	}
-	
+
+       /**
+        * Retrieves the distance of the fort from the wagon party.
+        * 
+        * @return The distance of the fort from the wagon party
+        */
 	public int getMilesAway() {
 		return milesAway;
 	}
@@ -50,34 +72,57 @@ public class Fort {
 	}
 	
 	/**
-	 * 
-	 * @return
-	 */
+         * Checks if the wagon party has arrived at the fort.
+         * 
+         * @return True if the wagon party has arrived at the fort, otherwise false
+         */
 	public boolean hasvisited() {
 		return visited;
 	}
-	
+
+	/**
+         * Marks the fort as visited by the wagon party.
+         */
 	public void updatevisited() {
 		visited = true;
 	}
-	
+
+	/**
+         * Retrieves the name of the fort.
+         * 
+         * @return The name of the fort
+         */
 	public String getName() {
 		return name;
 	}
 	
-	//hoping this commit works 
+	/**
+         * Simulates the wagon party visiting the fort.
+         * 
+         * @param wagon The wagon object associated with the fort
+         */ 
 	public void visit(Wagon wagon) {
 		this.visited = true;
 		
 		}
 	}
-	
+
+        /**
+         * Generates a random phrase for conversation at the fort.
+         * 
+         * @return A randomly selected phrase for conversation
+         */
 	public String generateRandomPhrase() {
 	        Random random = new Random();
 	        int index = random.nextInt(phrases.length);
 	        return phrases[index];
 	 }
 
+        /**
+         * Simulates shopping for items at the fort.
+         * 
+         * @return A list of equipment items available for sale at the fort
+         */
 	public List<Equipment> shop(){
 		List<Equipment> itemsForSale = new ArrayList<>();
 		itemsForSale.add(new Food("Apple", 10, 1, true));
@@ -85,7 +130,10 @@ public class Fort {
 		itemsForSale.add(new Equipment("Water", 20, 1));
 		return itemsForSale;
 	}
-	
+
+        /**
+         * Displays the items available for sale at the fort in a graphical window.
+         */
 	public void displayItemsForSale() {
         List<Equipment> itemsForSale = shop();
         JFrame shopWindow = new JFrame("Items for Sale at " + name);
