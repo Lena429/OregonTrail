@@ -2,7 +2,7 @@
  * Travel.java
  * 
  * The Travel class changes speed, rations, updates the date, and updates miles travelled. 
- *  
+ * The resource consumption was determined by Chapter 16 of You Have Died of Dysentery.
  * @author - Lena Frate
  * @author - Lillyan Stewart 
  * @version 1.1.1 - April 7 2024
