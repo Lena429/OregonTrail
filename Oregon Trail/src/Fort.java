@@ -144,7 +144,7 @@ public class Fort {
 
         for (Equipment item : itemsForSale) {
             JLabel label = new JLabel(item.getName() + ": " + item.getQuantity());
-            JButton Add = new JButton("Add all items");
+            JButton Add = new JButton("Add: ");
             Add.addActionListener(new ActionListener() {
             	public void actionPerformed (ActionEvent e) {
             		wagon.addItem(item);

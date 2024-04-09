@@ -246,9 +246,18 @@ public class Interface {
 		frameImage.setVisible(false);
 		
 		//image for look around at fort
-		// ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
-		//JLabel fortImage = new JLabel(image);
-		//fortImage.setBounds(562, 108, 684, 511);
+		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
+		JLabel fortImage = new JLabel(image);
+		fortImage.setBounds(562, 108, 684, 511);
+		
+		JLabel dateLbl_3 = new JLabel("Date:");
+		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		dateLbl_3.setBounds(586, 631, 93, 51);
+		
+		JLabel dateQtyLbl_3 = new JLabel(travel.getDate());
+		dateQtyLbl_3.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		dateQtyLbl_3.setBounds(676, 631, 284, 51);
+		
 		//Label to hold generated phrases of conversation
 		JLabel Gossip = new JLabel("");
 		Gossip.setBounds(187, 146, 654, 13);
@@ -271,9 +280,8 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
 				wagon.removeItem(food, travel.getRations() * 4);
-				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
-				dateQtyLbl_2.setText(travel.getDate());
 				dateQtyLbl.setText(travel.getDate());
+				dateQtyLbl_3.setText(travel.getDate());
 			}
 		});
 		Rest.setBounds(31, 256, 133, 21);
@@ -306,14 +314,8 @@ public class Interface {
 		PanelThree.add(Talking);
 		PanelThree.add(Rest);
 		PanelThree.add(LookAround);
-		
-		
-		// cannot just take the label from frame 2 because now it does not show up there
-		
-		
-		
-		PanelThree.add(dateLbl_2);
-		PanelThree.add(dateQtyLbl_2);
+		PanelThree.add(dateLbl_3);
+		PanelThree.add(dateQtyLbl_3);
 		PanelThree.add(fortName);
 		PanelThree.add(Shop);
 		frameThree.getContentPane().add(PanelThree);
