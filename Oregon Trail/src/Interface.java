@@ -229,13 +229,13 @@ public class Interface {
 			}
 		});
 
-        //This is fort stuff
+        	//Creates the frame for fort objects and actions
 		frameThree = new JFrame();
 		frameThree.setBounds(100, 100, 1289, 767);
 		frameThree.setTitle("FORT");
 		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameThree.setVisible(false);
-		
+		//Creates frame for fort images
 		frameImage = new JFrame();
 		frameImage.setBounds(100, 100, 1289, 767);
 		frameImage.setTitle("Look Around");
@@ -246,7 +246,7 @@ public class Interface {
 		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
 		JLabel fortImage = new JLabel(image);
 		fortImage.setBounds(562, 108, 684, 511);
-		
+		//Label to hold generated phrases of conversation
 		JLabel Gossip = new JLabel("");
 		Gossip.setBounds(187, 146, 654, 13);
 		
@@ -256,12 +256,13 @@ public class Interface {
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String phrase = fort1.generateRandomPhrase();
-                Gossip.setText(phrase);
+               			Gossip.setText(phrase);
 			}
 		});
 		Talking.setBounds(31, 138, 133, 21);
 		
 		//player decides to rest in the fort
+		//updates day counter while in the fort and resting
 		JButton Rest = new JButton("Rest");
 		Rest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -282,7 +283,8 @@ public class Interface {
 			}
 		});
 		LookAround.setBounds(31, 194, 133, 21);
-		
+
+		//player decides to shop in the store
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -290,11 +292,11 @@ public class Interface {
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);
-		
-	    fortName = new JLabel(" ");
+		//Greeting header for the fort frames
+	        fortName = new JLabel(" ");
 		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
 		fortName.setBounds(343, 11, 569, 86);
-		
+		//panel to hold all fort objects to the frame
 		JPanel PanelThree = new JPanel();
 		PanelThree.setLayout(null);
 		PanelThree.add(Gossip);
@@ -306,7 +308,7 @@ public class Interface {
 		PanelThree.add(fortName);
 		PanelThree.add(Shop);
 		frameThree.getContentPane().add(PanelThree);
-		
+		//panel for the fort images 
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(null);
 		imagePanel.add(fortImage);
