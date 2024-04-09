@@ -43,11 +43,10 @@ public class Interface {
 	private JFrame frameThree; 
 	private JLabel dateQtyLbl;
 	private JLabel dateQtyLbl_2;
-  private JLabel dateQtyLbl_3;
+	private JLabel dateQtyLbl_3;
 	private JLabel milToQtyLbl;
 	private JLabel fortName;
 	private JTextArea inventory;
-
 	
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
@@ -242,8 +241,8 @@ public class Interface {
 		dateQtyLbl.setBounds(676, 631, 284, 51);
 		frame.getContentPane().add(dateQtyLbl);
 		
-		//When this stop button is pushed, the clock is stopped and frame two auto pops up. 
-		//		Displays inventory 
+		// When this stop button is pushed, the clock is stopped and frame two auto pops up. 
+		// Displays inventory 
 		JButton stopTrvlBtn = new JButton("Stop Travel");
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -262,6 +261,8 @@ public class Interface {
 		JLabel trailImage = new JLabel(icon);
 		trailImage.setBounds(562, 108, 684, 511);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
+		
+		// FRAME ONE ENDS
 		
 		// This is frame two (wagon inventory, pace, and rations) setup
 		frameTwo = new JFrame();
@@ -292,26 +293,26 @@ public class Interface {
 		rationsComboBox.setBounds(300, 200, 220, 54);
 		rationsComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 
-		//Inventory of the wagon 
-		JTextArea inventory = new JTextArea();
+		// Inventory of the wagon 
+		inventory = new JTextArea();
 		inventory.setEditable(false); // Optional: make the text area read-only
 		inventory.setWrapStyleWord(true);
 		inventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		inventory.setBounds(575, 108, 671, 505);
 		
-		//Label for frame two changing rations combobox
+		// Label for frame two changing rations combobox
 		JLabel changeRatLbl = new JLabel("Change Rations:");
 		changeRatLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		changeRatLbl.setBounds(10, 187, 275, 86);
 		changeRatLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 		
-		//Label for frame two changing pace combobox
+		// Label for frame two changing pace combobox
 		JLabel changePaceLbl = new JLabel("Change Pace:");
 		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		changePaceLbl.setBounds(10, 333, 275, 86);
 		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 
-		//Label for frame two date label
+		// Label for frame two date label
 		JLabel dateLbl_2 = new JLabel("Date:");
 		dateLbl_2.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		dateLbl_2.setBounds(586, 631, 93, 51);
@@ -320,8 +321,8 @@ public class Interface {
 		dateQtyLbl_2.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		dateQtyLbl_2.setBounds(676, 631, 284, 51);
 		
-		//A button that will allow you to rest.
-		//		When you rest food decreases and a day will pass everytime button is pushed.
+		// A button that will allow you to rest.
+		// When you rest food decreases and a day will pass everytime button is pushed.
 		JButton restBtn = new JButton("Rest");
 		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		restBtn.setBounds(180, 521, 189, 62);
@@ -335,7 +336,7 @@ public class Interface {
 			}
 		});
 		
-		//Panel with added components for frame two 
+		// Panel with added components for frame two 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.add(inventory);
@@ -348,20 +349,23 @@ public class Interface {
 		panel.add(restBtn);
 		frameTwo.getContentPane().add(panel);
 
-        	//Creates the frame for fort objects and actions
+		// FRAME TWO ENDS
+		
+        // Creates the frame for fort objects and actions
 		frameThree = new JFrame();
 		frameThree.setBounds(100, 100, 1289, 767);
 		frameThree.setTitle("FORT");
 		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameThree.setVisible(false);
-		//Creates frame for fort images
+		
+		// Creates frame for fort images
 		frameImage = new JFrame();
 		frameImage.setBounds(100, 100, 1289, 767);
 		frameImage.setTitle("Look Around");
 		frameImage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameImage.setVisible(false);
 		
-		//image for look around at fort
+		// image for look around at fort
 		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/Screenshot 2024-04-08 211435.png"));
 		JLabel fortImage = new JLabel(image);
 		fortImage.setBounds(562, 108, 684, 511);
@@ -374,12 +378,12 @@ public class Interface {
 		dateQtyLbl_3.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		dateQtyLbl_3.setBounds(676, 631, 284, 51);
 		
-		//Label to hold generated phrases of conversation
+		// Label to hold generated phrases of conversation
 		JLabel Gossip = new JLabel("");
 		Gossip.setBounds(187, 146, 654, 13);
 		
-		//player talks to other people inside fort
-		//randomly selected phrases from Fort Class
+		// player talks to other people inside fort
+		// randomly selected phrases from Fort Class
 		JButton Talking = new JButton("Talk to people");
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -389,8 +393,8 @@ public class Interface {
 		});
 		Talking.setBounds(31, 138, 133, 21);
 		
-		//player decides to rest in the fort
-		//updates day counter while in the fort and resting
+		// player decides to rest in the fort
+		// updates day counter while in the fort and resting
 		JButton Rest = new JButton("Rest");
 		Rest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -411,7 +415,7 @@ public class Interface {
 		});
 		LookAround.setBounds(31, 194, 133, 21);
 
-		//player decides to shop in the store
+		// player decides to shop in the store
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -419,11 +423,13 @@ public class Interface {
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);
-		//Greeting header for the fort frames
+		
+		// Greeting header for the fort frames
 	    fortName = new JLabel(" ");
 		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
 		fortName.setBounds(343, 11, 569, 86);
-		//panel to hold all fort objects to the frame
+		
+		// panel to hold all fort objects to the frame
 		JPanel PanelThree = new JPanel();
 		PanelThree.setLayout(null);
 		PanelThree.add(Gossip);
@@ -435,14 +441,11 @@ public class Interface {
 		PanelThree.add(fortName);
 		PanelThree.add(Shop);
 		frameThree.getContentPane().add(PanelThree);
-		//panel for the fort images 
+		
+		// panel for the fort images 
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(null);
-		
 		imagePanel.add(fortImage);
-		frameImage.getContentPane().add(imagePanel);
-
-
-		
+		frameImage.getContentPane().add(imagePanel);	
 	}
 }
