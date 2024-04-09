@@ -51,9 +51,10 @@ public class Interface {
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
 	private Equipment water		= new Equipment("Water", 200, 1);
 	private Food food	        = new Food("Food", 1, 900, true);
-	private Fort fort1		= new Fort("Kanesville", 200, wagon);
+	private Fort fort1      = new Fort("Kanesville", 200, wagon);
 	private Fort fort2		= new Fort("Mormon Graveyard", 300, wagon);
 	private JLabel milToQtyLbl;
+	private JLabel dateQtyLbl_3;
 
 	/**
 	 * Launch the application.
@@ -112,8 +113,9 @@ public class Interface {
 			milToQtyLbl.setText("visiting");
 			fort1.updatevisited();
 			clock.stop();//clock stops when entering a fort 
+	        dateQtyLbl_3.setText(travel.getDate());
 			frameThree.setVisible(true);
-			fortName.setText("Welcome to " + fort1.getName()); // Display the greeting message
+			fortName.setText("Welcome to " + fort1.getName());     // Display the greeting message
 		} else {
 		    // Check if the player has arrived at fort2
 		    fort2.updateMilesAway(travel.getPace());
@@ -123,6 +125,7 @@ public class Interface {
 		        milToQtyLbl.setText("visiting");
 		        fort2.updatevisited();
 		        clock.stop(); // Clock stops when entering a fort
+		        dateQtyLbl_3.setText(travel.getDate());
 		        frameThree.setVisible(true); // Open a new frame here
 		        fortName.setText("Welcome to " + fort2.getName()); // Display the greeting message
 		    }
@@ -254,7 +257,7 @@ public class Interface {
 		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		dateLbl_3.setBounds(586, 631, 93, 51);
 		
-		JLabel dateQtyLbl_3 = new JLabel(travel.getDate());
+		dateQtyLbl_3 = new JLabel(travel.getDate());
 		dateQtyLbl_3.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		dateQtyLbl_3.setBounds(676, 631, 284, 51);
 		
@@ -322,7 +325,8 @@ public class Interface {
 		//panel for the fort images 
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(null);
-		//imagePanel.add(fortImage);
+		
+		imagePanel.add(fortImage);
 		frameImage.getContentPane().add(imagePanel);
 
 		//Start travel again button. 
