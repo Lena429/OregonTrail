@@ -1,6 +1,6 @@
 /**
  * Location.java
- * 
+ * Holds all information for different locations throughout the trail
  * @author - Sarah Slusher
  * @author - Lena Frate
  * @author - Lillyan Stewart
