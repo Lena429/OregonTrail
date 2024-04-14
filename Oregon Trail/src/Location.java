@@ -24,9 +24,9 @@ public class Location {
 	private int milesAway;      // Distance of the fort from the wagon party
 	
 	//phrases for talking to people
-	private String[] phrases = {
-			"I'm hoping the weather stays nice", "Have you seen that large caravan up ahead?", "I heard the flu is going around, so be careful!"
-	};
+	//private String[] phrases = {
+			//"I'm hoping the weather stays nice", "Have you seen that large caravan up ahead?", "I heard the flu is going around, so be careful!"
+	//};
 
 
     /**
@@ -104,50 +104,50 @@ public class Location {
      * Generates a random phrase for conversation at the fort.
      * @return A randomly selected phrase for conversation
      */
-	public String generateRandomPhrase() {
-	        Random random = new Random();
-	        int index = random.nextInt(phrases.length);
-	        return phrases[index];
-	 }
+	//public String generateRandomPhrase() {
+	  //      Random random = new Random();
+	 //       int index = random.nextInt(phrases.length);
+	 //       return phrases[index];
+	// }
 
     /**
      * Simulates shopping for items at the fort.
      * @return A list of equipment items available for sale at the fort
      */
-	public List<Equipment> shop(){
-		List<Equipment> itemsForSale = new ArrayList<>();
-		itemsForSale.add(new Food("Apple", 10, 1, true));
-		itemsForSale.add(new Food("Bread", 5, 1, true));
-		itemsForSale.add(new Equipment("Water", 20, 1));
-		return itemsForSale;
-	}
+	//public List<Equipment> shop(){
+	//	List<Equipment> itemsForSale = new ArrayList<>();
+	//	itemsForSale.add(new Food("Apple", 10, 1, true));
+	//	itemsForSale.add(new Food("Bread", 5, 1, true));
+	//	itemsForSale.add(new Equipment("Water", 20, 1));
+	//	return itemsForSale;
+	//}
 
     /**
      * Displays the items available for sale at the fort in a graphical window.
      */
-	public void displayItemsForSale() {
-        List<Equipment> itemsForSale = shop();
-        JFrame shopWindow = new JFrame("Items for Sale at " + name);
-        shopWindow.setSize(300, 400);
-        shopWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	//public void displayItemsForSale() {
+    //    List<Equipment> itemsForSale = shop();
+    //    JFrame shopWindow = new JFrame("Items for Sale at " + name);
+    //    shopWindow.setSize(300, 400);
+    //    shopWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    //    JPanel panel = new JPanel();
+    //    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        for (Equipment item : itemsForSale) {
-            JLabel label = new JLabel(item.getName() + ": " + item.getQuantity());
-            JButton Add = new JButton("Add: ");
-            Add.addActionListener(new ActionListener() {
-            	public void actionPerformed (ActionEvent e) {
-            		wagon.addItem(item);
-            	}
-            });
-            panel.add(Add);
-            panel.add(label);
-        }
+    //    for (Equipment item : itemsForSale) {
+    //        JLabel label = new JLabel(item.getName() + ": " + item.getQuantity());
+    //        JButton Add = new JButton("Add: ");
+    //        Add.addActionListener(new ActionListener() {
+    //        	public void actionPerformed (ActionEvent e) {
+    //        		wagon.addItem(item);
+    //        	}
+    //        });
+    //        panel.add(Add);
+    //        panel.add(label);
+    //    }
 
-        shopWindow.add(panel);
-        shopWindow.setVisible(true);
-    }
+    //    shopWindow.add(panel);
+    //    shopWindow.setVisible(true);
+   // }
 }
 
