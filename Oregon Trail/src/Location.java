@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,10 +22,6 @@ public class Location {
 	private boolean visited;    // Indicates if the fort has been visited or not
 	private int milesAway;      // Distance of the fort from the wagon party
 	
-	//phrases for talking to people
-	//private String[] phrases = {
-			//"I'm hoping the weather stays nice", "Have you seen that large caravan up ahead?", "I heard the flu is going around, so be careful!"
-	//};
 
 
     /**
@@ -99,17 +94,6 @@ public class Location {
 	public void visit(Wagon wagon) {
 		this.visited = true;
 	}
-
-    /**
-     * Generates a random phrase for conversation at the fort.
-     * @return A randomly selected phrase for conversation
-     */
-	//public String generateRandomPhrase() {
-	  //      Random random = new Random();
-	 //       int index = random.nextInt(phrases.length);
-	 //       return phrases[index];
-	// }
-
     /**
      * Simulates shopping for items at the fort.
      * @return A list of equipment items available for sale at the fort
