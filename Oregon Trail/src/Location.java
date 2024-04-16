@@ -6,18 +6,10 @@
  * @author - Lillyan Stewart
  * @version- 1.1 April 8 2024 
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 
 public class Location {
-	private Wagon wagon;        // The wagon associated with the fort
+	private Wagon wagon;
 	private String name;        // The name of the fort
 	private boolean visited;    // Indicates if the fort has been visited or not
 	private int milesAway;      // Distance of the fort from the wagon party
