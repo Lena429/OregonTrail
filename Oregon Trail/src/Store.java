@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-public class Store extends Fort {
+public class Store extends Location {
 	
 	
 	public Store(String name, int miles, Wagon wagon) {
@@ -32,7 +32,7 @@ public class Store extends Fort {
      */
 	public void displayItemsForSale() {
         List<Equipment> itemsForSale = shop();
-        JFrame shopWindow = new JFrame("Items for Sale at " + name);
+        JFrame shopWindow = new JFrame("Items for Sale at " + getName());
         shopWindow.setSize(300, 400);
         shopWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
