@@ -68,6 +68,13 @@ public class Wagon {
 		totalWeight = totalWeight - (weight*quantity);
 	}
 	
+	/**
+	 * returns the inventory of the wagon 
+	 * @return wagon - the array list of everything in the wagon inventory
+	 */
+	public ArrayList<Equipment> getItems(){		
+		return wagon;
+	}
 	
 	/**
 	 * makes all the variable names and weight into a string for display. 

@@ -46,13 +46,14 @@ public class Interface {
 	private JLabel fortName;
 	private JTextArea inventory;
 	
+	private Trade offer			= new Trade();
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
 	private Equipment toys		= new Equipment("Toys", 5, 5);
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
-	private Equipment water		= new Equipment("Water", 200, 1);
+	private Equipment water		= new Equipment("Water", 1, 200);
 	private Food food	        = new Food("Food", 1, 900, true);
 	private Fort fort1			= new Fort("Kanesville", 200, wagon);
 	private Fort fort2			= new Fort("Mormon Graveyard", 300, wagon);
