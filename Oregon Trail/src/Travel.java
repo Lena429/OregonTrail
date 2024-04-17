@@ -8,11 +8,8 @@
  * @author - Sarah Slusher
  * @version 1.1.1 - April 7 2024
  */
-import java.awt.Label;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JComboBox;
 

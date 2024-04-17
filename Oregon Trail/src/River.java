@@ -1,4 +1,3 @@
-
 /**
  * Rivers.java
  * 
@@ -8,13 +7,10 @@
  * @author - Lena Frate
  * @author - Lillyan Stewart 
  * @author - Sarah Slusher
- * @version 1.1.1 - April 16 2024
+ * @version 1.1.1 - April 17 2024
  */
 import java.util.Random;
 import java.util.Scanner;
-
-import javax.swing.JOptionPane;
-
 import java.io.InputStreamReader;
 
 public class River extends Location {
@@ -23,9 +19,9 @@ public class River extends Location {
 	private Wagon wagon = new Wagon();
 
 	/**
-	 * Creates a River object containing the name and miles. 
+	 * Creates a River object containing the name and miles
 	 * @param name - the name of the River
-	 * @param miles - how many miles until the River.
+	 * @param miles - how many miles until the River
 	 */
 	public River(String name, int miles) {
 		super(name, miles);
@@ -37,7 +33,7 @@ public class River extends Location {
 
 	/**
 	 * returns the name of the river. (this method is for future use)
-	 * @return name - the name of the river the user is at. 
+	 * @return name - the name of the river the user is at
 	 */ 
     public String getRiver() {
     	String name = scr.nextLine();
@@ -47,7 +43,7 @@ public class River extends Location {
 	
     /**
 	 * returns height of the water level at the river the user is at
-	 * @return height - the height of the water. 
+	 * @return height - the height of the water
 	 */
 	public int getHeight() {
 		int height = scr.nextInt();
@@ -61,7 +57,7 @@ public class River extends Location {
 	 */
 	public String getFlow() {
 		int flow = scr.nextInt(); // reads in next integer
-		// checks to see what number speed the river flow is at. 
+		// checks to see what number speed the river flow is at
 		switch(flow) {
 		case 1: 
 			return "Slow";
@@ -84,40 +80,50 @@ public class River extends Location {
 	}
 	
 	/**
-	 * Can possibly generate a random event when the user crosses the river.
+	 * Can possibly generate a random event when the user crosses the river
 	 * Since the user chose to cross the river without the ferry, the chance of negative
 	 * consequences is higher. 
-	 * @param money - this accesses the users money so a random event can impact the user. 
+	 * @param money - this accesses the users money so a random event can impact the user
+	 * @return "You made it across safely." - This string tells the user they have no consequences
+	 * @return "You made it, but $22 fell out of your pocket." - This string tells the user their consequence
+	 * @return "Error" - this tells the user there has been an error in the program
 	 */
-	public void randomEvtCross(Equipment money) {
+	public String randomEvtCross(Equipment money) {
 		Random rnd = new Random();
-		int random = rnd.nextInt(5)+1;															 // generates a random number 1 - 5
+		int random = rnd.nextInt(5)+1;															   // generates a random number 1 - 5
 		switch (random)
 		{	
 		// you safely crossed with no consequences 
 		case 1:
 		case 2: 
-		case 3: 
-			JOptionPane.showMessageDialog(null, "You made it across safely"); 					 // displays message
-			break;
+		case 3:
+		case 4:
+			return "You made it across safely.";
+			//JOptionPane.showMessageDialog(null, "You made it across safely"); 				   // displays message
+			//break;
 			
 		// you safely crossed but with consequences
-		case 4: 
-			wagon.removeItemQty(money, 22); 													 // subtracts from money total 
-			JOptionPane.showMessageDialog(null, "You made it, but $22 fell out of your pocket"); // displays message
-			break;
-		}		
+		case 5: 
+			wagon.removeItemQty(money, 22); 													   // subtracts from money total 
+			return "You made it, but $22 fell out of your pocket.";
+			//JOptionPane.showMessageDialog(null, "You made it, but $22 fell out of your pocket"); // displays message
+			//break;
+		}	
+		return "Error";
 	}
 	
 	/**
-	 * Can possibly generate a random event when the user crosses the river.
+	 * Can possibly generate a random event when the user crosses the river
 	 * Since the user chose to cross the river with the ferry, the chance of negative
 	 * consequences is lower. 
-	 * @param money - this accesses the users money so a random event can impact the user. 
+	 * @param money - this accesses the users money so a random event can impact the user
+	 * @return "You made it across safely." - This string tells the user they have no consequences
+	 * @return "You made it, but $22 fell out of your pocket." - This string tells the user their consequence
+	 * @return "Error" - this tells the user there has been an error in the program
 	 */
-	public void randomEvtFerry(Equipment money) {
+	public String randomEvtFerry(Equipment money) {
 				Random rnd = new Random(); 
-				int random = rnd.nextInt(9)+1; // generates a random number 1 - 9
+				int random = rnd.nextInt(9)+1; 		 // generates a random number 1 - 9
 				switch (random)
 				{	
 				// you safely crosses with no consequences
@@ -128,24 +134,19 @@ public class River extends Location {
 				case 5:
 				case 6: 
 				case 7:
-					JOptionPane.showMessageDialog(null, "You made it across safely"); 					 // displays message
-					break;
-					
+				case 8:
+					return "You made it across safely.";
 				// you crossed safely but with consequences
 				case 9:
-					wagon.removeItemQty(money, 22); 													 // subtracts from money total 
-					JOptionPane.showMessageDialog(null, "You made it, but $22 fell out of your pocket"); // displays message
-					break;
-
+					wagon.removeItemQty(money, 22);	 // subtracts from money total 
+					return "You made it, but $22 fell out of your pocket.";
 				}
+				return "Error";
 		}
 	}
 	
 
 	
-	
-
-
 
 
 
