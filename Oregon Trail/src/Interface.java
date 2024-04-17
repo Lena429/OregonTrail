@@ -418,7 +418,7 @@ public class Interface {
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fort1.displayItemsForSale();
+				//fort1.displayItemsForSale();
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);
