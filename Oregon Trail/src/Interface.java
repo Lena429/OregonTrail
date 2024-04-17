@@ -22,7 +22,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -66,13 +65,13 @@ public class Interface {
 	private Equipment water		= new Equipment("Water", 1, 200);
 	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 900, true);
-	private Fort fort1			= new Fort("Kanesville", 200);
-	private Fort fort2			= new Fort("Mormon Graveyard", 300);
-	private River river1  		= new River("Platte", 100);
+	private Fort fort1			= new Fort("Kanesville", 10);
+	private Fort fort2			= new Fort("Mormon Graveyard", 200);
+	private River river1  		= new River("Platte", 150);
 	private River river2 		= new River("Bear River", 50);
 	
 
-	private Store store;
+	private Store store;;
 
 	private ArrayList<Location> locations = new ArrayList<>();
 	
@@ -111,6 +110,9 @@ public class Interface {
 		wagon.addItem(water);
 		wagon.addItem(food);
 		wagon.addItem(money);
+		
+		// this will break of the order of the array changes
+		store = new Store(wagon.getItems().get(7), wagon.getItems(), wagon);
 		
 		//locations.add(new Fort("name", 100, null));
 		locations.add(fort1);
