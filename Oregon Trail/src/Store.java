@@ -7,12 +7,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 public class Store{
-
+	private Equipment money;
+	private ArrayList<Equipment> inventory = new ArrayList<>();
+	private Wagon wagon = new Wagon();
 	private float foodCost = 0;
 	private float wheelCost = 0;
 	private float clothesCost = 0;
@@ -22,8 +23,8 @@ public class Store{
 	private JLabel AmountOwed = new JLabel("00");
 	
 	
-	public Store() {
-		
+	public Store(Equipment money) {
+		this.money = money;
 	}
 	
 	 /**
@@ -34,6 +35,7 @@ public class Store{
 	JFrame StoreWindow = new JFrame();
 	StoreWindow.setBounds(100, 100, 424, 481);
 	StoreWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	StoreWindow.setVisible(true);
 	StoreWindow.getContentPane().setLayout(null);
 	
 	JLabel StoreLabel = new JLabel("Fort Store");
@@ -110,13 +112,16 @@ public class Store{
 	DollarLabel.setBounds(31, 293, 71, 19);
 	StoreWindow.getContentPane().add(DollarLabel);
 	
-	JLabel AmountOwed = new JLabel("00");
+	AmountOwed = new JLabel("00");
 	AmountOwed.setBounds(101, 292, 64, 24);
 	StoreWindow.getContentPane().add(AmountOwed);
 	
 	JButton buyButton = new JButton("Buy");
 	buyButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			removeMoney(inventory, wagon);
+			updateSupplies(inventory, wagon );
+			StoreWindow.dispose();
 		}
 	});
 	buyButton.setBounds(175, 294, 85, 21);
@@ -125,7 +130,7 @@ public class Store{
 	JButton cancelButton = new JButton("Cancel");
 	cancelButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			updateSupplies(null, null );
+			StoreWindow.dispose();
 		}
 	});
 	cancelButton.setBounds(276, 295, 85, 21);
@@ -136,7 +141,7 @@ public class Store{
         AmountOwed.setText(String.format("%.2f", totalCost));
     }
 	
-	public void updateSupplies(ArrayList<Equipment> inventory, Wagon wagon){
+	public void removeMoney(ArrayList<Equipment> inventory2, Wagon wagon){
 		float totalCost = foodCost + wheelCost + clothesCost;
 		for (Equipment item : inventory) {
 			if (item.getName().equals("Money")) {
@@ -144,13 +149,35 @@ public class Store{
 				break;
 			}
 		}
-		
-		if(FoodAmount.getValue() > 0) wagon.addItem(new Food("Food", 1, FoodAmount.getValue(), true));
-		
-		if(WheelAmount.getValue() > 0)wagon.addItem(new Equipment("Wagon Wheel", 45, WheelAmount.getValue()));
-		
-		if(ClothesAmount.getValue() > 0) wagon.addItem(new Equipment("Clothes", 1, ClothesAmount.getValue()));
-		
+	}
+	
+	private void updateSupplies(ArrayList<Equipment> inventory, Wagon wagon) {
+	    // Get the values from the sliders
+	    int foodAmount = FoodAmount.getValue();
+	    int wheelAmount = WheelAmount.getValue();
+	    int clothesAmount = ClothesAmount.getValue();
+
+	    // Create and populate the ArrayList to be added to the wagon
+	    ArrayList<Equipment> purchasedItems = new ArrayList<>();
+
+	    // Populate purchasedItems based on the slider values
+	    if (foodAmount > 0) {
+	        Equipment food = new Equipment("Food", 1, foodAmount);
+	        purchasedItems.add(food);
+	    }
+	    if (wheelAmount > 0) {
+	        Equipment wheel = new Equipment("Wagon Wheel", 45, wheelAmount);
+	        purchasedItems.add(wheel);
+	    }
+	    if (clothesAmount > 0) {
+	        Equipment clothes = new Equipment("Clothes", 2, clothesAmount);
+	        purchasedItems.add(clothes);
+	    }
+
+	    // Add purchased items to the wagon's inventory
+	    for (Equipment item : purchasedItems) {
+	        wagon.addItem(item);
+	    }
 	}
 
 }
