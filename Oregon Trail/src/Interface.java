@@ -109,7 +109,7 @@ public class Interface {
 		milTrvlQtyLbl.setText(travel.updateMilesTravelled() + "");
 		trvlSpeedQtyLbl.setText(travel.getPace() + "");
 		rationsQtyLbl.setText(travel.displayRations());
-		wagon.removeItem(food, travel.getRations() * 4);
+		wagon.removeItemQty(food, travel.getRations() * 4);
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
@@ -333,7 +333,7 @@ public class Interface {
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
-				wagon.removeItem(food, travel.getRations() * 4); 
+				wagon.removeItemQty(food, travel.getRations() * 4); 
 				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl_2.setText(travel.getDate());
 				dateQtyLbl.setText(travel.getDate());
@@ -354,7 +354,7 @@ public class Interface {
 				
 				// day increments and food decrements
 				travel.updateDate();
-				wagon.removeItem(food, travel.getRations() * 4);
+				wagon.removeItemQty(food, travel.getRations() * 4);
 				dateQtyLbl.setText(travel.getDate());
 				dateQtyLbl_2.setText(travel.getDate());
 		        // Update the inventory display so user can see correct food value
@@ -445,7 +445,7 @@ public class Interface {
 		Rest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
-				wagon.removeItem(food, travel.getRations() * 4);
+				wagon.removeItemQty(food, travel.getRations() * 4);
 				dateQtyLbl.setText(travel.getDate());
 				dateQtyLbl_3.setText(travel.getDate());
 			}

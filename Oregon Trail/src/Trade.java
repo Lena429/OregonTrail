@@ -9,7 +9,6 @@
  */
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JLabel;
 
 public class Trade {
 	
@@ -196,12 +195,12 @@ public class Trade {
 	 */
 	public void tradeAccepted(ArrayList<Equipment> inventory, Wagon wagon) {
 		// remove
-		wagon.removeItem(inventory.get(index), qtyLost);
+		wagon.removeItemQty(inventory.get(index), qtyLost);
 		
 		// add
 		for (Equipment item : inventory) {
 			if (item.getName().toLowerCase().equals(gainName)) {
-				item.addQuantity(qtyGained);
+				wagon.addItemQty(item, qtyGained);
 				break;
 			}
 		}
