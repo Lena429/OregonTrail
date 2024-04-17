@@ -65,10 +65,10 @@ public class Interface {
 	private Equipment water		= new Equipment("Water", 1, 200);
 	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 900, true);
-	private Fort fort1			= new Fort("Kanesville", 10);
+	private Fort fort1			= new Fort("Kanesville", 100);
 	private Fort fort2			= new Fort("Mormon Graveyard", 200);
-	private River river1  		= new River("Platte", 150);
-	private River river2 		= new River("Bear River", 50);
+	private River river1  		= new River("Platte", 300);
+	private River river2 		= new River("Bear River", 400);
 	
 
 	private Store store;;
@@ -138,27 +138,30 @@ public class Interface {
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
-			for (Location location : locations) {
-				if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
-			    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
-			    if (!location.arrivedAtLandmark()) {							  // checks to see if user arrived yet
-			    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  // if the user hasn't arrived update how far away the wagon is 
-			    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
-			        location.updatevisited();									  // updates the object/landmark to be visited by the user 
-			        clock.stop();												  // stops the days from passing
-			        dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
-			        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
-			        	frameFour.setVisible(true); 							  // displays river name 
-			        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
-			        	heightNumLbl.setText(((River) location).getHeight()+ ""); // displays height of river user is at 
-			        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
-			        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at 
-			        } else {													  // since the object wasn't an instance of river, it must be an instance of fort
-			        	frameThree.setVisible(true); 							  // displays frame three
-			        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
-			        }
-			    }
-			}
+		for (Location location : locations) {
+			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
+		    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
+		    if (!location.arrivedAtLandmark()) {							  // checks to see if user arrived yet
+		    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  // if the user hasn't arrived update how far away the wagon is 
+		    	break;
+		    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
+		        location.updatevisited();									  // updates the object/landmark to be visited by the user 
+		        clock.stop();												  // stops the days from passing
+		        dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
+		        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
+		        	frameFour.setVisible(true); 							  // displays river name 
+		        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
+		        	heightNumLbl.setText(((River) location).getHeight()+ ""); // displays height of river user is at 
+		        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
+		        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at
+		        	break;
+		        } else {													  // since the object wasn't an instance of river, it must be an instance of fort
+		        	frameThree.setVisible(true); 							  // displays frame three
+		        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
+		        	break;
+		        }
+		    }
+		}
     }
 				
 	/**
