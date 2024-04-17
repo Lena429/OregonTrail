@@ -30,7 +30,7 @@ public class Store{
 	public void StoreWindow() {
 	JFrame StoreWindow = new JFrame();
 	StoreWindow.setBounds(100, 100, 424, 481);
-	StoreWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	StoreWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	StoreWindow.getContentPane().setLayout(null);
 	
 	JLabel StoreLabel = new JLabel("Fort Store");
