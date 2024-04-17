@@ -433,8 +433,8 @@ public class Interface {
 		JButton Talking = new JButton("Talk to people");
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//String phrase = fort1.generateRandomPhrase();
-               			//Gossip.setText(phrase);
+				String phrase = fort1.generateRandomPhrase();
+               			Gossip.setText(phrase);
 			}
 		});
 		Talking.setBounds(31, 138, 133, 21);
@@ -465,7 +465,7 @@ public class Interface {
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//fort1.displayItemsForSale();
+				fort1.displayItemsForSale();
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);
