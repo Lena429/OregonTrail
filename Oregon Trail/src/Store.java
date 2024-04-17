@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 public class Store extends Location {
-	
+	private ArrayList<Equipment> wagon = new ArrayList<>();
 	
 	public Store(String name, int miles, Wagon wagon) {
 		super(name, miles, wagon);
@@ -30,29 +30,29 @@ public class Store extends Location {
 	 /**
      * Displays the items available for sale at the fort in a graphical window.
      */
-	public void displayItemsForSale() {
-        List<Equipment> itemsForSale = shop();
-        JFrame shopWindow = new JFrame("Items for Sale at " + getName());
-        shopWindow.setSize(300, 400);
-        shopWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	//public void displayItemsForSale() {
+    //    List<Equipment> itemsForSale = shop();
+    //    JFrame shopWindow = new JFrame("Items for Sale at " + getName());
+    //    shopWindow.setSize(300, 400);
+   //     shopWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    //    JPanel panel = new JPanel();
+    //    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        for (Equipment item : itemsForSale) {
-            JLabel label = new JLabel(item.getName() + ": " + item.getQuantity());
-            JButton Add = new JButton("Add: ");
-            Add.addActionListener(new ActionListener() {
-            	public void actionPerformed (ActionEvent e) {
-            		wagon.addItem(item);
-            	}
-            });
-            panel.add(Add);
-            panel.add(label);
-        }
+     //   for (Equipment item : itemsForSale) {
+     //       JLabel label = new JLabel(item.getName() + ": " + item.getQuantity());
+     //       JButton Add = new JButton("Add: ");
+     //       Add.addActionListener(new ActionListener() {
+     //       	public void actionPerformed (ActionEvent e) {
+     //       		wagon.addItem(item);
+     //       	}
+     //       });
+     //       panel.add(Add);
+     //       panel.add(label);
+     //   }
 
-        shopWindow.add(panel);
-        shopWindow.setVisible(true);
-    }
+     //   shopWindow.add(panel);
+     //   shopWindow.setVisible(true);
+   // }
 
 }
