@@ -27,6 +27,7 @@ public class Location {
 		this.milesAway = miles;
 	}
 	
+	public Location() {}
 	/**
      * Updates the distance of the fort from the wagon party based on the pace.
      * @param pace The pace at which the wagon party is traveling

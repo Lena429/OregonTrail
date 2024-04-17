@@ -57,6 +57,7 @@ public class Interface {
 	private Trade offer			= new Trade();
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
+	private River river 		= new River();
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
 	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 1);
@@ -68,7 +69,8 @@ public class Interface {
 	private Fort fort1			= new Fort("Kanesville", 200);
 	private Fort fort2			= new Fort("Mormon Graveyard", 300);
 	private River river1  		= new River("Platte", 100);
-	private River river2 		= new River("Bear River", 50);
+	private River river2 		= new River("Bear River", 1);
+	
 
 	private Store store;
 
@@ -516,8 +518,9 @@ public class Interface {
 		frameFour = new JFrame();
 		frameFour.setBounds(100, 100, 1289, 767);
 		frameFour.setTitle("River");
-		frameFour.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameFour.setVisible(false);
+		frameFour.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
+        frameFour.setResizable(false);
 		
 	    riverName = new JLabel(" ");
 			riverName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
@@ -549,23 +552,28 @@ public class Interface {
 		
 		JLabel crossingLbl = new JLabel("Cross the river yourself or pay the ferry($8)?");
 		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		crossingLbl.setBounds(415, 346, 137, 51);
+		crossingLbl.setBounds(300, 446, 900, 51);
 		
 		JButton crossBtn = new JButton("Cross");
 		crossBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//wagon.removeItem(Equiptment item, int quantity);
+				river.randomEvtCross(money);
+				frameFour.dispose();
 			}
 		});
-		crossBtn.setBounds(415, 408, 137, 51);
+		crossBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		crossBtn.setBounds(665, 508, 137, 51);
 		
 		JButton ferryBtn = new JButton("Ferry");
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				wagon.removeItemQty(money, 8);
+				river.randomEvtFerry(money);
+				frameFour.dispose();
 			}
 		});
-		ferryBtn.setBounds(10, 408, 395, 51);
+		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		ferryBtn.setBounds(360, 508, 137, 51);
 		
 		
 		JPanel panelFour = new JPanel();
@@ -578,6 +586,8 @@ public class Interface {
 		panelFour.add(widthNumLbl);
 		panelFour.add(riverName);
 		panelFour.add(crossingLbl);
+		panelFour.add(crossBtn);
+		panelFour.add(ferryBtn);
 		frameFour.getContentPane().add(panelFour);
 }
 }

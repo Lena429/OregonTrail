@@ -13,6 +13,9 @@
 
 import java.util.Random;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import java.io.InputStreamReader;
 
 
@@ -20,6 +23,8 @@ import java.io.InputStreamReader;
 public class River extends Location {
 	Scanner scr;
 	String river;
+	private Wagon wagon = new Wagon();
+
 
 	
 	public River(String name, int miles) {
@@ -28,7 +33,7 @@ public class River extends Location {
 		     scr = new Scanner(isr);
 	}
 	
-	
+	public River() {}
 
 	
 	// when we do weather we can add parameters to check whether its been raining a bunch or not. 
@@ -74,29 +79,60 @@ public class River extends Location {
 		
 	}
 	
-	public int randomEvent() {
+	public void randomEvtCross(Equipment money) {
 		//rand number = getradnom number;
 		//maybe I should do math formulas instead
 		Random rnd = new Random();
 		int random = rnd.nextInt(5)+1;
 		switch (random)
 		{		
-		case 1: //remove one ox and reduce speed. 
-		case 2: //remove some food because it was water logged
-		case 3: //drown someone/death. 
-			return 0; 			
-		case 4: //made it across perfectly fine. 
-			return 1;
-		}
-		
-		return 4; 
-		
+		case 1: // You were safe 
+		case 2: 
+		case 3: 
+			JOptionPane.showMessageDialog(null, "You made it across safely.");
+			break;
+		case 4: 
+			//Oh no money fell out of your pocket and you lost it in the river 
+			wagon.removeItemQty(money, 22);
+			JOptionPane.showMessageDialog(null, "You made it, but $22 fell out of your pocket");
+			break;
+		}		
 	}
 	
+	public void randomEvtFerry(Equipment money) {
+		//rand number = getradnom number;
+				//maybe I should do math formulas instead
+				Random rnd = new Random();
+				int random = rnd.nextInt(9)+1;
+				switch (random)
+				{		
+				case 1: // You were safe 
+				case 2: 
+				case 3: 	
+				case 4: 
+				case 5:
+				case 6: 
+				case 7:
+					JOptionPane.showMessageDialog(null, "You made it across safely");
+					break;
+					//Oh no money fell out of your pocket and you lost it in the river 
+				case 9:
+					wagon.removeItemQty(money, 22);
+					JOptionPane.showMessageDialog(null, "You made it, but $22 fell out of your pocket");
+					break;
+
+				}
+				
+				
+			}
+	
+	}
+	
+
 	
 	
 
-}
+
 
 
 
