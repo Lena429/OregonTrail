@@ -9,7 +9,6 @@
 
 
 public class Location {
-	private Wagon wagon;
 	private String name;        // The name of the fort
 	private boolean visited;    // Indicates if the fort has been visited or not
 	private int milesAway;      // Distance of the fort from the wagon party
@@ -22,11 +21,10 @@ public class Location {
      * @param miles Distance of the fort from the wagon party
      * @param wagon The wagon associated with the fort
      */
-	public Location(String name, int miles, Wagon wagon) {
+	public Location(String name, int miles) {
 		this.name = name;
 		this.visited = false;
 		this.milesAway = miles;
-		this.wagon = wagon;
 	}
 	
 	/**

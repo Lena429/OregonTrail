@@ -13,9 +13,6 @@
 
 import java.util.Random;
 import java.util.Scanner;
-import java.io.*;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 
@@ -25,9 +22,9 @@ public class River extends Location {
 	String river;
 
 	
-	public River(String name, int miles, Wagon wagon) {
-		super(name, miles, wagon);
-		   InputStreamReader isr = new InputStreamReader(this.getClass().getResourceAsStream("OregonTrail/Oregon Trail/src/Rivers.txt"));
+	public River(String name, int miles) {
+		super(name, miles);
+		   InputStreamReader isr = new InputStreamReader(this.getClass().getResourceAsStream("River.txt"));
 		     scr = new Scanner(isr);
 	}
 	
@@ -58,9 +55,17 @@ public class River extends Location {
 		return height;
 	}
 	
-	public int getFlow() {
+	public String getFlow() {
 		int flow = scr.nextInt();
-		return flow;	
+		switch(flow) {
+		case 1: 
+			return "Slow";
+		case 2:
+			return "Steady";
+		case 3: 
+			return "Fast";
+		}
+		return "Error";
 	}
 	
 	public int getWidth() {
@@ -69,7 +74,7 @@ public class River extends Location {
 		
 	}
 	
-	public int random() {
+	public int randomEvent() {
 		//rand number = getradnom number;
 		//maybe I should do math formulas instead
 		Random rnd = new Random();
@@ -84,7 +89,11 @@ public class River extends Location {
 			return 1;
 		}
 		
+		return 4; 
+		
 	}
+	
+	
 	
 
 }

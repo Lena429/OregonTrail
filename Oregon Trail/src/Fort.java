@@ -15,8 +15,8 @@
 import java.util.Random;
 public class Fort extends Location {
 
-	public Fort(String name, int miles, Wagon wagon) {
-		super(name, miles, wagon);
+	public Fort(String name, int miles) {
+		super(name, miles);
 		// TODO Auto-generated constructor stub
 	}
 	//phrases for chattering 

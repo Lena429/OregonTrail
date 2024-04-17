@@ -8,6 +8,7 @@
  * @author - Sarah Slusher
  * @version 1.1.1 - April 7 2024
  */
+import java.awt.Label;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,15 +22,11 @@ public class Travel {
 	private int milesTravelled = 0;
 	private LocalDate startDate = LocalDate.of(1853, 3, 1);
 	private LocalDate nextDate;
-	private List<Location> locations = new ArrayList<>();
 	
 	/*
 	 * Creates a Travel object containing default rations (3) and speed (12) values
 	 */
-	public Travel() {
-		//initalize forts, rivers and landmarks here in order of appearance on map
-		locations.add(new Fort("name", 100, null));
-		
+	public Travel() {	
 		rations = 3;
 		speed = 12;
 	}
@@ -156,17 +153,9 @@ public class Travel {
 	    return formattedDate;
 	}
 	
-	 public void updateLocations() {
-	        for (Location location : locations) {
-	            location.updateMilesAway(speed);
-	            if (!location.arrivedAtLandmark()) {
-	                // Update UI or perform other actions based on miles away
-	            } else if (!location.hasvisited()) {
-	                // Update UI or perform other actions for visiting a location
-	                location.updatevisited();
-	                // Stop clock, update date, show frame, etc.
-	                break; // Exit the loop once a location is visited
-	            }
-	        }
-	}
+	//get array list
+	
+
 }
+
+
