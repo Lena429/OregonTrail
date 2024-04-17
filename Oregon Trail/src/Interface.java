@@ -60,6 +60,7 @@ public class Interface {
 	private Food food	        = new Food("Food", 1, 900, true);
 	private Fort fort1			= new Fort("Kanesville", 200, wagon);
 	private Fort fort2			= new Fort("Mormon Graveyard", 300, wagon);
+	private Store store;
 
 
 	/**
@@ -465,7 +466,7 @@ public class Interface {
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fort1.displayItemsForSale();
+				store.StoreWindow();
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);
