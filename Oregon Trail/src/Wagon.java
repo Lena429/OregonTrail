@@ -50,10 +50,9 @@ public class Wagon {
 	 * the weight gets removed from the food weight as well
 	 * @param item - the item being removed from the array
 	 */
-	public void removeItem(Equipment item, int quantity) {
+	public void removeItem(Equipment item, float quantity) {
 		// remove the item from the array and get its weight
 		int weight = item.getWeight();
-		// wagon.remove(item);
 		
 		// check if the item is food/consumable and remove that weight from the respective totals
 		if (item instanceof Food) {

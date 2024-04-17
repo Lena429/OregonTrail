@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -336,6 +337,9 @@ public class Interface {
 				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl_2.setText(travel.getDate());
 				dateQtyLbl.setText(travel.getDate());
+		        
+				// Update the inventory display so user can see correct food value
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
 			}
 		});
 		
@@ -344,7 +348,36 @@ public class Interface {
 		tradeBtn.setBounds(180, 430, 189, 62);
 		tradeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				// generates the trade offer
+				offer.getTrader(travel.getMilesTravelled());
+				offer.getOffer(wagon.getItems());
+				
+				// day increments and food decrements
+				travel.updateDate();
+				wagon.removeItem(food, travel.getRations() * 4);
+				dateQtyLbl.setText(travel.getDate());
+				dateQtyLbl_2.setText(travel.getDate());
+		        // Update the inventory display so user can see correct food value
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+				
+				// displays the trade offer in a dialogue box
+				String text = offer.displayTradeOffer();;
+				String title = "Trade";
+				int type = JOptionPane.QUESTION_MESSAGE;
+				int response = JOptionPane.showConfirmDialog(frameTwo,  text, title, JOptionPane.YES_NO_OPTION, type);
+				
+				// checks if the user accepted the trade or not
+		        if (response == JOptionPane.YES_OPTION) {
+		        	// Yes, add/remove the items and update the inventory display
+		        	offer.tradeAccepted(wagon.getItems(), wagon);
+					inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+					
+		        } else if (response == JOptionPane.NO_OPTION) {
+		            // No, close the dialogue box
+		        }
+		        
+		        // updates the food label on frame 1
+		        foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 			}
 		});
 		
