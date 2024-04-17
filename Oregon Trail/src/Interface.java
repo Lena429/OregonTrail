@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -51,9 +52,11 @@ public class Interface {
 	private Wagon wagon	  		= new Wagon();
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
-	private Equipment toys		= new Equipment("Toys", 5, 5);
+	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 1);
+	private Equipment clothes	= new Equipment("Clothes", 2, 5);
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
 	private Equipment water		= new Equipment("Water", 1, 200);
+	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 900, true);
 	private Fort fort1			= new Fort("Kanesville", 200, wagon);
 	private Fort fort2			= new Fort("Mormon Graveyard", 300, wagon);
@@ -86,10 +89,12 @@ public class Interface {
 		//Preloaded wagon 
 		wagon.addItem(wagWheel);
 		wagon.addItem(wagAxle);
-		wagon.addItem(toys);
+		wagon.addItem(wagTong);
+		wagon.addItem(clothes);
 		wagon.addItem(blankets);
 		wagon.addItem(water);
 		wagon.addItem(food);
+		wagon.addItem(money);
 		
 		clock = new javax.swing.Timer(2000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -278,7 +283,7 @@ public class Interface {
 			}
 		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
-		paceComboBox.setBounds(300, 346, 152, 54);
+		paceComboBox.setBounds(300, 313, 152, 54);
 		paceComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 
 		// ComboBox for rations/how much the user would like to eat per day 
@@ -308,7 +313,7 @@ public class Interface {
 		// Label for frame two changing pace combobox
 		JLabel changePaceLbl = new JLabel("Change Pace:");
 		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changePaceLbl.setBounds(10, 333, 275, 86);
+		changePaceLbl.setBounds(10, 300, 275, 86);
 		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 
 		// Label for frame two date label
@@ -332,6 +337,47 @@ public class Interface {
 				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl_2.setText(travel.getDate());
 				dateQtyLbl.setText(travel.getDate());
+		        
+				// Update the inventory display so user can see correct food value
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+			}
+		});
+		
+		JButton tradeBtn = new JButton("Trade");
+		tradeBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		tradeBtn.setBounds(180, 430, 189, 62);
+		tradeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// generates the trade offer
+				offer.getTrader(travel.getMilesTravelled());
+				offer.getOffer(wagon.getItems());
+				
+				// day increments and food decrements
+				travel.updateDate();
+				wagon.removeItem(food, travel.getRations() * 4);
+				dateQtyLbl.setText(travel.getDate());
+				dateQtyLbl_2.setText(travel.getDate());
+		        // Update the inventory display so user can see correct food value
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+				
+				// displays the trade offer in a dialogue box
+				String text = offer.displayTradeOffer();;
+				String title = "Trade";
+				int type = JOptionPane.QUESTION_MESSAGE;
+				int response = JOptionPane.showConfirmDialog(frameTwo,  text, title, JOptionPane.YES_NO_OPTION, type);
+				
+				// checks if the user accepted the trade or not
+		        if (response == JOptionPane.YES_OPTION) {
+		        	// Yes, add/remove the items and update the inventory display
+		        	offer.tradeAccepted(wagon.getItems(), wagon);
+					inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+					
+		        } else if (response == JOptionPane.NO_OPTION) {
+		            // No, close the dialogue box
+		        }
+		        
+		        // updates the food label on frame 1
+		        foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 			}
 		});
 		
@@ -346,6 +392,7 @@ public class Interface {
 		panel.add(dateLbl_2);
 		panel.add(dateQtyLbl_2);
 		panel.add(restBtn);
+		panel.add(tradeBtn);
 		frameTwo.getContentPane().add(panel);
 
 		// FRAME TWO ENDS
@@ -386,8 +433,8 @@ public class Interface {
 		JButton Talking = new JButton("Talk to people");
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String phrase = fort1.generateRandomPhrase();
-               			Gossip.setText(phrase);
+				//String phrase = fort1.generateRandomPhrase();
+               			//Gossip.setText(phrase);
 			}
 		});
 		Talking.setBounds(31, 138, 133, 21);

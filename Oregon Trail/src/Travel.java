@@ -73,7 +73,7 @@ public class Travel {
 	
 	/**
 	 *  Gets the current pace
-	 *  @return speed that it is set at. 
+	 *  @return speed - the speed that it is set at. 
 	 */
 	public int getPace() {
 		return speed;
@@ -99,7 +99,7 @@ public class Travel {
 	
 	/**
 	 * This allows us to properly display what ration setting the game is set to.
-	 * @return ratWords which is the ration setting. 
+	 * @return ratWords - the ration setting. 
 	 */
 	public String displayRations() {
 		String ratWords = "";
@@ -113,7 +113,7 @@ public class Travel {
 	
 	/**
 	 * Gets the current ration setting
-	 * @return rations which is food setting 
+	 * @return rations - which is food setting 
 	 */
 	public int getRations() {
 		return rations;
@@ -121,7 +121,7 @@ public class Travel {
 	
 	/**
 	 * This updates the miles travelled. 
-	 * @return the total milesTravelled. 
+	 * @return milesTravelled - the total milesTravelled. 
 	 */
 	public int updateMilesTravelled() {
 		milesTravelled += speed;
@@ -129,8 +129,16 @@ public class Travel {
 	}
 	
 	/**
+	 * Gets the total miles travelled so far by the user
+	 * @return milesTravelled - the total miles travelled so far
+	 */
+	public int getMilesTravelled() {
+		return milesTravelled;
+	}
+	
+	/**
 	 * This updates the date as the clock continues.
-	 * @return the date correctly formatted MMMM, d, yyyy
+	 * @return formattedDate - the date correctly formatted MMMM, d, yyyy
 	 */
 	public String updateDate() {
 		// increment the date and store as new start date
@@ -146,7 +154,7 @@ public class Travel {
 	
 	/**
 	 * This gets the dates for the user.
-	 * @return the date correctly formatted MMMM, d, yyyy
+	 * @return formattedDate - the date correctly formatted MMMM, d, yyyy
 	 */
 	public String getDate() {
 		// format the date and return the string
