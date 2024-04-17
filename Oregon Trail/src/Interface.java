@@ -69,7 +69,7 @@ public class Interface {
 	private Fort fort1			= new Fort("Kanesville", 200);
 	private Fort fort2			= new Fort("Mormon Graveyard", 300);
 	private River river1  		= new River("Platte", 100);
-	private River river2 		= new River("Bear River", 1);
+	private River river2 		= new River("Bear River", 50);
 	
 
 	private Store store;
@@ -78,7 +78,6 @@ public class Interface {
 	
 	//initalize forts, rivers and landmarks here in order of appearance on map
 	
-
 	/**
 	 * Launch the application.
 	 */
@@ -138,30 +137,24 @@ public class Interface {
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
 			for (Location location : locations) {
-				if (location.hasvisited()) continue;
-			    location.updateMilesAway(travel.getPace());
-			    
-			    if (!location.arrivedAtLandmark()) {
-			        // Update UI or perform other actions based on miles away
-			    	milToQtyLbl.setText(location.getMilesAway() + "");
-			    } else {
-			        // Update UI or perform other actions for visiting a location
-			        location.updatevisited();
-			        clock.stop();  
-			        dateQtyLbl_3.setText(travel.getDate());
-			        if(location instanceof River){
-			        	frameFour.setVisible(true);
-			        	riverName.setText("Welcome to " + location.getName());
-			        	heightNumLbl.setText(((River) location).getHeight()+ "");
-			        	flowNumLbl.setText(((River) location).getFlow());
-			        	widthNumLbl.setText(((River) location).getWidth()+ "");
-			        } else {
-			        	frameThree.setVisible(true);
-			        	fortName.setText("Welcome to " + location.getName());	
+				if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
+			    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
+			    if (!location.arrivedAtLandmark()) {							  // checks to see if user arrived yet
+			    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  // if the user hasn't arrived update how far away the wagon is 
+			    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
+			        location.updatevisited();									  // updates the object/landmark to be visited by the user 
+			        clock.stop();												  // stops the days from passing
+			        dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
+			        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
+			        	frameFour.setVisible(true); 							  // displays river name 
+			        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
+			        	heightNumLbl.setText(((River) location).getHeight()+ ""); // displays height of river user is at 
+			        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
+			        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at 
+			        } else {													  // since the object wasn't an instance of river, it must be an instance of fort
+			        	frameThree.setVisible(true); 							  // displays frame three
+			        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
 			        }
-			        
-			        // Stop clock, update date, show frame, etc.
-			        // Exit the loop once a location is visited
 			    }
 			}
     }
@@ -522,30 +515,37 @@ public class Interface {
 		frameFour.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
         frameFour.setResizable(false);
 		
+        // displays river name
 	    riverName = new JLabel(" ");
-			riverName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
-			riverName.setBounds(343, 11, 569, 86);
-			
+		riverName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
+		riverName.setBounds(343, 11, 569, 86);
+		
+		// this is a height label so the user knows what is being displayed
 		JLabel heightLbl = new JLabel("Height:");
 		heightLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		heightLbl.setBounds(10, 160, 395, 51);
 		
+		// this is a flow label so the user knows what is being displayed
 		JLabel flowLbl = new JLabel("Flow: ");
 		flowLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		flowLbl.setBounds(10, 222, 395, 51);
 		
+		// this is a widht label so the user knows what is being displayed 
 		JLabel widthLbl = new JLabel("Width:");
 		widthLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		widthLbl.setBounds(10, 284, 395, 51);
 		
+		// this displays the height of the river water level 
 		heightNumLbl = new JLabel("");
 		heightNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		heightNumLbl.setBounds(415, 160, 137, 51);
 		
+		// this displays the flow of the river
 		flowNumLbl = new JLabel("");
 		flowNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		flowNumLbl.setBounds(415, 222, 137, 51);
 		
+		// this displays the width of the river
 		widthNumLbl = new JLabel("");
 		widthNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		widthNumLbl.setBounds(415, 284, 137, 51);
@@ -554,28 +554,30 @@ public class Interface {
 		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		crossingLbl.setBounds(300, 446, 900, 51);
 		
+		// button to cross river with wagon 
 		JButton crossBtn = new JButton("Cross");
 		crossBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				river.randomEvtCross(money);
-				frameFour.dispose();
+				river.randomEvtCross(money);   // random event that occurs during river crossing
+				frameFour.dispose();		   // closes frame after button is hit
 			}
 		});
 		crossBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		crossBtn.setBounds(665, 508, 137, 51);
 		
+		// button to cross river on ferry 
 		JButton ferryBtn = new JButton("Ferry");
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				wagon.removeItemQty(money, 8);
-				river.randomEvtFerry(money);
-				frameFour.dispose();
+				wagon.removeItemQty(money, 8); // removes money because user paid to cross with ferry 
+				river.randomEvtFerry(money);   // random event (user may cross with no consequences too)
+				frameFour.dispose();		   // closes frame after button hit
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		ferryBtn.setBounds(360, 508, 137, 51);
 		
-		
+		// panel for the frame four 
 		JPanel panelFour = new JPanel();
 		panelFour.setLayout(null);
 		panelFour.add(heightLbl);
