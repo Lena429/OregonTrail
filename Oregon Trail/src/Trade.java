@@ -19,7 +19,7 @@ public class Trade {
 	private String lose = "";
 	private int index;
 	private int qtyGained = 0;
-	private int qtyLost = 0;
+	private float qtyLost = 0;
 	private String gainName = "";
 
 	/**
@@ -61,7 +61,7 @@ public class Trade {
 		
 		// chooses a random item and quantity to trade
 		index = rnd.nextInt(size);
-		qtyLost = (rnd.nextInt(wagon.get(index).getQuantity()) + 1);
+		qtyLost = (rnd.nextFloat(wagon.get(index).getQuantity()) + 1);
 		
 		// formats the name to have a space and be all lowercase
 		String name = wagon.get(index).getName();
@@ -121,6 +121,7 @@ public class Trade {
 	
 	/**
 	 * Adds and removes the appropriate item quantities for the accepted trade offer
+	 * and resets the offer variables so the user cannot accept the offer more than once
 	 * @param wagon - what the user has in their inventory
 	 */
 	public void tradeAccepted(ArrayList<Equipment> wagon) {
@@ -134,6 +135,13 @@ public class Trade {
 				break;
 			}
 		}
+		
+		// clear variables
+		trader = "";
+		gain = "";
+		lose = "";
+		qtyGained = 0;
+		qtyLost = 0;
 	}
 	
 	/**

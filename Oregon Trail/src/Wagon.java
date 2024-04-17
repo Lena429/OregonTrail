@@ -14,9 +14,9 @@ public class Wagon {
 	
 	// 	private ArrayList<MemeberHealth> wagon = new ArrayList<>();
 	private ArrayList<Equipment> wagon = new ArrayList<>();
-	private int foodWeight = 0;
-	private int totalWeight = 0;
-	private int consumableWeight = 0;
+	private float foodWeight = 0;
+	private float totalWeight = 0;
+	private float consumableWeight = 0;
 	
 	/**
 	 * Creates an Wagon object
@@ -31,7 +31,7 @@ public class Wagon {
 	public void addItem(Equipment item) {
 		// add the item to the array and get its weight
 		int weight = item.getWeight();
-		int quantity = item.getQuantity();
+		float quantity = item.getQuantity();
 		wagon.add(item);
 		
 		// check if the item is food/consumable and add that weight to the respective totals
@@ -92,7 +92,7 @@ public class Wagon {
 	 * returns the total weight of the wagon
 	 * @return totalWeight - the total weight of the wagon
 	 */
-	public int getTotalWeight() {
+	public float getTotalWeight() {
 		return totalWeight;
 	}
 	
@@ -100,7 +100,7 @@ public class Wagon {
 	 * returns the food weight of the wagon
 	 * @return foodWeight - the weight of the food in the wagon
 	 */
-	public int getConsumableWeight() {
+	public float getConsumableWeight() {
 		return consumableWeight;
 	}
 }

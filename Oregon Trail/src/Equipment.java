@@ -12,7 +12,7 @@ public class Equipment {
 
 	private String name;
 	private int weight; 
-	private int quantity;
+	private float quantity;
 
 	/**
 	 * Creates an Item object containing a name and weight
@@ -20,7 +20,7 @@ public class Equipment {
 	 * @param weight - the weight of the item
 	 * @param quantity - quantity of the item
 	 */
-	public Equipment(String name, int weight, int quantity) {
+	public Equipment(String name, int weight, float quantity) {
 		this.name = name;
 		this.weight = weight;
 		this.quantity = quantity;
@@ -46,7 +46,7 @@ public class Equipment {
 	 * adds the specified amount to the quantity of the item
 	 * @param quantity - the amount to be added
 	 */
-	public void addQuantity(int quantity) {
+	public void addQuantity(float quantity) {
 		this.quantity += quantity;
 	}
 	
@@ -54,7 +54,7 @@ public class Equipment {
 	 * removes the specified amount from the quantity of the item
 	 * @param quantity
 	 */
-	public void removeQuantity(int quantity) {
+	public void removeQuantity(float quantity) {
 		this.quantity -= quantity;
 	}
 	
@@ -62,7 +62,7 @@ public class Equipment {
 	 * returns the quantity of the item
 	 * @return quantity - the amount of the item in the wagon
 	 */
-	public int getQuantity() {
+	public float getQuantity() {
 		return quantity;
 	}
 }

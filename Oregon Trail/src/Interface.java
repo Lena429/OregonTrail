@@ -51,9 +51,11 @@ public class Interface {
 	private Wagon wagon	  		= new Wagon();
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
-	private Equipment toys		= new Equipment("Toys", 5, 5);
+	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 1);
+	private Equipment clothes	= new Equipment("Clothes", 2, 5);
 	private Equipment blankets	= new Equipment("Blankets", 2, 5);
 	private Equipment water		= new Equipment("Water", 1, 200);
+	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 900, true);
 	private Fort fort1			= new Fort("Kanesville", 200, wagon);
 	private Fort fort2			= new Fort("Mormon Graveyard", 300, wagon);
@@ -86,10 +88,12 @@ public class Interface {
 		//Preloaded wagon 
 		wagon.addItem(wagWheel);
 		wagon.addItem(wagAxle);
-		wagon.addItem(toys);
+		wagon.addItem(wagTong);
+		wagon.addItem(clothes);
 		wagon.addItem(blankets);
 		wagon.addItem(water);
 		wagon.addItem(food);
+		wagon.addItem(money);
 		
 		clock = new javax.swing.Timer(2000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -278,7 +282,7 @@ public class Interface {
 			}
 		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
-		paceComboBox.setBounds(300, 346, 152, 54);
+		paceComboBox.setBounds(300, 313, 152, 54);
 		paceComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 
 		// ComboBox for rations/how much the user would like to eat per day 
@@ -308,7 +312,7 @@ public class Interface {
 		// Label for frame two changing pace combobox
 		JLabel changePaceLbl = new JLabel("Change Pace:");
 		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changePaceLbl.setBounds(10, 333, 275, 86);
+		changePaceLbl.setBounds(10, 300, 275, 86);
 		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 
 		// Label for frame two date label
@@ -335,6 +339,15 @@ public class Interface {
 			}
 		});
 		
+		JButton tradeBtn = new JButton("Trade");
+		tradeBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		tradeBtn.setBounds(180, 430, 189, 62);
+		tradeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		
 		// Panel with added components for frame two 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -346,6 +359,7 @@ public class Interface {
 		panel.add(dateLbl_2);
 		panel.add(dateQtyLbl_2);
 		panel.add(restBtn);
+		panel.add(tradeBtn);
 		frameTwo.getContentPane().add(panel);
 
 		// FRAME TWO ENDS
@@ -386,8 +400,8 @@ public class Interface {
 		JButton Talking = new JButton("Talk to people");
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String phrase = fort1.generateRandomPhrase();
-               			Gossip.setText(phrase);
+				//String phrase = fort1.generateRandomPhrase();
+               			//Gossip.setText(phrase);
 			}
 		});
 		Talking.setBounds(31, 138, 133, 21);
@@ -418,7 +432,7 @@ public class Interface {
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fort1.displayItemsForSale();
+				//fort1.displayItemsForSale();
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);
