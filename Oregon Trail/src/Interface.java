@@ -67,7 +67,7 @@ public class Interface {
 	private Food food	        = new Food("Food", 1, 900, true);
 	private Fort fort1			= new Fort("Kanesville", 100);
 	private Fort fort2			= new Fort("Mormon Graveyard", 200);
-	private River river1  		= new River("Platte", 300);
+	private River river1  		= new River("Platte", 100);
 	private River river2 		= new River("Bear River", 400);
 	
 
@@ -559,12 +559,13 @@ public class Interface {
 		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		crossingLbl.setBounds(300, 446, 900, 51);
 		
-		// button to cross river with wagon 
+
+		//button to cross river with wagon 
 		JButton crossBtn = new JButton("Cross");
 		crossBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				river.randomEvtCross(money);   // random event that occurs during river crossing
-				frameFour.dispose();		   // closes frame after button is hit
+				JOptionPane.showMessageDialog(null, river.randomEvtCross(money)); // Displays if the user made it across safely, or with consequences
+				frameFour.dispose();		  									  // closes frame after button is hit
 			}
 		});
 		crossBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
@@ -574,13 +575,15 @@ public class Interface {
 		JButton ferryBtn = new JButton("Ferry");
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				wagon.removeItemQty(money, 8); // removes money because user paid to cross with ferry 
-				river.randomEvtFerry(money);   // random event (user may cross with no consequences too)
-				frameFour.dispose();		   // closes frame after button hit
+				wagon.removeItemQty(money, 8); 									  // removes money because user paid to cross with ferry 
+				JOptionPane.showMessageDialog(null, river.randomEvtFerry(money)); // Displays if the user made it across safely, or with consequences
+				frameFour.dispose();		   									  // closes frame after button hit
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		ferryBtn.setBounds(360, 508, 137, 51);
+
+
 		
 		// panel for the frame four 
 		JPanel panelFour = new JPanel();
