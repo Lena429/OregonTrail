@@ -12,10 +12,13 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 public class Store{
-	private ArrayList<Equipment> wagon = new ArrayList<>();
-	private double foodCost = 0;
-	private double wheelCost = 0;
-	private double clothesCost = 0;
+
+	private float foodCost = 0;
+	private float wheelCost = 0;
+	private float clothesCost = 0;
+	private JSlider ClothesAmount = new JSlider();
+	private JSlider FoodAmount = new JSlider();
+	private JSlider WheelAmount = new JSlider();
 	private JLabel AmountOwed = new JLabel("00");
 	
 	
@@ -50,7 +53,7 @@ public class Store{
 	Clothes.setBounds(31, 209, 134, 13);
 	StoreWindow.getContentPane().add(Clothes);
 	
-	JSlider FoodAmount = new JSlider();
+	
 	FoodAmount.addChangeListener(new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
 			foodCost = FoodAmount.getValue() * 1; // Assuming 1 lb of food costs $1
@@ -67,7 +70,7 @@ public class Store{
 	FoodAmount.setBounds(149, 48, 212, 44);
 	StoreWindow.getContentPane().add(FoodAmount);
 	
-	JSlider WheelAmount = new JSlider();
+	
 	WheelAmount.addChangeListener(new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
 			wheelCost = WheelAmount.getValue() * 10; // Assuming 1 wheel costs $10
@@ -84,10 +87,10 @@ public class Store{
 	WheelAmount.setBounds(149, 120, 212, 44);
 	StoreWindow.getContentPane().add(WheelAmount);
 	
-	JSlider ClothesAmount = new JSlider();
+	
 	ClothesAmount.addChangeListener(new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
-			clothesCost = ClothesAmount.getValue() * 0.20; // Assuming 1 pair of clothes costs $0.20
+			clothesCost = (float) (ClothesAmount.getValue() * 0.20); // Assuming 1 pair of clothes costs $0.20
 			updateTotalOwed();	
 		}
 	});
@@ -122,43 +125,32 @@ public class Store{
 	JButton cancelButton = new JButton("Cancel");
 	cancelButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			updateSupplies(null, null );
 		}
 	});
 	cancelButton.setBounds(276, 295, 85, 21);
 	StoreWindow.getContentPane().add(cancelButton);
 	}
 	private void updateTotalOwed() {
-        double totalCost = foodCost + wheelCost + clothesCost;
+        float totalCost = foodCost + wheelCost + clothesCost;
         AmountOwed.setText(String.format("%.2f", totalCost));
     }
 	
-	
-	 /**
-     * Displays the items available for sale at the fort in a graphical window.
-     */
-	//public void displayItemsForSale() {
-    //    List<Equipment> itemsForSale = shop();
-    //    JFrame shopWindow = new JFrame("Items for Sale at " + getName());
-    //    shopWindow.setSize(300, 400);
-   //     shopWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-    //    JPanel panel = new JPanel();
-    //    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-     //   for (Equipment item : itemsForSale) {
-     //       JLabel label = new JLabel(item.getName() + ": " + item.getQuantity());
-     //       JButton Add = new JButton("Add: ");
-     //       Add.addActionListener(new ActionListener() {
-     //       	public void actionPerformed (ActionEvent e) {
-     //       		wagon.addItem(item);
-     //       	}
-     //       });
-     //       panel.add(Add);
-     //       panel.add(label);
-     //   }
-
-     //   shopWindow.add(panel);
-     //   shopWindow.setVisible(true);
-   // }
+	public void updateSupplies(ArrayList<Equipment> inventory, Wagon wagon){
+		float totalCost = foodCost + wheelCost + clothesCost;
+		for (Equipment item : inventory) {
+			if (item.getName().equals("Money")) {
+				wagon.removeItemQty(item, totalCost );
+				break;
+			}
+		}
+		
+		if(FoodAmount.getValue() > 0) wagon.addItem(new Food("Food", 1, FoodAmount.getValue(), true));
+		
+		if(WheelAmount.getValue() > 0)wagon.addItem(new Equipment("Wagon Wheel", 45, WheelAmount.getValue()));
+		
+		if(ClothesAmount.getValue() > 0) wagon.addItem(new Equipment("Clothes", 1, ClothesAmount.getValue()));
+		
+	}
 
 }
