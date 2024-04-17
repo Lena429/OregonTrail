@@ -19,7 +19,7 @@ public class Fort extends Location {
 		super(name, miles, wagon);
 		// TODO Auto-generated constructor stub
 	}
-	
+	//phrases for chattering 
 	private String[] phrases = {
 			"I'm hoping the weather stays nice", "Have you seen that large caravan up ahead?", "I heard the flu is going around, so be careful!"
 	};
