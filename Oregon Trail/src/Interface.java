@@ -21,6 +21,8 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,12 +42,17 @@ public class Interface {
 	private JLabel foodQtyLbl;
 	private JFrame frameTwo;
 	private JFrame frameThree; 
+	private JFrame frameFour;
 	private JLabel dateQtyLbl;
 	private JLabel dateQtyLbl_2;
 	private JLabel dateQtyLbl_3;
 	private JLabel milToQtyLbl;
 	private JLabel fortName;
+	private JLabel riverName;
 	private JTextArea inventory;
+	private JLabel heightNumLbl;
+	private JLabel widthNumLbl;
+	private JLabel flowNumLbl;
 	
 	private Trade offer			= new Trade();
 	private Travel travel 		= new Travel();
@@ -58,10 +65,17 @@ public class Interface {
 	private Equipment water		= new Equipment("Water", 1, 200);
 	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 900, true);
-	private Fort fort1			= new Fort("Kanesville", 200, wagon);
-	private Fort fort2			= new Fort("Mormon Graveyard", 300, wagon);
+	private Fort fort1			= new Fort("Kanesville", 200);
+	private Fort fort2			= new Fort("Mormon Graveyard", 300);
+	private River river1  		= new River("Platte", 100);
+	private River river2 		= new River("Bear River", 50);
+
 	private Store store;
 
+	private ArrayList<Location> locations = new ArrayList<>();
+	
+	//initalize forts, rivers and landmarks here in order of appearance on map
+	
 
 	/**
 	 * Launch the application.
@@ -97,6 +111,13 @@ public class Interface {
 		wagon.addItem(food);
 		wagon.addItem(money);
 		
+		//locations.add(new Fort("name", 100, null));
+		locations.add(fort1);
+		locations.add(river1);
+		locations.add(fort2);
+		locations.add(river2);
+		
+		
 		clock = new javax.swing.Timer(2000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				clockActionPerformed(evt);
@@ -114,41 +135,35 @@ public class Interface {
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
-		// This needs to be changed in the future to become an actual function of Fort class
-		// determine if user arrived at a fort1
-		fort1.updateMilesAway(travel.getPace());
-		if (!fort1.arrivedAtLandmark()) {
-			
-			milToQtyLbl.setText(fort1.getMilesAway() + "");
-		
-		} else if (!fort1.hasvisited()){
-			
-			milToQtyLbl.setText("visiting");
-			fort1.updatevisited();
-			clock.stop();//clock stops when entering a fort 
-	        dateQtyLbl_3.setText(travel.getDate());
-			frameThree.setVisible(true);
-			fortName.setText("Welcome to " + fort1.getName());     // Display the greeting message
-		} else {
-		    // Check if the player has arrived at fort2
-		    fort2.updateMilesAway(travel.getPace());
-		    
-		    if (!fort2.arrivedAtLandmark()) {
-		        
-		    	milToQtyLbl.setText(fort2.getMilesAway() + "");
-		    
-		    } else if (!fort2.hasvisited()){
-		       
-		    	milToQtyLbl.setText("visiting");
-		        fort2.updatevisited();
-		        clock.stop(); // Clock stops when entering a fort
-		        dateQtyLbl_3.setText(travel.getDate());
-		        frameThree.setVisible(true); // Open a new frame here
-		        fortName.setText("Welcome to " + fort2.getName()); // Display the greeting message
-		    }
-		}
-	}
-	
+			for (Location location : locations) {
+				if (location.hasvisited()) continue;
+			    location.updateMilesAway(travel.getPace());
+			    
+			    if (!location.arrivedAtLandmark()) {
+			        // Update UI or perform other actions based on miles away
+			    	milToQtyLbl.setText(location.getMilesAway() + "");
+			    } else {
+			        // Update UI or perform other actions for visiting a location
+			        location.updatevisited();
+			        clock.stop();  
+			        dateQtyLbl_3.setText(travel.getDate());
+			        if(location instanceof River){
+			        	frameFour.setVisible(true);
+			        	riverName.setText("Welcome to " + location.getName());
+			        	heightNumLbl.setText(((River) location).getHeight()+ "");
+			        	flowNumLbl.setText(((River) location).getFlow());
+			        	widthNumLbl.setText(((River) location).getWidth()+ "");
+			        } else {
+			        	frameThree.setVisible(true);
+			        	fortName.setText("Welcome to " + location.getName());	
+			        }
+			        
+			        // Stop clock, update date, show frame, etc.
+			        // Exit the loop once a location is visited
+			    }
+			}
+    }
+				
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -494,5 +509,75 @@ public class Interface {
 		imagePanel.setLayout(null);
 		imagePanel.add(fortImage);
 		frameImage.getContentPane().add(imagePanel);	
-	}
+	
+	
+	
+		// FRAME THREE ENDS 
+		frameFour = new JFrame();
+		frameFour.setBounds(100, 100, 1289, 767);
+		frameFour.setTitle("River");
+		frameFour.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameFour.setVisible(false);
+		
+	    riverName = new JLabel(" ");
+			riverName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
+			riverName.setBounds(343, 11, 569, 86);
+			
+		JLabel heightLbl = new JLabel("Height:");
+		heightLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		heightLbl.setBounds(10, 160, 395, 51);
+		
+		JLabel flowLbl = new JLabel("Flow: ");
+		flowLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		flowLbl.setBounds(10, 222, 395, 51);
+		
+		JLabel widthLbl = new JLabel("Width:");
+		widthLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		widthLbl.setBounds(10, 284, 395, 51);
+		
+		heightNumLbl = new JLabel("");
+		heightNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		heightNumLbl.setBounds(415, 160, 137, 51);
+		
+		flowNumLbl = new JLabel("");
+		flowNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		flowNumLbl.setBounds(415, 222, 137, 51);
+		
+		widthNumLbl = new JLabel("");
+		widthNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		widthNumLbl.setBounds(415, 284, 137, 51);
+		
+		JLabel crossingLbl = new JLabel("Cross the river yourself or pay the ferry($8)?");
+		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		crossingLbl.setBounds(415, 346, 137, 51);
+		
+		JButton crossBtn = new JButton("Cross");
+		crossBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//wagon.removeItem(Equiptment item, int quantity);
+			}
+		});
+		crossBtn.setBounds(415, 408, 137, 51);
+		
+		JButton ferryBtn = new JButton("Ferry");
+		ferryBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		ferryBtn.setBounds(10, 408, 395, 51);
+		
+		
+		JPanel panelFour = new JPanel();
+		panelFour.setLayout(null);
+		panelFour.add(heightLbl);
+		panelFour.add(flowLbl);
+		panelFour.add(widthLbl);
+		panelFour.add(heightNumLbl);
+		panelFour.add(flowNumLbl);
+		panelFour.add(widthNumLbl);
+		panelFour.add(riverName);
+		panelFour.add(crossingLbl);
+		frameFour.getContentPane().add(panelFour);
+}
 }
