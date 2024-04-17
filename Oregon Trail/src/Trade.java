@@ -9,7 +9,6 @@
  */
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JLabel;
 
 public class Trade {
 	
@@ -19,7 +18,7 @@ public class Trade {
 	private String lose = "";
 	private int index;
 	private int qtyGained = 0;
-	private int qtyLost = 0;
+	private float qtyLost = 0;
 	private String gainName = "";
 
 	/**
@@ -33,9 +32,10 @@ public class Trade {
 	 * @return trader - a string containing who the user is trading with
 	 */
 	public String getTrader(int milesTravelled) {
-		
+		// generate a random number 0-2
 		int value = rnd.nextInt(3);
 
+		// choose the trader associated with the number
 		switch(value){
 			case 0: trader = "A fellow traveller"; break;
 			case 1: trader = "A trapper"; break;
@@ -55,23 +55,35 @@ public class Trade {
 	 * randomly generates a trade offer for the user
 	 * @param wagon - what the user has in their inventory
 	 */
-	public void getOffer(ArrayList<Equipment> wagon) {
+	public void getOffer(ArrayList<Equipment> inventory) {
+		
+		// THE ITEM THE USER WILL LOSE
+		int size = inventory.size();
+		String formattedName;
+		
+		// chooses a random index and gets the name of the item
+		index = rnd.nextInt(size - 1);
+		String name = inventory.get(index).getName();
+		
+		// generates a random quantity to trade
+		qtyLost = (rnd.nextInt((int) inventory.get(index).getQuantity()) + 1);
+		
+		// if the quantity is greater than 150, limit it (this is mainly for food)
+		if(qtyLost > 150) {
+			qtyLost = rnd.nextInt(140) + 10;
+		}
 				
-		int size = wagon.size();
-		
-		// chooses a random item and quantity to trade
-		index = rnd.nextInt(size);
-		qtyLost = (rnd.nextInt(wagon.get(index).getQuantity()) + 1);
-		
 		// formats the name to have a space and be all lowercase
-		String name = wagon.get(index).getName();
 		if (name.equals("Food") || name.equals("Water")) {
-			name = "lbs " + name;
-		} else name = " " + name;
+			// food and water will have the pounds label
+			formattedName = "lbs " + name;
+		} else formattedName = " " + name;
 		
-		lose = qtyLost + name.toLowerCase();
+		// combines the name and quantity into a single string
+		lose = qtyLost + formattedName.toLowerCase();
 		
-		// chooses a random item to trade for
+		// THE ITEM THE USER WILL GAIN
+		// generate a random value 0-4
 		int value = rnd.nextInt(5);
 		
 		// trapper will only offer food
@@ -80,34 +92,82 @@ public class Trade {
 		// formats the random item and generates a random quantity to trade for
 		switch(value){
 			case 0: 
-				qtyGained = rnd.nextInt(90) + 10;
+				// item
 				gainName = "food";
-				gain = qtyGained + "lbs of " + gainName;
-				break;
+				// quantity
+				qtyGained = rnd.nextInt(90) + 10;
+
+				// checks if gain and lose are the same items
+				if (gainName.equals(name.toLowerCase())) {
+					// yes, move to the next case
+				} else {
+					gain = qtyGained + "lbs of " + gainName;
+					break;
+				}
+				
 			case 1:
-				qtyGained = rnd.nextInt(4) + 1;
+				// item
 				gainName = "clothes";
-				if (qtyGained == 1) gain = qtyGained + " set of " + gainName;
-				else gain = qtyGained + " sets of " + gainName;
-				break;
+				// quantity
+				qtyGained = rnd.nextInt(4) + 1;
+				
+				// checks if gain and lose are the same items
+				if (gainName.equals(name.toLowerCase())) {
+					// yes, move to the next case
+				} else {
+					if (qtyGained == 1) gain = qtyGained + " set of " + gainName;
+					else gain = qtyGained + " sets of " + gainName;
+					break;
+				}
+				
 			case 2:
-				qtyGained = rnd.nextInt(3) + 1;
+				// item
 				gainName = "wagon wheel";
-				if (qtyGained == 1) gain = qtyGained + " " + gainName;
-				else gain = qtyGained + " " + gainName + "s";
-				break;
+				// quantity
+				qtyGained = rnd.nextInt(3) + 1;
+
+				// checks if gain and lose are the same items
+				if (gainName.equals(name.toLowerCase())) {
+					// yes, move to the next case
+				} else {
+					if (qtyGained == 1) gain = qtyGained + " " + gainName;
+					else gain = qtyGained + " " + gainName + "s";
+					break;
+				}
+				
 			case 3:
-				qtyGained = rnd.nextInt(3) + 1;
+				// item
 				gainName = "wagon axle";
-				if (qtyGained == 1) gain = qtyGained + " " + gainName;
-				else gain = qtyGained + " " + gainName + "s";
-				break;
-			case 4:
+				// quantity
 				qtyGained = rnd.nextInt(3) + 1;
+				
+				// checks if gain and lose are the same items
+				if (gainName.equals(name.toLowerCase())) {
+					// yes, move to the next case
+				} else {
+					if (qtyGained == 1) gain = qtyGained + " " + gainName;
+					else gain = qtyGained + " " + gainName + "s";
+					break;
+				}
+				
+			case 4:
+				// item
 				gainName = "wagon tongue";
-				if (qtyGained == 1) gain = qtyGained + " " + gainName;
-				else gain = qtyGained + " " + gainName + "s";
-				break;
+				// quantity
+				qtyGained = rnd.nextInt(3) + 1;
+
+				// checks if gain and lose are the same items
+				if (gainName.equals(name.toLowerCase())) {
+					// yes, move to the next case
+				} else {
+					if (qtyGained == 1) gain = qtyGained + " " + gainName;
+					else gain = qtyGained + " " + gainName + "s";
+					break;
+				}
+				
+			case 5:
+				// the trader has nothing to offer
+				gainName = "";
 		}
 	}
 	
@@ -115,37 +175,36 @@ public class Trade {
 	 * displays the trade offer on a label
 	 * @param tradeLbl - the label to display the trade offer on
 	 */
-	public void displayTradeOffer(JLabel tradeLbl) {
-		tradeLbl.setText(trader + " wants to give you " + gain + " for " + lose);
+	public String displayTradeOffer() {
+		String offer;
+		
+		// checks if there is no trade offer
+		if (gainName.equals("")) {
+			offer = "You cannot find anyone to trade with you.";
+		} else {
+			offer = trader + " wants to give you " + gain + " for " + lose;
+		}
+		
+		return offer;
 	}
 	
 	/**
 	 * Adds and removes the appropriate item quantities for the accepted trade offer
-	 * @param wagon - what the user has in their inventory
+	 * @param inventory - what the user has in their inventory
+	 * @param wagon - the object that stores the inventory array list
 	 */
-	public void tradeAccepted(ArrayList<Equipment> wagon) {
+	public void tradeAccepted(ArrayList<Equipment> inventory, Wagon wagon) {
 		// remove
-		wagon.get(index).removeQuantity(qtyLost);
+		wagon.removeItemQty(inventory.get(index), qtyLost);
 		
 		// add
-		for (Equipment item : wagon) {
+		for (Equipment item : inventory) {
 			if (item.getName().toLowerCase().equals(gainName)) {
-				item.addQuantity(qtyGained);
+				wagon.addItemQty(item, qtyGained);
 				break;
 			}
 		}
 	}
 	
-	/**
-	 * clears the trade label and resets the offer variables
-	 * @param tradeLbl - the label that displays the trade offer
-	 */
-	public void tradeDeclined(JLabel tradeLbl) {
-		tradeLbl.setText("");
-		trader = "";
-		gain = "";
-		lose = "";
-		qtyGained = 0;
-		qtyLost = 0;
-	}
+
 }

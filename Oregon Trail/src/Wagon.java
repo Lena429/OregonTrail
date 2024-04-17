@@ -14,9 +14,9 @@ public class Wagon {
 	
 	// 	private ArrayList<MemeberHealth> wagon = new ArrayList<>();
 	private ArrayList<Equipment> wagon = new ArrayList<>();
-	private int foodWeight = 0;
-	private int totalWeight = 0;
-	private int consumableWeight = 0;
+	private float foodWeight = 0;
+	private float totalWeight = 0;
+	private float consumableWeight = 0;
 	
 	/**
 	 * Creates an Wagon object
@@ -31,7 +31,7 @@ public class Wagon {
 	public void addItem(Equipment item) {
 		// add the item to the array and get its weight
 		int weight = item.getWeight();
-		int quantity = item.getQuantity();
+		float quantity = item.getQuantity();
 		wagon.add(item);
 		
 		// check if the item is food/consumable and add that weight to the respective totals
@@ -46,21 +46,46 @@ public class Wagon {
 	}
 	
 	/**
-	 * removes an item from the wagon array and removes its weight from the total weight of the wagon. If the item is also nutritional,
-	 * the weight gets removed from the food weight as well
-	 * @param item - the item being removed from the array
+	 * adds a certain quantity of the item to the wagon array and adds its weight to the 
+	 * total weight of the wagon. If the item is also nutritional, the weight gets added to 
+	 * the food weight as well
+	 * @param item - the item specified item
+	 * @param quantity - the amount to be added
 	 */
-	public void removeItem(Equipment item, int quantity) {
-		// remove the item from the array and get its weight
+	public void addItemQty(Equipment item, float quantity) {
+		// get the item's weight and add the quantity
 		int weight = item.getWeight();
-		// wagon.remove(item);
+		item.addQuantity(quantity);
+
+		// check if the item is food/consumable and add that weight to the respective totals
+		if (item instanceof Food) {
+			foodWeight = foodWeight + (weight*quantity);
+			if (((Food) item).getNutrition()) 
+			consumableWeight = consumableWeight + (weight*quantity);
+		}
+		
+		// add the item weight to the total wagon weight
+		totalWeight = totalWeight + (weight*quantity);
+	}
+	
+	/**
+	 * removes a certain quantity of the item from the wagon array and removes its weight from the 
+	 * total weight of the wagon. If the item is also nutritional, the weight gets removed from 
+	 * the food weight as well
+	 * @param item - the item specified item
+	 * @param quantity - the amount to be removed
+	 */
+	public void removeItemQty(Equipment item, float quantity) {
+		// get the item's weight and remove the quantity
+		int weight = item.getWeight();
+		item.removeQuantity(quantity);
+
 		
 		// check if the item is food/consumable and remove that weight from the respective totals
 		if (item instanceof Food) {
 			foodWeight = foodWeight - (weight*quantity);
 			if (((Food) item).getNutrition()) {
 			consumableWeight = consumableWeight - (weight*quantity);
-			item.removeQuantity(quantity);
 			}
 		}
 		
@@ -92,7 +117,7 @@ public class Wagon {
 	 * returns the total weight of the wagon
 	 * @return totalWeight - the total weight of the wagon
 	 */
-	public int getTotalWeight() {
+	public float getTotalWeight() {
 		return totalWeight;
 	}
 	
@@ -100,7 +125,7 @@ public class Wagon {
 	 * returns the food weight of the wagon
 	 * @return foodWeight - the weight of the food in the wagon
 	 */
-	public int getConsumableWeight() {
+	public float getConsumableWeight() {
 		return consumableWeight;
 	}
 }
