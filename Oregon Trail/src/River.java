@@ -1,5 +1,5 @@
 /**
- * Rivers.java
+ * River.java
  * 
  * The river class gets the name, height, flow, and width of a river from a txt file. It also has random events for crossing the river, 
  * as well as different options for crossing the river. 

@@ -21,6 +21,13 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/*
+ * TO-DO
+ * add all items to store
+ * read in a text file to instantiate locations and equipment
+ * make store at beginning of game
+ */
+
 public class Store {
 	private Equipment money;
 	private ArrayList<Equipment> inventory = new ArrayList<>();
