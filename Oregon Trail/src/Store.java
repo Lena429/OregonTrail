@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -35,10 +36,19 @@ public class Store {
 	private float foodCost = 0;
 	private float wheelCost = 0;
 	private float clothesCost = 0;
-	private JSlider ClothesAmount = new JSlider();
-	private JSlider FoodAmount = new JSlider();
-	private JSlider WheelAmount = new JSlider();
-	private JLabel AmountOwed = new JLabel("00");
+	private float blanketCost = 0;
+	private float tongueCost = 0;
+	private float axleCost = 0;
+	private float waterCost = 0;
+	private float totalCost;
+	private JSlider ClothesAmount;
+	private JSlider FoodAmount;
+	private JSlider WheelAmount;
+	private JSlider WaterAmount;
+	private JSlider AxleAmount;
+	private JSlider TongueAmount;
+	private JSlider BlanketAmount;
+	private JLabel AmountOwed;
 	
 	/**
 	 * Creates a store object containing the wagon inventory and an object of wagon
@@ -58,29 +68,79 @@ public class Store {
      */
 	public void StoreWindow() {
 		JFrame StoreWindow = new JFrame();
-		StoreWindow.setBounds(100, 100, 424, 481);
+		StoreWindow.setBounds(100, 100, 1289, 767);
 		StoreWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		StoreWindow.setVisible(true);
 		StoreWindow.getContentPane().setLayout(null);
 		
-		JLabel StoreLabel = new JLabel("Fort Store");
-		StoreLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		StoreLabel.setBounds(167, 10, 93, 44);
+		JLabel StoreLabel = new JLabel("Store");
+		StoreLabel.setFont(new Font("Felix Titling", Font.PLAIN, 40));
+		StoreLabel.setBounds(547, 11, 140, 44);
 		StoreWindow.getContentPane().add(StoreLabel);
 		
 		JLabel FoodItem = new JLabel("Food $1/ lbs");
-		FoodItem.setBounds(31, 64, 87, 13);
+		FoodItem.setHorizontalAlignment(SwingConstants.RIGHT);
+		FoodItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		FoodItem.setBounds(44, 490, 171, 24);
 		StoreWindow.getContentPane().add(FoodItem);
 		
-		JLabel Wheels = new JLabel("Wagon Wheel $10 ");
-		Wheels.setBounds(31, 138, 115, 13);
-		StoreWindow.getContentPane().add(Wheels);
+		JLabel Blanket = new JLabel("Blanket $2");
+		Blanket.setHorizontalAlignment(SwingConstants.RIGHT);
+		Blanket.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		Blanket.setBounds(25, 79, 190, 29);
+		StoreWindow.getContentPane().add(Blanket);
 		
 		JLabel Clothes = new JLabel("Clothes $0.20 / pair");
-		Clothes.setBounds(31, 209, 134, 13);
+		Clothes.setHorizontalAlignment(SwingConstants.RIGHT);
+		Clothes.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		Clothes.setBounds(10, 156, 205, 24);
 		StoreWindow.getContentPane().add(Clothes);
 		
+		JLabel WaterItem = new JLabel("Water $1/ gal");
+		WaterItem.setHorizontalAlignment(SwingConstants.RIGHT);
+		WaterItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		WaterItem.setBounds(44, 571, 171, 24);
+		StoreWindow.getContentPane().add(WaterItem);
 		
+		JLabel DollarLabel = new JLabel("Total $: ");
+		DollarLabel.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		DollarLabel.setBounds(180, 662, 133, 39);
+		StoreWindow.getContentPane().add(DollarLabel);
+		
+		JLabel Wheel = new JLabel("Wagon Wheel $10 ");
+		Wheel.setHorizontalAlignment(SwingConstants.RIGHT);
+		Wheel.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		Wheel.setBounds(26, 239, 190, 29);
+		StoreWindow.getContentPane().add(Wheel);
+		
+		JLabel Tongue = new JLabel("Wagon Tongue $10 ");
+		Tongue.setHorizontalAlignment(SwingConstants.RIGHT);
+		Tongue.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		Tongue.setBounds(10, 326, 206, 29);
+		StoreWindow.getContentPane().add(Tongue);
+		
+		JLabel Axle = new JLabel("Wagon Axle $10 ");
+		Axle.setHorizontalAlignment(SwingConstants.RIGHT);
+		Axle.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		Axle.setBounds(26, 410, 190, 29);
+		StoreWindow.getContentPane().add(Axle);
+		
+		AmountOwed = new JLabel("0.00");
+		AmountOwed.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		AmountOwed.setBounds(300, 657, 130, 49);
+		StoreWindow.getContentPane().add(AmountOwed);
+		
+		FoodAmount = new JSlider();
+		FoodAmount.setSnapToTicks(true);
+		FoodAmount.setMajorTickSpacing(300);
+		FoodAmount.setMaximum(1500);
+		FoodAmount.setValueIsAdjusting(true);
+		FoodAmount.setPaintLabels(true);
+		FoodAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		FoodAmount.setValue(0);
+		FoodAmount.setPaintTicks(true);
+		FoodAmount.setMinorTickSpacing(20);
+		FoodAmount.setBounds(226, 490, 990, 44);
 		FoodAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates food cost and total owed
@@ -88,35 +148,37 @@ public class Store {
 				updateTotalOwed();			
 			}
 		});
-		FoodAmount.setValueIsAdjusting(true);
-		FoodAmount.setPaintLabels(true);
-		FoodAmount.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		FoodAmount.setValue(0);
-		FoodAmount.setPaintTicks(true);
-		FoodAmount.setMajorTickSpacing(50);
-		FoodAmount.setMinorTickSpacing(10);
-		FoodAmount.setBounds(149, 48, 212, 44);
 		StoreWindow.getContentPane().add(FoodAmount);
 		
-		
-		WheelAmount.addChangeListener(new ChangeListener() {
+		BlanketAmount = new JSlider();
+		BlanketAmount.setMajorTickSpacing(2);
+		BlanketAmount.setPaintLabels(true);
+		BlanketAmount.setSnapToTicks(true);
+		BlanketAmount.setMaximum(10);
+		BlanketAmount.setValue(0);
+		BlanketAmount.setPaintTicks(true);
+		BlanketAmount.setMinorTickSpacing(1);
+		BlanketAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		BlanketAmount.setBounds(234, 77, 982, 44);
+		BlanketAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				// updates wheel cost and total owed
-				wheelCost = WheelAmount.getValue() * 10; // Assuming 1 wheel costs $10
+				// updates clothes cost and total owed
+				blanketCost = (float) (BlanketAmount.getValue() * 1); // Assuming 1 blanket costs $2
 				updateTotalOwed();	
 			}
 		});
-		WheelAmount.setPaintLabels(true);
-		WheelAmount.setSnapToTicks(true);
-		WheelAmount.setMaximum(6);
-		WheelAmount.setValue(0);
-		WheelAmount.setPaintTicks(true);
-		WheelAmount.setMinorTickSpacing(1);
-		WheelAmount.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		WheelAmount.setBounds(149, 120, 212, 44);
-		StoreWindow.getContentPane().add(WheelAmount);
+		StoreWindow.getContentPane().add(BlanketAmount);
 		
-		
+		ClothesAmount = new JSlider();
+		ClothesAmount.setMajorTickSpacing(2);
+		ClothesAmount.setValue(0);
+		ClothesAmount.setSnapToTicks(true);
+		ClothesAmount.setPaintTicks(true);
+		ClothesAmount.setPaintLabels(true);
+		ClothesAmount.setMinorTickSpacing(1);
+		ClothesAmount.setMaximum(20);
+		ClothesAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ClothesAmount.setBounds(234, 156, 982, 44);
 		ClothesAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
@@ -124,27 +186,86 @@ public class Store {
 				updateTotalOwed();	
 			}
 		});
-		ClothesAmount.setMajorTickSpacing(25);
-		ClothesAmount.setValue(0);
-		ClothesAmount.setSnapToTicks(true);
-		ClothesAmount.setPaintTicks(true);
-		ClothesAmount.setPaintLabels(true);
-		ClothesAmount.setMinorTickSpacing(1);
-		ClothesAmount.setMaximum(10);
-		ClothesAmount.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		ClothesAmount.setBounds(149, 198, 212, 44);
 		StoreWindow.getContentPane().add(ClothesAmount);
 		
-		JLabel DollarLabel = new JLabel("Total $: ");
-		DollarLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		DollarLabel.setBounds(31, 293, 71, 19);
-		StoreWindow.getContentPane().add(DollarLabel);
+		WheelAmount = new JSlider();
+		WheelAmount.setValue(0);
+		WheelAmount.setSnapToTicks(true);
+		WheelAmount.setPaintTicks(true);
+		WheelAmount.setPaintLabels(true);
+		WheelAmount.setMinorTickSpacing(1);
+		WheelAmount.setMaximum(10);
+		WheelAmount.setMajorTickSpacing(2);
+		WheelAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		WheelAmount.setBounds(234, 245, 982, 44);
+		WheelAmount.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				// updates wheel cost and total owed
+				wheelCost = WheelAmount.getValue() * 10; // Assuming 1 wheel costs $10
+				updateTotalOwed();	
+			}
+		});
+		StoreWindow.getContentPane().add(WheelAmount);
 		
-		AmountOwed = new JLabel("00");
-		AmountOwed.setBounds(101, 292, 64, 24);
-		StoreWindow.getContentPane().add(AmountOwed);
+		TongueAmount = new JSlider();
+		TongueAmount.setValue(0);
+		TongueAmount.setSnapToTicks(true);
+		TongueAmount.setPaintTicks(true);
+		TongueAmount.setPaintLabels(true);
+		TongueAmount.setMinorTickSpacing(1);
+		TongueAmount.setMaximum(10);
+		TongueAmount.setMajorTickSpacing(2);
+		TongueAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		TongueAmount.setBounds(234, 330, 982, 44);
+		TongueAmount.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				// updates clothes cost and total owed
+				tongueCost = (float) (TongueAmount.getValue() * 10); // Assuming 1 tongue costs $10
+				updateTotalOwed();	
+			}
+		});
+		StoreWindow.getContentPane().add(TongueAmount);
+		
+		AxleAmount = new JSlider();
+		AxleAmount.setValue(0);
+		AxleAmount.setSnapToTicks(true);
+		AxleAmount.setPaintTicks(true);
+		AxleAmount.setPaintLabels(true);
+		AxleAmount.setMinorTickSpacing(1);
+		AxleAmount.setMaximum(10);
+		AxleAmount.setMajorTickSpacing(2);
+		AxleAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		AxleAmount.setBounds(234, 410, 982, 44);
+		AxleAmount.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				// updates clothes cost and total owed
+				axleCost = (float) (AxleAmount.getValue() * 10); // Assuming 1 axle costs $10
+				updateTotalOwed();	
+			}
+		});		StoreWindow.getContentPane().add(AxleAmount);
+		
+		WaterAmount = new JSlider();
+		WaterAmount.setValueIsAdjusting(true);
+		WaterAmount.setValue(0);
+		WaterAmount.setSnapToTicks(true);
+		WaterAmount.setPaintTicks(true);
+		WaterAmount.setPaintLabels(true);
+		WaterAmount.setMinorTickSpacing(20);
+		WaterAmount.setMaximum(1500);
+		WaterAmount.setMajorTickSpacing(300);
+		WaterAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		WaterAmount.setBounds(226, 571, 990, 44);
+		WaterAmount.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				// updates food cost and total owed
+				waterCost = WaterAmount.getValue() * 1; // Assuming 1 gal of water costs $1
+				updateTotalOwed();			
+			}
+		});
+		StoreWindow.getContentPane().add(WaterAmount);
 		
 		JButton buyButton = new JButton("Buy");
+		buyButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// subtracts cost from user, updates inventory, and closes store window
@@ -153,17 +274,18 @@ public class Store {
 				StoreWindow.dispose();
 			}
 		});
-		buyButton.setBounds(175, 294, 85, 21);
+		buyButton.setBounds(450, 657, 201, 43);
 		StoreWindow.getContentPane().add(buyButton);
 		
 		JButton cancelButton = new JButton("Cancel");
+		cancelButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// closes store window without purchasing anything
 				StoreWindow.dispose();
 			}
 		});
-		cancelButton.setBounds(276, 295, 85, 21);
+		cancelButton.setBounds(707, 657, 201, 43);
 		StoreWindow.getContentPane().add(cancelButton);
 	}
 	
@@ -171,7 +293,7 @@ public class Store {
 	 * updates the amount owed label to be properly formatted
 	 */
 	private void updateTotalOwed() {
-        float totalCost = foodCost + wheelCost + clothesCost;
+        totalCost = foodCost + wheelCost + clothesCost + blanketCost + tongueCost + axleCost + waterCost;
         AmountOwed.setText(String.format("%.2f", totalCost));
     }
 	
@@ -179,8 +301,7 @@ public class Store {
 	 * removes the total cost of the items from the user's money
 	 */
 	public void removeMoney(){
-		float totalCost = foodCost + wheelCost + clothesCost;
-				wagon.removeItemQty(money, totalCost );
+		wagon.removeItemQty(money, totalCost );
 	}
 	
 	/**
@@ -191,6 +312,10 @@ public class Store {
 	    int foodAmount = FoodAmount.getValue();
 	    int wheelAmount = WheelAmount.getValue();
 	    int clothesAmount = ClothesAmount.getValue();
+	    int tongueAmount = TongueAmount.getValue();
+	    int axleAmount = AxleAmount.getValue();
+	    int waterAmount = WaterAmount.getValue();
+	    int blanketAmount = BlanketAmount.getValue();
 
 
 	    // Determines if any of a certain item was bought
@@ -205,6 +330,17 @@ public class Store {
 					break;
 				}
 	    }
+	    if (waterAmount > 0) {
+	    	// Wagon wheel was bought, so add it to inventory
+	        String water = "Water";
+	        
+	        // adds the item to the wagon
+	        for (Equipment item: inventory)
+		    	if (water.equals(item.getName())) {
+					wagon.addItemQty(item, waterAmount);
+					break;
+				}
+	    }
 	    if (wheelAmount > 0) {
 	    	// Wagon wheel was bought, so add it to inventory
 	        String wheel = "Wagon Wheel";
@@ -216,6 +352,28 @@ public class Store {
 					break;
 				}
 	    }
+	    if (tongueAmount > 0) {
+	    	// Wagon wheel was bought, so add it to inventory
+	        String tongue = "Wagon Tongue";
+	        
+	        // adds the item to the wagon
+	        for (Equipment item: inventory)
+		    	if (tongue.equals(item.getName())) {
+					wagon.addItemQty(item, tongueAmount);
+					break;
+				}
+	    }
+	    if (axleAmount > 0) {
+	    	// Wagon wheel was bought, so add it to inventory
+	        String axle = "Wagon Axle";
+	        
+	        // adds the item to the wagon
+	        for (Equipment item: inventory)
+		    	if (axle.equals(item.getName())) {
+					wagon.addItemQty(item, axleAmount);
+					break;
+				}
+	    }
 	    if (clothesAmount > 0) {
 	    	// Clothes were bought, so add it to inventory
 	        String clothes = "Clothes";
@@ -224,6 +382,17 @@ public class Store {
 	        for (Equipment item: inventory)
 		    	if (clothes.equals(item.getName())) {
 					wagon.addItemQty(item, clothesAmount);
+					break;
+				}
+	    }
+	    if (blanketAmount > 0) {
+	    	// Wagon wheel was bought, so add it to inventory
+	        String blanket = "Blankets";
+	        
+	        // adds the item to the wagon
+	        for (Equipment item: inventory)
+		    	if (blanket.equals(item.getName())) {
+					wagon.addItemQty(item, blanketAmount);
 					break;
 				}
 	    }

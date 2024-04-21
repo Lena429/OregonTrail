@@ -77,7 +77,10 @@ public class Trade {
 		if (name.equals("Food") || name.equals("Water")) {
 			// food and water will have the pounds label
 			formattedName = "lbs " + name;
+		} else if(name.equals("Water")){
+			formattedName = "gal " + name;
 		} else formattedName = " " + name;
+
 		
 		// combines the name and quantity into a single string
 		lose = qtyLost + formattedName.toLowerCase();
