@@ -75,6 +75,7 @@ public class Interface {
 	private River river6 		= new River("Raft River", 800);
 	private River river7 		= new River("Salmon River", 900);
 	private River river8 		= new River("Snake River", 1000);
+	private River river9 		= new River("Columbia River", 1100);
 	
 	
 
@@ -131,6 +132,7 @@ public class Interface {
 		locations.add(river6);
 		locations.add(river7);
 		locations.add(river8);
+		locations.add(river9);
 		
 		// this will break of the order of the array changes
 		store = new Store(wagon.getItems().get(7), wagon.getItems(), wagon);
