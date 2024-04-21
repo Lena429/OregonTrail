@@ -67,8 +67,15 @@ public class Interface {
 	private Food food	        = new Food("Food", 1, 0, true);
 	private Fort fort1			= new Fort("Kanesville", 100);
 	private Fort fort2			= new Fort("Mormon Graveyard", 200);
-	private River river1  		= new River("Platte", 100);
-	private River river2 		= new River("Bear River", 400);
+	private River river1  		= new River("Grand River", 300);
+	private River river2 		= new River("Missouri River", 400);
+	private River river3 		= new River("Loup Fork", 500);
+	private River river4 		= new River("Elkhorn River", 600);
+	private River river5 		= new River("Platte River", 700);
+	private River river6 		= new River("Raft River", 800);
+	private River river7 		= new River("Salmon River", 900);
+	private River river8 		= new River("Snake River", 1000);
+	
 	
 
 	private Store store;;
@@ -118,7 +125,13 @@ public class Interface {
 		locations.add(river1);
 		locations.add(fort2);
 		locations.add(river2);
-				
+		locations.add(river3);
+		locations.add(river4);
+		locations.add(river5);
+		locations.add(river6);
+		locations.add(river7);
+		locations.add(river8);
+		
 		// this will break of the order of the array changes
 		store = new Store(wagon.getItems().get(7), wagon.getItems(), wagon);
 		
