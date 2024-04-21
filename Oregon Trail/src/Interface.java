@@ -574,9 +574,13 @@ public class Interface {
 		widthNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		widthNumLbl.setBounds(415, 284, 137, 51);
 		
-		JLabel crossingLbl = new JLabel("Cross the river yourself or pay the ferry($8)?");
+		JLabel crossingLbl = new JLabel("Cross the river yourself ");
 		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		crossingLbl.setBounds(300, 446, 900, 51);
+		crossingLbl.setBounds(29, 383, 832, 83);
+		
+		JLabel lblOrPayThe = new JLabel("or pay the ferry($8)?");
+		lblOrPayThe.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		lblOrPayThe.setBounds(39, 445, 321, 62);
 		
 
 		//button to cross river with wagon 
@@ -588,7 +592,7 @@ public class Interface {
 			}
 		});
 		crossBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		crossBtn.setBounds(665, 508, 137, 51);
+		crossBtn.setBounds(200, 508, 137, 51);
 		
 		// button to cross river on ferry 
 		JButton ferryBtn = new JButton("Ferry");
@@ -600,7 +604,7 @@ public class Interface {
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		ferryBtn.setBounds(360, 508, 137, 51);
+		ferryBtn.setBounds(10, 508, 137, 51);
 
 		
 		// panel for frame four 
@@ -614,6 +618,7 @@ public class Interface {
 		panelFour.add(widthNumLbl);
 		panelFour.add(riverName);
 		panelFour.add(crossingLbl);
+		panelFour.add(lblOrPayThe);
 		panelFour.add(crossBtn);
 		panelFour.add(ferryBtn);
 		panelFour.add(riverImg);
