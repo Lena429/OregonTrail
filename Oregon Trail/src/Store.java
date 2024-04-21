@@ -24,9 +24,9 @@ import javax.swing.event.ChangeListener;
 
 /*
  * TO-DO
- * add all items to store
+ * add all items to store - done
  * read in a text file to instantiate locations and equipment
- * make store at beginning of game
+ * make store at beginning of game - in progress
  */
 
 public class Store {
