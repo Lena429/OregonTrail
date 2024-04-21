@@ -57,14 +57,14 @@ public class Interface {
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
 	private River river 		= new River();
-	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 2);
-	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 1);
-	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 1);
-	private Equipment clothes	= new Equipment("Clothes", 2, 5);
-	private Equipment blankets	= new Equipment("Blankets", 2, 5);
-	private Equipment water		= new Equipment("Water", 1, 200);
+	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 0);
+	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
+	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 0);
+	private Equipment clothes	= new Equipment("Clothes", 2, 0);
+	private Equipment blankets	= new Equipment("Blankets", 2, 0);
+	private Equipment water		= new Equipment("Water", 1, 0);
 	private Equipment money		= new Equipment("Money", 0, 800);
-	private Food food	        = new Food("Food", 1, 900, true);
+	private Food food	        = new Food("Food", 1, 0, true);
 	private Fort fort1			= new Fort("Kanesville", 100);
 	private Fort fort2			= new Fort("Mormon Graveyard", 200);
 	private River river1  		= new River("Platte", 100);
@@ -99,7 +99,8 @@ public class Interface {
 	 * Create the application.
 	 */
 	public Interface() {
-		initialize();
+		
+		
 		
 		//Preloaded wagon 
 		wagon.addItem(wagWheel);
@@ -111,15 +112,17 @@ public class Interface {
 		wagon.addItem(food);
 		wagon.addItem(money);
 		
-		// this will break of the order of the array changes
-		store = new Store(wagon.getItems().get(7), wagon.getItems(), wagon);
 		
 		//locations.add(new Fort("name", 100, null));
 		locations.add(fort1);
 		locations.add(river1);
 		locations.add(fort2);
 		locations.add(river2);
+				
+		// this will break of the order of the array changes
+		store = new Store(wagon.getItems().get(7), wagon.getItems(), wagon);
 		
+		initialize();
 		
 		clock = new javax.swing.Timer(2000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -168,8 +171,12 @@ public class Interface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		store.StoreWindow();
+		
 		// This is frame one setup (main frame)
 		frame = new JFrame();
+		frame.toBack();
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -215,7 +222,7 @@ public class Interface {
 		weatherLbl.setBounds(10, 470, 395, 51);
 		frame.getContentPane().add(weatherLbl);
 		
-		foodQtyLbl = new JLabel("900");
+		foodQtyLbl = new JLabel(wagon.getConsumableWeight() + "");
 		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		foodQtyLbl.setBounds(415, 160, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);
@@ -230,7 +237,7 @@ public class Interface {
 		milTrvlQtyLbl.setBounds(415, 284, 137, 51);
 		frame.getContentPane().add(milTrvlQtyLbl);
 		
-		milToQtyLbl = new JLabel("200");
+		milToQtyLbl = new JLabel("100");
 		milToQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		milToQtyLbl.setBounds(415, 346, 137, 51);
 		frame.getContentPane().add(milToQtyLbl);
@@ -283,7 +290,7 @@ public class Interface {
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
 		
 		// FRAME ONE ENDS
-		
+				
 		// This is frame two (wagon inventory, pace, and rations) setup
 		frameTwo = new JFrame();
 		frameTwo.setBounds(100,100,1289,767);
@@ -583,9 +590,8 @@ public class Interface {
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		ferryBtn.setBounds(360, 508, 137, 51);
 
-
 		
-		// panel for the frame four 
+		// panel for frame four 
 		JPanel panelFour = new JPanel();
 		panelFour.setLayout(null);
 		panelFour.add(heightLbl);
@@ -599,5 +605,6 @@ public class Interface {
 		panelFour.add(crossBtn);
 		panelFour.add(ferryBtn);
 		frameFour.getContentPane().add(panelFour);
+		
 }
 }
