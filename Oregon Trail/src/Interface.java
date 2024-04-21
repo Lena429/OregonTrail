@@ -427,6 +427,11 @@ public class Interface {
 		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameThree.setVisible(false);
 		
+		//fort image from outside
+		ImageIcon fort = new ImageIcon(this.getClass().getResource("/image/fort copy.png"));
+		JLabel forts = new JLabel(fort);
+		forts.setBounds(562,108,684,511);
+		
 		// Creates frame for fort images
 		frameImage = new JFrame();
 		frameImage.setBounds(100, 100, 1289, 767);
@@ -435,7 +440,7 @@ public class Interface {
 		frameImage.setVisible(false);
 		
 		// image for look around at fort
-		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/image_2024-04-09_124455387.png"));
+		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/lookaround copy.png"));
 		JLabel fortImage = new JLabel(image);
 		fortImage.setBounds(562, 108, 684, 511);
 		
@@ -509,6 +514,7 @@ public class Interface {
 		PanelThree.add(dateQtyLbl_3);
 		PanelThree.add(fortName);
 		PanelThree.add(Shop);
+		PanelThree.add(forts);
 		frameThree.getContentPane().add(PanelThree);
 		
 		// panel for the fort images 
@@ -526,6 +532,12 @@ public class Interface {
 		frameFour.setVisible(false);
 		frameFour.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
         frameFour.setResizable(false);
+        
+        //Image of a river for the frame
+        ImageIcon riverImage = new ImageIcon(this.getClass().getResource("/image/river image.png"));
+        JLabel riverImg = new JLabel(riverImage);
+        riverImg.setBounds(562,108,684,511);
+    	
 		
         // displays river name
 	    riverName = new JLabel(" ");
@@ -604,6 +616,7 @@ public class Interface {
 		panelFour.add(crossingLbl);
 		panelFour.add(crossBtn);
 		panelFour.add(ferryBtn);
+		panelFour.add(riverImg);
 		frameFour.getContentPane().add(panelFour);
 		
 }
