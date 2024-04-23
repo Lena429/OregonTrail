@@ -11,12 +11,26 @@
  */
 import java.util.Random;
 import java.util.Scanner;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class River extends Location {
-	Scanner scr;
-	String river;
+	private static Scanner scr;
+	private String river;
 	private Wagon wagon = new Wagon();
+	private static InputStreamReader reader = null;
+	private Scanner in = null;
+	
+	// Phrases for conversations
+    private String[] phraseRiver1 = {" "};
+    private String[] phraseRiver2 = {" "};
+    private String[] phraseRiver3 = {" "};
+    private String[] phraseRiver4 = {" "};
+    private String[] phraseRiver5 = {" "};
+    private String[] phraseRiver6 = {" "};
+    private String[] phraseRiver7 = {" "};
+    private String[] phraseRiver8 = {" "};
+    private String[] phraseRiver9 = {" "};
 
 	/**
 	 * Creates a River object containing the name and miles
@@ -25,8 +39,8 @@ public class River extends Location {
 	 */
 	public River(String name, int miles) {
 		super(name, miles);
-		   InputStreamReader isr = new InputStreamReader(this.getClass().getResourceAsStream("River.txt")); // reads in a text file
-		   scr = new Scanner(isr);
+		  // InputStreamReader isr = new InputStreamReader(this.getClass().getResourceAsStream("River.txt")); // reads in a text file
+		   //scr = new Scanner(isr);
 	}
 	
 	public River() {}  
@@ -144,36 +158,70 @@ public class River extends Location {
 				return "Error";
 		}
 	
-	// Phrases for chattering, categorized by fort names
-    private String[] phrasesForFortA = {"I'm hoping the weather gets better, it's thundering and there is so much rain!" };
-    private String[] phrasesForFortB = {"Moving down the mountains to here wasn't so bad; at least the weather is pleasant"};
-    private String[] phrasesForFortC = {"I feel bad for all the cattle we've seen along the way. There are so many dead along the road to here."};
-    private String[] phrasesForFortD = {"It's rather warm in this summer heat, and there's nothing for the stock to eat outside of the fort!"};
-    // Add more fort-specific phrases as needed
+	
+
+
+
+
+    // Add more river-specific phrases as needed
 
     public String generatePhrase() {
         String phrase = "";
 
-        // Check the fort's name and select phrases accordingly
-        if (getName().equals("Fort Kearny")) {
-            phrase = phrasesForFortA[0]; // Select the first phrase for Fort A
-        } else if (getName().equals("Fort Bridger")) {
-            phrase = phrasesForFortB[0]; // Select the first phrase for Fort B
-        }
-        else if(getName().equals("Fort Hall")) {
-        	phrase = phrasesForFortC[0];
-        }else if(getName().equals("Fort Boise")) {
-        	phrase = phrasesForFortD[0];
+        // Check the river's name and select phrases accordingly
+        if (getName().equals("Grand River")) {
+            phrase = phraseRiver1[0]; 
+        } else if (getName().equals("Missouri River")) {
+            phrase = phraseRiver2[0]; 
+        } else if(getName().equals("Loup Fork")) {
+        	phrase = phraseRiver3[0];
+        } else if(getName().equals("Elkhorn River")) {
+        	phrase = phraseRiver4[0];
+        } else if(getName().equals("Platte River")) {
+        	phrase = phraseRiver5[0];
+        } else if(getName().equals("Raft River")) {
+        	phrase = phraseRiver6[0];
+        } else if(getName().equals("Salmon River")) {
+        	phrase = phraseRiver7[0];
+        } else if(getName().equals("Snake River")) {
+        	phrase = phraseRiver8[0];
+        } else if(getName().equals("Columbia River")) {
+        	phrase = phraseRiver9[0];
         }
         
         // Add more conditions for other forts as needed
 
         return phrase;
     }
-	}
 	
 
-	
+//Open the text file and initialize the scanner
+    public static void openFile() {
+        try {
+            InputStream inputStream = River.class.getResourceAsStream("River.txt");
+            
+				reader = new InputStreamReader(inputStream);
+			
+            scr = new Scanner(reader);
+        } catch (Exception e) {
+            System.out.println("Couldn't open file: " + e.getMessage());
+        }
+    }
+
+// Close the scanner
+    public static void closeFile() {
+        if (scr != null) {
+            scr.close();
+        }
+        if (reader != null) {
+            try {
+                reader.close();
+            } catch (Exception e) {
+                System.out.println("Error while closing file: " + e.getMessage());
+            }
+        }
+    }
 
 
+}
 

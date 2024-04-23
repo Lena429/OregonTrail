@@ -78,7 +78,8 @@ public class Interface {
 	private River river7 		= new River("Salmon River", 900);
 	private River river8 		= new River("Snake River", 1000);
 	private River river9 		= new River("Columbia River", 1100);
-	
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 1200); //I am not sure where these would go order wise
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 1300);// I added these just so we'd remember
 	
 
 	private Store store;;
@@ -135,6 +136,8 @@ public class Interface {
 		locations.add(river7);
 		locations.add(river8);
 		locations.add(river9);
+		locations.add(landmark1);
+		locations.add(landmark2);
 		
 		// this will break of the order of the array changes
 		store = new Store(wagon.getItems().get(7), wagon.getItems(), wagon);
@@ -175,10 +178,16 @@ public class Interface {
 		        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
 		        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at
 		        	break;
-		        } else {													  // since the object wasn't an instance of river, it must be an instance of fort
+		        } else if (location instanceof Fort){													  // since the object wasn't an instance of river, it must be an instance of fort
 		        	frameThree.setVisible(true); 							  // displays frame three
 		        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
 		        	break;
+		        }
+		        else {
+		        	frameFour.setVisible(true); 							  // displays river name 
+		        	riverName.setText("testing purposes");
+		        	
+		        
 		        }
 		    }
 		}
