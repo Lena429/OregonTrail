@@ -143,6 +143,33 @@ public class River extends Location {
 				}
 				return "Error";
 		}
+	
+	// Phrases for chattering, categorized by fort names
+    private String[] phrasesForFortA = {"I'm hoping the weather gets better, it's thundering and there is so much rain!" };
+    private String[] phrasesForFortB = {"Moving down the mountains to here wasn't so bad; at least the weather is pleasant"};
+    private String[] phrasesForFortC = {"I feel bad for all the cattle we've seen along the way. There are so many dead along the road to here."};
+    private String[] phrasesForFortD = {"It's rather warm in this summer heat, and there's nothing for the stock to eat outside of the fort!"};
+    // Add more fort-specific phrases as needed
+
+    public String generatePhrase() {
+        String phrase = "";
+
+        // Check the fort's name and select phrases accordingly
+        if (getName().equals("Fort Kearny")) {
+            phrase = phrasesForFortA[0]; // Select the first phrase for Fort A
+        } else if (getName().equals("Fort Bridger")) {
+            phrase = phrasesForFortB[0]; // Select the first phrase for Fort B
+        }
+        else if(getName().equals("Fort Hall")) {
+        	phrase = phrasesForFortC[0];
+        }else if(getName().equals("Fort Boise")) {
+        	phrase = phrasesForFortD[0];
+        }
+        
+        // Add more conditions for other forts as needed
+
+        return phrase;
+    }
 	}
 	
 
