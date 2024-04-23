@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -65,11 +66,11 @@ public class Interface {
 	private Equipment water		= new Equipment("Water", 1, 0);
 	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 0, true);
-	private Fort fort1			= new Fort("Kanesvill", 100);
+	private Fort fort1			= new Fort("Kanesvill", 10);			// change back to 100
 	private Fort fort2			= new Fort("Mormon Graveyard", 200);
 	private Fort fort3          = new Fort("Fort Hall", 1200);
 	private Fort fort4          = new Fort("Fort Boise", 1300);
-	private River river1  		= new River("Grand River", 300);
+	private River river1  		= new River("Grand River", 30);			// change back to 300
 	private River river2 		= new River("Missouri River", 400);
 	private River river3 		= new River("Loup Fork", 500);
 	private River river4 		= new River("Elkhorn River", 600);
@@ -566,55 +567,56 @@ public class Interface {
         //Image of a river for the frame
         ImageIcon riverImage = new ImageIcon(this.getClass().getResource("/image/river image.png"));
         JLabel riverImg = new JLabel(riverImage);
-        riverImg.setBounds(562,108,684,511);
+        riverImg.setBounds(562, 108, 684, 493);
     	
 		
         // displays river name
 	    riverName = new JLabel(" ");
+	    riverName.setHorizontalAlignment(SwingConstants.CENTER);
+	    riverName.setBounds(222, 11, 821, 86);
 		riverName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
-		riverName.setBounds(343, 11, 569, 86);
 		
 		// this is a height label so the user knows what is being displayed
 		JLabel heightLbl = new JLabel("Height:");
+		heightLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		heightLbl.setBounds(10, 160, 158, 51);
 		heightLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		heightLbl.setBounds(10, 160, 395, 51);
 		
 		// this is a flow label so the user knows what is being displayed
-		JLabel flowLbl = new JLabel("Flow: ");
+		JLabel flowLbl = new JLabel("Flow:");
+		flowLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		flowLbl.setBounds(10, 222, 158, 51);
 		flowLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		flowLbl.setBounds(10, 222, 395, 51);
 		
 		// this is a widht label so the user knows what is being displayed 
 		JLabel widthLbl = new JLabel("Width:");
+		widthLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		widthLbl.setBounds(10, 284, 158, 51);
 		widthLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		widthLbl.setBounds(10, 284, 395, 51);
 		
 		// this displays the height of the river water level 
 		heightNumLbl = new JLabel("");
+		heightNumLbl.setBounds(178, 160, 137, 51);
 		heightNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		heightNumLbl.setBounds(415, 160, 137, 51);
 		
 		// this displays the flow of the river
 		flowNumLbl = new JLabel("");
+		flowNumLbl.setBounds(178, 222, 137, 51);
 		flowNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		flowNumLbl.setBounds(415, 222, 137, 51);
 		
 		// this displays the width of the river
 		widthNumLbl = new JLabel("");
+		widthNumLbl.setBounds(178, 284, 137, 51);
 		widthNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		widthNumLbl.setBounds(415, 284, 137, 51);
 		
-		JLabel crossingLbl = new JLabel("Cross the river yourself ");
+		JLabel crossingLbl = new JLabel("How would you like to traverse the river?");
+		crossingLbl.setBounds(10, 592, 832, 83);
 		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		crossingLbl.setBounds(29, 383, 832, 83);
-		
-		JLabel lblOrPayThe = new JLabel("or pay the ferry($8)?");
-		lblOrPayThe.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		lblOrPayThe.setBounds(39, 445, 321, 62);
 		
 
 		//button to cross river with wagon 
-		JButton crossBtn = new JButton("Cross");
+		JButton crossBtn = new JButton("Cross yourself");
+		crossBtn.setBounds(369, 668, 261, 51);
 		crossBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, river.randomEvtCross(money)); // Displays if the user made it across safely, or with consequences
@@ -622,10 +624,10 @@ public class Interface {
 			}
 		});
 		crossBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		crossBtn.setBounds(200, 508, 137, 51);
 		
 		// button to cross river on ferry 
-		JButton ferryBtn = new JButton("Ferry");
+		JButton ferryBtn = new JButton("Pay the Ferry ($8)");
+		ferryBtn.setBounds(20, 668, 324, 51);
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wagon.removeItemQty(money, 8); 									  // removes money because user paid to cross with ferry 
@@ -634,8 +636,33 @@ public class Interface {
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		ferryBtn.setBounds(10, 508, 137, 51);
 
+		JButton fordBtn = new JButton("Ford the river");
+		fordBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		fordBtn.setBounds(655, 668, 253, 51);
+		
+		JButton waitBtn = new JButton("Wait");
+		waitBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		waitBtn.setBounds(933, 668, 253, 51);
+		
+		JTextPane conversationPane = new JTextPane();
+		conversationPane.setEditable(false);
+		conversationPane.setFont(new Font("Bookman Old Style", Font.PLAIN, 22));
+		conversationPane.setBounds(178, 371, 357, 215);
+		
+		JButton talkBtn = new JButton("Talk");
+		talkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		talkBtn.setBounds(10, 371, 158, 51);
+		talkBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (Location location : locations) {
+					if(location instanceof River && !location.hasvisited()) {
+						conversationPane.setText(((River) location).generatePhrase());
+						break;
+					}
+				}
+			}
+		});
 		
 		// panel for frame four 
 		JPanel panelFour = new JPanel();
@@ -648,11 +675,13 @@ public class Interface {
 		panelFour.add(widthNumLbl);
 		panelFour.add(riverName);
 		panelFour.add(crossingLbl);
-		panelFour.add(lblOrPayThe);
 		panelFour.add(crossBtn);
 		panelFour.add(ferryBtn);
 		panelFour.add(riverImg);
+		panelFour.add(fordBtn);
+		panelFour.add(waitBtn);
+		panelFour.add(conversationPane);
+		panelFour.add(talkBtn);
 		frameFour.getContentPane().add(panelFour);
-		
-}
+	}
 }

@@ -20,8 +20,8 @@ public class River extends Location {
 	private static InputStreamReader reader = null;
 	
 	// Phrases for conversations
-    private String[] phraseRiver1 = {"Amelia Knight says, \"We passed Pisgah and will cross Grand River soon. My head aches, but I will make tea tonight to cure it."};
-    private String[] phraseRiver2 = {"Amelia Knight says, \"We passed Pisgah and wil cross Grand River soon. My head aches, but I will make tea tonight to cure it."};
+    private String[] phraseRiver1 = {"Amelia Knight says, \"We passed Pisgah and will cross Grand River soon. My head aches, but I will make tea tonight to cure it.\""};
+    private String[] phraseRiver2 = {"Amelia Knight says, \"We passed Pisgah and wil cross Grand River soon. My head aches, but I will make tea tonight to cure it.\""};
     private String[] phraseRiver3 = {" "};
     private String[] phraseRiver4 = {""};
     private String[] phraseRiver5 = {"Amelia Knight says, \"Platte is a beautiful river about a mile across, full of islands and sand bars. There are also an abundance of prickly pears growing along it.\""};
