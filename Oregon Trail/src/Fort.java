@@ -12,22 +12,30 @@
  * @author - Lillyan Stewart
  * @version- 1.1 April 8 2024 
  */
-import java.util.Random;
+
 public class Fort extends Location {
 
 	public Fort(String name, int miles) {
 		super(name, miles);
 		// TODO Auto-generated constructor stub
 	}
-	//phrases for chattering 
-	private String[] phrases = {
-			"I'm hoping the weather stays nice", "Have you seen that large caravan up ahead?", "I heard the flu is going around, so be careful!"
-	};
-	
-	public String generateRandomPhrase() {
-		   Random random = new Random();
-		   int index = random.nextInt(phrases.length);
-		   return phrases[index];
-		 }
+	// Phrases for chattering, categorized by fort names
+    private String[] phrasesForFortA = {"I'm hoping the weather stays nice" };
+    private String[] phrasesForFortB = {"It's been a long journey"};
+    // Add more fort-specific phrases as needed
+
+    public String generatePhrase() {
+        String phrase = "";
+
+        // Check the fort's name and select phrases accordingly
+        if (getName().equals("Kanesvill")) {
+            phrase = phrasesForFortA[0]; // Select the first phrase for Fort A
+        } else if (getName().equals("Mormon Graveyard")) {
+            phrase = phrasesForFortB[0]; // Select the first phrase for Fort B
+        }
+        // Add more conditions for other forts as needed
+
+        return phrase;
+    }
 
 }
