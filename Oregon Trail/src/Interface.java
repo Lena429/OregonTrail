@@ -127,6 +127,8 @@ public class Interface {
 		locations.add(fort1);
 		locations.add(river1);
 		locations.add(fort2);
+		locations.add(fort3);
+		locations.add(fort4);
 		locations.add(river2);
 		locations.add(river3);
 		locations.add(river4);
