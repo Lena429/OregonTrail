@@ -476,7 +476,7 @@ public class Interface {
 		JButton Talking = new JButton("Talk to people");
 		Talking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String phrase = fort1.generateRandomPhrase();
+				String phrase = fort1.generatePhrase();
                			Gossip.setText(phrase);
 			}
 		});
