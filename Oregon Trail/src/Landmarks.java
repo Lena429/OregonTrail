@@ -3,7 +3,7 @@
 public class Landmarks extends Location{
 	
 	
-	public Fort(String name, int miles) {
+	public Landmarks(String name, int miles) {
 		super(name, miles);
-
+	}
 }

@@ -65,8 +65,8 @@ public class Interface {
 	private Equipment water		= new Equipment("Water", 1, 0);
 	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 0, true);
-	private Fort fort1			= new Fort("Fort Kearny", 100);
-	private Fort fort2			= new Fort("Fort Bridger", 200);
+	private Fort fort1			= new Fort("Kanesvill", 100);
+	private Fort fort2			= new Fort("Mormon Graveyard", 200);
 	private Fort fort3          = new Fort("Fort Hall", 1200);
 	private Fort fort4          = new Fort("Fort Boise", 1300);
 	private River river1  		= new River("Grand River", 300);
