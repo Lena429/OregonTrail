@@ -30,15 +30,16 @@ public class Fort extends Location {
         String phrase = "";
 
         // Check the fort's name and select phrases accordingly
+        // More phrases can be added and selected later
         if (getName().equals("Fort Kearny")) {
             phrase = phrasesForFortA[0]; // Select the first phrase for Fort A
         } else if (getName().equals("Fort Bridger")) {
             phrase = phrasesForFortB[0]; // Select the first phrase for Fort B
         }
         else if(getName().equals("Fort Hall")) {
-        	phrase = phrasesForFortC[0];
+        	phrase = phrasesForFortC[0]; // Select the first phrase for Fort C
         }else if(getName().equals("Fort Boise")) {
-        	phrase = phrasesForFortD[0];
+        	phrase = phrasesForFortD[0]; //Select the first phrase for Fort D
         }
         
         // Add more conditions for other forts as needed
