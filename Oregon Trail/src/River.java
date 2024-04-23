@@ -16,10 +16,8 @@ import java.io.InputStreamReader;
 
 public class River extends Location {
 	private static Scanner scr;
-	private String river;
 	private Wagon wagon = new Wagon();
 	private static InputStreamReader reader = null;
-	private Scanner in = null;
 	
 	// Phrases for conversations
     private String[] phraseRiver1 = {" "};

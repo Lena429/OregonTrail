@@ -174,9 +174,11 @@ public class Interface {
 		        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
 		        	frameFour.setVisible(true); 							  // displays river name 
 		        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
+		        	River.openFile();
 		        	heightNumLbl.setText(((River) location).getHeight()+ ""); // displays height of river user is at 
 		        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
 		        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at
+		        	River.closeFile();
 		        	break;
 		        } else if (location instanceof Fort){													  // since the object wasn't an instance of river, it must be an instance of fort
 		        	frameThree.setVisible(true); 							  // displays frame three
