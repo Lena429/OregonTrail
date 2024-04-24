@@ -18,7 +18,7 @@ public class Trade {
 	private String lose = "";
 	private int index;
 	private int qtyGained = 0;
-	private float qtyLost = 0;
+	private int qtyLost = 0;
 	private String gainName = "";
 
 	/**
@@ -66,7 +66,7 @@ public class Trade {
 		String name = inventory.get(index).getName();
 		
 		// generates a random quantity to trade
-		qtyLost = (rnd.nextInt((int) inventory.get(index).getQuantity()) + 1);
+		qtyLost = (rnd.nextInt(inventory.get(index).getQuantity() + 1));
 		
 		// if the quantity is greater than 150, limit it (this is mainly for food)
 		if(qtyLost > 150) {
@@ -182,7 +182,7 @@ public class Trade {
 		String offer;
 		
 		// checks if there is no trade offer
-		if (gainName.equals("")) {
+		if (gainName.equals("") || qtyLost == 0) {
 			offer = "You cannot find anyone to trade with you.";
 		} else {
 			offer = trader + " wants to give you " + gain + " for " + lose;

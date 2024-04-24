@@ -22,25 +22,18 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/*
- * TO-DO
- * add all items to store - done
- * read in a text file to instantiate locations and equipment
- * make store at beginning of game - in progress
- */
-
 public class Store {
-	private Equipment money;
+	private Money bank;
 	private ArrayList<Equipment> inventory = new ArrayList<>();
-	private Wagon wagon = new Wagon();
-	private float foodCost = 0;
-	private float wheelCost = 0;
-	private float clothesCost = 0;
-	private float blanketCost = 0;
-	private float tongueCost = 0;
-	private float axleCost = 0;
-	private float waterCost = 0;
-	private float totalCost;
+	private Wagon wagon;
+	private int foodCost = 0;
+	private int wheelCost = 0;
+	private int clothesCost = 0;
+	private int blanketCost = 0;
+	private int tongueCost = 0;
+	private int axleCost = 0;
+	private int waterCost = 0;
+	private int totalCost;
 	private JSlider ClothesAmount;
 	private JSlider FoodAmount;
 	private JSlider WheelAmount;
@@ -56,8 +49,8 @@ public class Store {
 	 * @param inventory - where all of the items in the wagon are stored
 	 * @param wagon - where the inventory arrayList is stored
 	 */
-	public Store(Equipment money, ArrayList<Equipment> inventory, Wagon wagon) {
-		this.money = money;
+	public Store(Money bank, ArrayList<Equipment> inventory, Wagon wagon) {
+		this.bank = bank;
 		this.inventory = inventory;
 		this.wagon = wagon;
 	}
@@ -125,6 +118,18 @@ public class Store {
 		Axle.setBounds(26, 410, 190, 29);
 		StoreWindow.getContentPane().add(Axle);
 		
+		JLabel moneyAvailLbl = new JLabel("Available money:");
+		moneyAvailLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		moneyAvailLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 16));
+		moneyAvailLbl.setBounds(5, 15, 150, 29);
+		StoreWindow.getContentPane().add(moneyAvailLbl);
+		
+		JLabel moneyLbl = new JLabel (bank.displayMoney());
+		moneyLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		moneyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 16));
+		moneyLbl.setBounds(165, 15, 150, 29);
+		StoreWindow.getContentPane().add(moneyLbl);
+		
 		AmountOwed = new JLabel("0.00");
 		AmountOwed.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		AmountOwed.setBounds(300, 657, 130, 49);
@@ -144,7 +149,7 @@ public class Store {
 		FoodAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates food cost and total owed
-				foodCost = FoodAmount.getValue() * 1; // Assuming 1 lb of food costs $1
+				foodCost = FoodAmount.getValue() * 100; // Assuming 1 lb of food costs $1
 				updateTotalOwed();			
 			}
 		});
@@ -163,7 +168,7 @@ public class Store {
 		BlanketAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				blanketCost = (float) (BlanketAmount.getValue() * 1); // Assuming 1 blanket costs $2
+				blanketCost = BlanketAmount.getValue() * 200; // Assuming 1 blanket costs $2
 				updateTotalOwed();	
 			}
 		});
@@ -182,7 +187,7 @@ public class Store {
 		ClothesAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				clothesCost = (float) (ClothesAmount.getValue() * 0.20); // Assuming 1 pair of clothes costs $0.20
+				clothesCost = ClothesAmount.getValue() * 20; // Assuming 1 pair of clothes costs $0.20
 				updateTotalOwed();	
 			}
 		});
@@ -201,7 +206,7 @@ public class Store {
 		WheelAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates wheel cost and total owed
-				wheelCost = WheelAmount.getValue() * 10; // Assuming 1 wheel costs $10
+				wheelCost = WheelAmount.getValue() * 1000; // Assuming 1 wheel costs $10
 				updateTotalOwed();	
 			}
 		});
@@ -220,7 +225,7 @@ public class Store {
 		TongueAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				tongueCost = (float) (TongueAmount.getValue() * 10); // Assuming 1 tongue costs $10
+				tongueCost = TongueAmount.getValue() * 1000; // Assuming 1 tongue costs $10
 				updateTotalOwed();	
 			}
 		});
@@ -239,7 +244,7 @@ public class Store {
 		AxleAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				axleCost = (float) (AxleAmount.getValue() * 10); // Assuming 1 axle costs $10
+				axleCost = AxleAmount.getValue() * 1000; // Assuming 1 axle costs $10
 				updateTotalOwed();	
 			}
 		});		StoreWindow.getContentPane().add(AxleAmount);
@@ -258,7 +263,7 @@ public class Store {
 		WaterAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates food cost and total owed
-				waterCost = WaterAmount.getValue() * 1; // Assuming 1 gal of water costs $1
+				waterCost = WaterAmount.getValue() * 100; // Assuming 1 gal of water costs $1
 				updateTotalOwed();			
 			}
 		});
@@ -269,9 +274,12 @@ public class Store {
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// subtracts cost from user, updates inventory, and closes store window
-				removeMoney();
-				updateSupplies();
-				StoreWindow.dispose();
+				if(!removeMoney()) {
+					// make dialogue box appear
+				} else {
+					updateSupplies();
+					StoreWindow.dispose();
+				}
 			}
 		});
 		buyButton.setBounds(450, 657, 201, 43);
@@ -294,14 +302,20 @@ public class Store {
 	 */
 	private void updateTotalOwed() {
         totalCost = foodCost + wheelCost + clothesCost + blanketCost + tongueCost + axleCost + waterCost;
-        AmountOwed.setText(String.format("%.2f", totalCost));
+        double formattedAmount = totalCost / 100.0; // Convert to double for decimal formatting
+        AmountOwed.setText(String.format("%.2f", formattedAmount));
     }
 	
 	/**
 	 * removes the total cost of the items from the user's money
 	 */
-	public void removeMoney(){
-		wagon.removeItemQty(money, totalCost );
+	public boolean removeMoney(){
+		if(bank.isMoneyAvailable(totalCost)) {
+			bank.spendMoney(totalCost);
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
