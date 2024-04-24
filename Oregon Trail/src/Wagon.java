@@ -31,7 +31,7 @@ public class Wagon {
 	public void addItem(Equipment item) {
 		// add the item to the array and get its weight
 		int weight = item.getWeight();
-		float quantity = item.getQuantity();
+		int quantity = item.getQuantity();
 		wagon.add(item);
 		
 		// check if the item is food/consumable and add that weight to the respective totals
@@ -52,7 +52,7 @@ public class Wagon {
 	 * @param item - the item specified item
 	 * @param quantity - the amount to be added
 	 */
-	public void addItemQty(Equipment item, float quantity) {
+	public void addItemQty(Equipment item, int quantity) {
 		// get the item's weight and add the quantity
 		int weight = item.getWeight();
 		item.addQuantity(quantity);
@@ -75,7 +75,7 @@ public class Wagon {
 	 * @param item - the item specified item
 	 * @param quantity - the amount to be removed
 	 */
-	public void removeItemQty(Equipment item, float quantity) {
+	public void removeItemQty(Equipment item, int quantity) {
 		// get the item's weight and remove the quantity
 		int weight = item.getWeight();
 		item.removeQuantity(quantity);
