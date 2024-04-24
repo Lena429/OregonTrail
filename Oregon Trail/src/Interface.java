@@ -64,9 +64,10 @@ public class Interface {
 	private Equipment clothes	= new Equipment("Clothes", 2, 0);
 	private Equipment blankets	= new Equipment("Blankets", 2, 0);
 	private Equipment water		= new Equipment("Water", 1, 0);
-	private Equipment money		= new Equipment("Money", 0, 800);
 	private Food food	        = new Food("Food", 1, 0, true);
-	private Fort fort1			= new Fort("Kanesvill", 10);			// change back to 100
+
+	private Money bank			= new Money(80000);
+	private Fort fort1			= new Fort("Kanesville", 100);
 	private Fort fort2			= new Fort("Mormon Graveyard", 200);
 	private Fort fort3          = new Fort("Fort Hall", 1200);
 	private Fort fort4          = new Fort("Fort Boise", 1300);
@@ -83,7 +84,7 @@ public class Interface {
 	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 1300);// I added these just so we'd remember
 	
 
-	private Store store;;
+	private Store store;
 
 	private ArrayList<Location> locations = new ArrayList<>();
 	
@@ -100,7 +101,6 @@ public class Interface {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-					
 				}
 			}
 		});
@@ -112,9 +112,7 @@ public class Interface {
 	 */
 	public Interface() {
 		
-		
-		
-		//Preloaded wagon 
+		// Preloaded wagon 
 		wagon.addItem(wagWheel);
 		wagon.addItem(wagAxle);
 		wagon.addItem(wagTong);
@@ -122,10 +120,9 @@ public class Interface {
 		wagon.addItem(blankets);
 		wagon.addItem(water);
 		wagon.addItem(food);
-		wagon.addItem(money);
 		
 		
-		//locations.add(new Fort("name", 100, null));
+		// locations.add(new Fort("name", 100, null));
 		locations.add(fort1);
 		locations.add(river1);
 		locations.add(fort2);
@@ -142,8 +139,7 @@ public class Interface {
 		locations.add(landmark1);
 		locations.add(landmark2);
 		
-		// this will break of the order of the array changes
-		store = new Store(wagon.getItems().get(7), wagon.getItems(), wagon);
+		store = new Store(bank, wagon.getItems(), wagon);
 		
 		initialize();
 		
@@ -191,8 +187,6 @@ public class Interface {
 		        else {
 		        	frameFour.setVisible(true); 							  // displays river name 
 		        	riverName.setText("testing purposes");
-		        	
-		        
 		        }
 		    }
 		}
@@ -306,7 +300,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
 				frameTwo.setVisible(true);
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
 				dateQtyLbl_2.setText(travel.getDate());
 			}
 		});
@@ -393,7 +387,7 @@ public class Interface {
 				dateQtyLbl.setText(travel.getDate());
 		        
 				// Update the inventory display so user can see correct food value
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
 			}
 		});
 		
@@ -412,7 +406,7 @@ public class Interface {
 				dateQtyLbl.setText(travel.getDate());
 				dateQtyLbl_2.setText(travel.getDate());
 		        // Update the inventory display so user can see correct food value
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
 				
 				// displays the trade offer in a dialogue box
 				String text = offer.displayTradeOffer();;
@@ -424,7 +418,7 @@ public class Interface {
 		        if (response == JOptionPane.YES_OPTION) {
 		        	// Yes, add/remove the items and update the inventory display
 		        	offer.tradeAccepted(wagon.getItems(), wagon);
-					inventory.setText("Wagon Contents: \n" + wagon.displayingInventory());
+					inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
 					
 		        } else if (response == JOptionPane.NO_OPTION) {
 		            // No, close the dialogue box
@@ -554,8 +548,6 @@ public class Interface {
 		imagePanel.add(fortImage);
 		frameImage.getContentPane().add(imagePanel);	
 	
-	
-	
 		// FRAME THREE ENDS 
 		frameFour = new JFrame();
 		frameFour.setBounds(100, 100, 1289, 767);
@@ -588,7 +580,7 @@ public class Interface {
 		flowLbl.setBounds(10, 222, 158, 51);
 		flowLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		
-		// this is a widht label so the user knows what is being displayed 
+		// this is a width label so the user knows what is being displayed 
 		JLabel widthLbl = new JLabel("Width:");
 		widthLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		widthLbl.setBounds(10, 284, 158, 51);
@@ -619,7 +611,7 @@ public class Interface {
 		crossBtn.setBounds(369, 668, 261, 51);
 		crossBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, river.randomEvtCross(money)); // Displays if the user made it across safely, or with consequences
+				JOptionPane.showMessageDialog(null, river.randomEvtCross(bank)); // Displays if the user made it across safely, or with consequences
 				frameFour.dispose();		  									  // closes frame after button is hit
 			}
 		});
@@ -630,8 +622,8 @@ public class Interface {
 		ferryBtn.setBounds(20, 668, 324, 51);
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				wagon.removeItemQty(money, 8); 									  // removes money because user paid to cross with ferry 
-				JOptionPane.showMessageDialog(null, river.randomEvtFerry(money)); // Displays if the user made it across safely, or with consequences
+				bank.spendMoney(800);; 									  // removes money because user paid to cross with ferry 
+				JOptionPane.showMessageDialog(null, river.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
 				frameFour.dispose();		   									  // closes frame after button hit
 			}
 		});
@@ -663,6 +655,7 @@ public class Interface {
 				}
 			}
 		});
+
 		
 		// panel for frame four 
 		JPanel panelFour = new JPanel();
@@ -683,5 +676,6 @@ public class Interface {
 		panelFour.add(conversationPane);
 		panelFour.add(talkBtn);
 		frameFour.getContentPane().add(panelFour);
+
 	}
 }

@@ -16,7 +16,6 @@ import java.io.InputStreamReader;
 
 public class River extends Location {
 	private static Scanner scr;
-	private Wagon wagon = new Wagon();
 	private static InputStreamReader reader = null;
 	
 	// Phrases for conversations
@@ -100,7 +99,7 @@ public class River extends Location {
 	 * @return "You made it, but $22 fell out of your pocket." - This string tells the user their consequence
 	 * @return "Error" - this tells the user there has been an error in the program
 	 */
-	public String randomEvtCross(Equipment money) {
+	public String randomEvtCross(Money bank) {
 		Random rnd = new Random();
 		int random = rnd.nextInt(5)+1;															   // generates a random number 1 - 5
 		switch (random)
@@ -116,7 +115,11 @@ public class River extends Location {
 			
 		// you safely crossed but with consequences
 		case 5: 
-			wagon.removeItemQty(money, 22); 													   // subtracts from money total 
+			
+			// this needs to have a check
+			bank.spendMoney(2200);													   // subtracts from money total 
+			
+			
 			return "You made it, but $22 fell out of your pocket.";
 			//JOptionPane.showMessageDialog(null, "You made it, but $22 fell out of your pocket"); // displays message
 			//break;
@@ -133,25 +136,30 @@ public class River extends Location {
 	 * @return "You made it, but $22 fell out of your pocket." - This string tells the user their consequence
 	 * @return "Error" - this tells the user there has been an error in the program
 	 */
-	public String randomEvtFerry(Equipment money) {
+	public String randomEvtFerry(Money bank) {
 				Random rnd = new Random(); 
 				int random = rnd.nextInt(9)+1; 		 // generates a random number 1 - 9
 				switch (random)
 				{	
-				// you safely crosses with no consequences
-				case 1: 
-				case 2: 
-				case 3: 	
-				case 4: 
-				case 5:
-				case 6: 
-				case 7:
-				case 8:
-					return "You made it across safely.";
-				// you crossed safely but with consequences
-				case 9:
-					wagon.removeItemQty(money, 22);	 // subtracts from money total 
-					return "You made it, but $22 fell out of your pocket.";
+					// you safely crosses with no consequences
+					case 1: 
+					case 2: 
+					case 3: 	
+					case 4: 
+					case 5:
+					case 6: 
+					case 7:
+					case 8:
+						return "You made it across safely.";
+					// you crossed safely but with consequences
+					case 9:
+						
+						
+						// this needs to have a check
+						bank.spendMoney(2200);													   // subtracts from money total 
+						
+						
+						return "You made it, but $22 fell out of your pocket.";
 				}
 				return "Error";
 		}
