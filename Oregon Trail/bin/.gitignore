@@ -8,6 +8,7 @@
 /Interface$12.class
 /Interface$13.class
 /Interface$14.class
+/Interface$15.class
 /Interface$2.class
 /Interface$3.class
 /Interface$4.class
@@ -17,7 +18,11 @@
 /Interface$8.class
 /Interface$9.class
 /Interface.class
+/Items.txt
+/Landmarks.class
 /Location.class
+/Money.class
+/ReadRivers
 /River.class
 /River.txt
 /Store$1.class
@@ -34,9 +39,3 @@
 /Travel.class
 /Wagon.class
 /image/
-/Landmarks.class
-/Interface$15.class
-/Items
-/Items.txt
-/ReadRivers
-/Money.class

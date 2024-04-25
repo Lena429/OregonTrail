@@ -14,11 +14,18 @@
  */
 
 public class Fort extends Location {
-
-	public Fort(String name, int miles) {
+	private int priceFactor;
+	public Fort(String name, int miles, int priceFactor) {
 		super(name, miles);
-		// TODO Auto-generated constructor stub
+		this.priceFactor = priceFactor;
 	}
+	
+	public int getPriceFactor() {
+		return priceFactor;
+	}
+	
+	
+	
 	// Phrases for chattering, categorized by fort names
     private String[] phrasesForFortA = {"We are sleeping in a lane while waiting to cross a river nearby and still can't feed our cows properly." };
     private String[] phrasesForFortB = {"Unfortunaly we passed a wagon train we saw a few days ago, with the father gone. I feel horrible for the children."};
@@ -46,5 +53,7 @@ public class Fort extends Location {
 
         return phrase;
     }
+
+	
 
 }

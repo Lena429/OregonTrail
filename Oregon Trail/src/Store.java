@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
@@ -34,6 +35,17 @@ public class Store {
 	private int axleCost = 0;
 	private int waterCost = 0;
 	private int totalCost;
+	
+	//trying something with prices
+	private int foodPrice = 20;
+	private int blanketPrice = 200;
+	private int clothesPrice = 25;
+	private int wheelPrice = 1000;
+	private int tonguePrice = 1000;
+	private int axlePrice = 1000;
+	private int waterPrice = 100;
+	
+	
 	private JSlider ClothesAmount;
 	private JSlider FoodAmount;
 	private JSlider WheelAmount;
@@ -53,6 +65,16 @@ public class Store {
 		this.bank = bank;
 		this.inventory = inventory;
 		this.wagon = wagon;
+	}
+	
+	public void adjustPrices(Fort fort) {
+		foodPrice *= fort.getPriceFactor();
+		blanketPrice *= fort.getPriceFactor();
+		clothesPrice *= fort.getPriceFactor();
+		wheelPrice  *= fort.getPriceFactor();
+		tonguePrice  *= fort.getPriceFactor();
+		axlePrice *= fort.getPriceFactor();
+		waterPrice *= fort.getPriceFactor();
 	}
 	
 	 /**
@@ -149,7 +171,7 @@ public class Store {
 		FoodAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates food cost and total owed
-				foodCost = FoodAmount.getValue() * 100; // Assuming 1 lb of food costs $1
+				foodCost = FoodAmount.getValue() * foodPrice; // Assuming 1 lb of food costs $1
 				updateTotalOwed();			
 			}
 		});
@@ -168,7 +190,7 @@ public class Store {
 		BlanketAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				blanketCost = BlanketAmount.getValue() * 200; // Assuming 1 blanket costs $2
+				blanketCost = BlanketAmount.getValue() * blanketPrice; // Assuming 1 blanket costs $2
 				updateTotalOwed();	
 			}
 		});
@@ -187,7 +209,7 @@ public class Store {
 		ClothesAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				clothesCost = ClothesAmount.getValue() * 20; // Assuming 1 pair of clothes costs $0.20
+				clothesCost = ClothesAmount.getValue() * clothesPrice; // Assuming 1 pair of clothes costs $0.20
 				updateTotalOwed();	
 			}
 		});
@@ -206,7 +228,7 @@ public class Store {
 		WheelAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates wheel cost and total owed
-				wheelCost = WheelAmount.getValue() * 1000; // Assuming 1 wheel costs $10
+				wheelCost = WheelAmount.getValue() * wheelPrice; // Assuming 1 wheel costs $10
 				updateTotalOwed();	
 			}
 		});
@@ -225,7 +247,7 @@ public class Store {
 		TongueAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				tongueCost = TongueAmount.getValue() * 1000; // Assuming 1 tongue costs $10
+				tongueCost = TongueAmount.getValue() * tonguePrice; // Assuming 1 tongue costs $10
 				updateTotalOwed();	
 			}
 		});
@@ -244,7 +266,7 @@ public class Store {
 		AxleAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				axleCost = AxleAmount.getValue() * 1000; // Assuming 1 axle costs $10
+				axleCost = AxleAmount.getValue() * axlePrice; // Assuming 1 axle costs $10
 				updateTotalOwed();	
 			}
 		});		StoreWindow.getContentPane().add(AxleAmount);
@@ -263,7 +285,7 @@ public class Store {
 		WaterAmount.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates food cost and total owed
-				waterCost = WaterAmount.getValue() * 100; // Assuming 1 gal of water costs $1
+				waterCost = WaterAmount.getValue() * waterPrice; // Assuming 1 gal of water costs $1
 				updateTotalOwed();			
 			}
 		});
@@ -275,9 +297,10 @@ public class Store {
 			public void actionPerformed(ActionEvent e) {
 				// subtracts cost from user, updates inventory, and closes store window
 				if(!removeMoney()) {
-					// make dialogue box appear
+					JOptionPane.showMessageDialog(null, " ", null, JOptionPane.WARNING_MESSAGE);
 				} else {
 					updateSupplies();
+					resetPrices();
 					StoreWindow.dispose();
 				}
 			}
@@ -290,11 +313,22 @@ public class Store {
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// closes store window without purchasing anything
+				resetPrices();
 				StoreWindow.dispose();
 			}
 		});
 		cancelButton.setBounds(707, 657, 201, 43);
 		StoreWindow.getContentPane().add(cancelButton);
+	}
+	
+	public void resetPrices() {
+		foodPrice = 20;
+		blanketPrice = 200;
+		clothesPrice = 25;
+		wheelPrice = 1000;
+		tonguePrice = 1000;
+		axlePrice = 1000;
+		waterPrice = 100;
 	}
 	
 	/**

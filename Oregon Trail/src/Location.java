@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Location.java
  * Holds all information for different locations throughout the trail
@@ -85,6 +87,23 @@ public class Location {
 	public void visit(Wagon wagon) {
 		this.visited = true;
 	}
+	
+	
+	
+	 /**
+     * Retrieves the current location of the wagon based on its distance from landmarks.
+     * @param locations The list of all locations
+     * @return The current location of the wagon, or null if it's not at any landmark
+     */
+    public static Location getCurrentLocation(ArrayList<Location> locations) {
+        for (Location location : locations) {
+            // Check if the wagon has arrived at the landmark
+            if (location.arrivedAtLandmark()) {
+                return location;
+            }
+        }
+        return null; // Return null if no location is found
+    }
   
 }
 
