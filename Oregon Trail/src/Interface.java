@@ -44,7 +44,6 @@ public class Interface {
 	private JFrame frameFour;
 	private JLabel dateQtyLbl;
 	private JLabel dateQtyLbl_2;
-	private JLabel dateQtyLbl_3;
 	private JLabel milToQtyLbl;
 	private JLabel fortName;
 	private JLabel riverName;
@@ -80,6 +79,8 @@ public class Interface {
 	private River river9 		= new River("Columbia River", 1100);
 	private Landmarks landmark1 = new Landmarks("Chimney Rock", 1200); //I am not sure where these would go order wise
 	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 1300);// I added these just so we'd remember
+	
+	private FortFrame qwert = new FortFrame(travel, wagon, food);
 	
 
 	private Store store;
@@ -167,7 +168,7 @@ public class Interface {
 		    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
 		        location.updatevisited();									  // updates the object/landmark to be visited by the user 
 		        clock.stop();												  // stops the days from passing
-		        dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
+		        //dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
 		        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
 		        	frameFour.setVisible(true); 							  // displays river name 
 		        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
@@ -178,8 +179,9 @@ public class Interface {
 		        	River.closeFile();
 		        	break;
 		        } else if (location instanceof Fort){													  // since the object wasn't an instance of river, it must be an instance of fort
-		        	frameThree.setVisible(true); 							  // displays frame three
-		        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
+		        	//frameThree.setVisible(true); 							  // displays frame three
+		        	qwert.openFortFrame((Fort) location, store);
+		        	//fortName.setText("Welcome to " + location.getName());	  // displays fort name
 		        	break;
 		        }
 		        else {
@@ -443,108 +445,7 @@ public class Interface {
 
 		// FRAME TWO ENDS
 		
-        // Creates the frame for fort objects and actions
-		frameThree = new JFrame();
-		frameThree.setBounds(100, 100, 1289, 767);
-		frameThree.setTitle("FORT");
-		frameThree.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameThree.setVisible(false);
-		
-		//fort image from outside
-		ImageIcon fort = new ImageIcon(this.getClass().getResource("/image/fort copy.png"));
-		JLabel forts = new JLabel(fort);
-		forts.setBounds(562,108,684,511);
-		
-		// Creates frame for fort images
-		frameImage = new JFrame();
-		frameImage.setBounds(100, 100, 1289, 767);
-		frameImage.setTitle("Look Around");
-		frameImage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameImage.setVisible(false);
-		
-		// image for look around at fort
-		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/lookaround copy.png"));
-		JLabel fortImage = new JLabel(image);
-		fortImage.setBounds(562, 108, 684, 511);
-		
-		JLabel dateLbl_3 = new JLabel("Date:");
-		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		dateLbl_3.setBounds(586, 631, 93, 51);
-		
-		dateQtyLbl_3 = new JLabel(travel.getDate());
-		dateQtyLbl_3.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		dateQtyLbl_3.setBounds(676, 631, 284, 51);
-		
-		// Label to hold generated phrases of conversation
-		JLabel Gossip = new JLabel("");
-		Gossip.setBounds(187, 146, 654, 13);
-		
-		// player talks to other people inside fort
-		// randomly selected phrases from Fort Class
-		JButton Talking = new JButton("Talk to people");
-		Talking.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String phrase = fort1.generatePhrase();
-               			Gossip.setText(phrase);
-			}
-		});
-		Talking.setBounds(31, 138, 133, 21);
-		
-		// player decides to rest in the fort
-		// updates day counter while in the fort and resting
-		JButton Rest = new JButton("Rest");
-		Rest.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * 4);
-				dateQtyLbl.setText(travel.getDate());
-				dateQtyLbl_3.setText(travel.getDate());
-			}
-		});
-		Rest.setBounds(31, 256, 133, 21);
-		
-		//player decides to look around at fort
-		JButton LookAround = new JButton("Look Around");
-		LookAround.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameImage.setVisible(true);
-			}
-		});
-		LookAround.setBounds(31, 194, 133, 21);
 
-		// player decides to shop in the store
-		JButton Shop = new JButton("Shop");
-		Shop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				store.StoreWindow();
-			}
-		});
-		Shop.setBounds(31, 310, 133, 21);
-		
-		// Greeting header for the fort frames
-	    fortName = new JLabel(" ");
-		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
-		fortName.setBounds(343, 11, 569, 86);
-		
-		// panel to hold all fort objects to the frame
-		JPanel PanelThree = new JPanel();
-		PanelThree.setLayout(null);
-		PanelThree.add(Gossip);
-		PanelThree.add(Talking);
-		PanelThree.add(Rest);
-		PanelThree.add(LookAround);
-		PanelThree.add(dateLbl_3);
-		PanelThree.add(dateQtyLbl_3);
-		PanelThree.add(fortName);
-		PanelThree.add(Shop);
-		PanelThree.add(forts);
-		frameThree.getContentPane().add(PanelThree);
-		
-		// panel for the fort images 
-		JPanel imagePanel = new JPanel();
-		imagePanel.setLayout(null);
-		imagePanel.add(fortImage);
-		frameImage.getContentPane().add(imagePanel);	
 	
 		// FRAME THREE ENDS 
 		frameFour = new JFrame();
