@@ -33,19 +33,16 @@ import javax.swing.Timer;
 public class Interface {
 
 	private JFrame frame;
-	private JFrame frameImage;
 	private Timer clock;
 	private JLabel milTrvlQtyLbl;
 	private JLabel rationsQtyLbl;
 	private JLabel trvlSpeedQtyLbl;
 	private JLabel foodQtyLbl;
 	private JFrame frameTwo;
-	private JFrame frameThree; 
 	private JFrame frameFour;
 	private JLabel dateQtyLbl;
 	private JLabel dateQtyLbl_2;
 	private JLabel milToQtyLbl;
-	private JLabel fortName;
 	private JLabel riverName;
 	private JTextArea inventory;
 	private JLabel heightNumLbl;
@@ -179,9 +176,7 @@ public class Interface {
 		        	River.closeFile();
 		        	break;
 		        } else if (location instanceof Fort){													  // since the object wasn't an instance of river, it must be an instance of fort
-		        	//frameThree.setVisible(true); 							  // displays frame three
 		        	qwert.openFortFrame((Fort) location, store);
-		        	//fortName.setText("Welcome to " + location.getName());	  // displays fort name
 		        	break;
 		        }
 		        else {
