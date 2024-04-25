@@ -21,6 +21,7 @@ public class FortFrame {
 	private Wagon wagon;
 	private Equipment food;
 	
+	
 	/**
 	 * 
 	 * @param travel
@@ -32,6 +33,7 @@ public class FortFrame {
 		this.wagon = wagon;
 		this.food = food;
 	}
+
 	
 	/**
 	 * 
@@ -112,8 +114,8 @@ public class FortFrame {
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                store.adjustPrices(currentFort);
-				store.StoreWindow();
+          store.adjustPrices(currentFort);
+				  store.StoreWindow();
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);

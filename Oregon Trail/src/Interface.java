@@ -72,10 +72,6 @@ public class Interface {
 	private RiverFrame riverFrame = new RiverFrame(locations, bank); 
 
 	private Store store;
-
-	
-	
-	//initalize forts, rivers and landmarks here in order of appearance on map
 	
 	/**
 	 * Launch the application.
@@ -108,7 +104,7 @@ public class Interface {
 		wagon.addItem(water);
 		wagon.addItem(food);
 		
-		
+		//initalize forts, rivers and landmarks here in order of appearance on map
 		// locations.add(new Fort("name", 100, null));
 		locations.add(fort1);
 		locations.add(river2);
@@ -293,6 +289,5 @@ public class Interface {
 		JLabel trailImage = new JLabel(icon);
 		trailImage.setBounds(562, 108, 684, 511);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
-
 	}
 }
