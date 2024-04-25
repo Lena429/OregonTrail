@@ -303,7 +303,7 @@ public class Store {
 
 					storeWindow.dispose();
 					resetPrices();
-					StoreWindow.dispose();
+					storeWindow.dispose();
 
 				}
 			}
@@ -319,7 +319,7 @@ public class Store {
 
 				storeWindow.dispose();
 				resetPrices();
-				StoreWindow.dispose();
+				storeWindow.dispose();
 			}
 		});
 		cancelButton.setBounds(707, 657, 201, 43);
