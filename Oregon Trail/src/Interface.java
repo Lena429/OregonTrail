@@ -22,7 +22,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -68,26 +68,33 @@ public class Interface {
 	private Food food	        = new Food("Food", 1, 0, true);
 
 	private Money bank			= new Money(80000);
+	private Location currentLocation;
 	private Fort fort1			= new Fort("Kanesville", 100, 1);
-	private Fort fort2			= new Fort("Mormon Graveyard", 200, 2);
-	private Fort fort3          = new Fort("Fort Hall", 1200, 2);
-	private Fort fort4          = new Fort("Fort Boise", 1300, 3);
-	private River river1  		= new River("Grand River", 30);			// change back to 300
-	private River river2 		= new River("Missouri River", 400);
-	private River river3 		= new River("Loup Fork", 500);
-	private River river4 		= new River("Elkhorn River", 600);
-	private River river5 		= new River("Platte River", 700);
-	private River river6 		= new River("Raft River", 800);
-	private River river7 		= new River("Salmon River", 900);
-	private River river8 		= new River("Snake River", 1000);
-	private River river9 		= new River("Columbia River", 1100);
-	private Landmarks landmark1 = new Landmarks("Chimney Rock", 1200); //I am not sure where these would go order wise
-	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 1300);// I added these just so we'd remember
+	private Fort fort2			= new Fort("Mormon Graveyard", 100, 2);
+	private Fort fort3          = new Fort("Fort Hall", 100, 2);
+	private Fort fort4          = new Fort("Fort Boise", 100, 3);
+	private River river1  		= new River("Grand River", 100);			// change back to 300
+	private River river2 		= new River("Missouri River", 100);
+	private River river3 		= new River("Loup Fork", 100);
+	private River river4 		= new River("Elkhorn River", 100);
+	private River river5 		= new River("Platte River", 100);
+	private River river6 		= new River("Raft River", 100);
+	private River river7 		= new River("Salmon River", 100);
+	private River river8 		= new River("Snake River", 100);
+	private River river9 		= new River("Columbia River", 100);
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 100); //I am not sure where these would go order wise
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 100);// I added these just so we'd remember
 	
 
 	private Store store;
 
 	private ArrayList<Location> locations = new ArrayList<>();
+	
+	
+	 // Method to update the current location
+    private void updateCurrentLocation(Location location) {
+        currentLocation = location;
+    }
 	
 	//initalize forts, rivers and landmarks here in order of appearance on map
 	
@@ -125,15 +132,15 @@ public class Interface {
 		
 		// locations.add(new Fort("name", 100, null));
 		locations.add(fort1);
+		locations.add(river2);
+		locations.add(fort3);
+		locations.add(river6);
 		locations.add(river1);
 		locations.add(fort2);
-		locations.add(fort3);
-		locations.add(fort4);
-		locations.add(river2);
 		locations.add(river3);
 		locations.add(river4);
 		locations.add(river5);
-		locations.add(river6);
+		locations.add(fort4);
 		locations.add(river7);
 		locations.add(river8);
 		locations.add(river9);
@@ -161,76 +168,78 @@ public class Interface {
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
-		boolean locationProcessed = false; // Flag to track if a location has been processed
-	    Collections.reverse(locations);
+		//boolean locationProcessed = false; // Flag to track if a location has been processed
+	    //Collections.reverse(locations);
 	    
-	    for (Location location : locations) {
-	        if (location.hasvisited()) continue; // Skip if already visited
-	        location.updateMilesAway(travel.getPace());
+	    //for (Location location : locations) {
+	    //    if (location.hasvisited()) continue; // Skip if already visited
+	    //    location.updateMilesAway(travel.getPace());
 	        
-	        if (!location.arrivedAtLandmark()) {
-	            milToQtyLbl.setText(location.getMilesAway() + "");
-	            locationProcessed = true;
+	    //    if (!location.arrivedAtLandmark()) {
+	    //        milToQtyLbl.setText(location.getMilesAway() + "");
+	    //        locationProcessed = true;
 	            // No need to break here, continue to the next location
-	        } else {
-	            location.updatevisited();
-	            clock.stop();
-	            dateQtyLbl_3.setText(travel.getDate());
+	    //    } else {
+	    //        location.updatevisited();
+	    //        clock.stop();
+	    //        dateQtyLbl_3.setText(travel.getDate());
 	            
-	            if (location instanceof River) {
-	                frameFour.setVisible(true);
-	                riverName.setText("Welcome to " + location.getName());
-	                // Display river information
-	            } else if (location instanceof Fort) {
-	                frameThree.setVisible(true);
-	                fortName.setText("Welcome to " + location.getName());
-	                Fort fort = (Fort) location;
-	                store.adjustPrices(fort);
+	    //        if (location instanceof River) {
+	    //            frameFour.setVisible(true);
+	    //            riverName.setText("Welcome to " + location.getName());
+	    //            // Display river information
+	    //        } else if (location instanceof Fort) {
+	    //            frameThree.setVisible(true);
+	    //            fortName.setText("Welcome to " + location.getName());
+	    //            Fort fort = (Fort) location;
+	    //            store.adjustPrices(fort);
 	                // Adjust prices of items in stores at specific forts
-	            } else {
-	                frameFour.setVisible(true);
-	                riverName.setText("testing purposes");
-	            }
+	    //        } else {
+	    //            frameFour.setVisible(true);
+	    //            riverName.setText("testing purposes");
+	    //        }
 	            
-	            locationProcessed = true;
+	    //        locationProcessed = true;
 	            // No need to break here, continue to the next location
-	        }
-	    }
+	    //    }
+	    //}
 
-	    if (!locationProcessed) {
+	    //if (!locationProcessed) {
 	        // Handle case where no location was processed
-	    }
+	    //}
 		
-		//for (Location location : locations) {
-		//	if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
-		//    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
-		//    if (!location.arrivedAtLandmark()) {							  // checks to see if user arrived yet
-		//    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  // if the user hasn't arrived update how far away the wagon is 
-		//    	break;
-		//    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
-		//        location.updatevisited();									  // updates the object/landmark to be visited by the user 
-		//        clock.stop();												  // stops the days from passing
-		//        dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
-		//        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
-		//        	frameFour.setVisible(true); 							  // displays river name 
-		//        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
-		//        	River.openFile();
-		//        	heightNumLbl.setText(((River) location).getHeight()+ ""); // displays height of river user is at 
-		//        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
-		//        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at
-		//        	River.closeFile();
-		//        	break;
-		//        } else if (location instanceof Fort){													  // since the object wasn't an instance of river, it must be an instance of fort
-		//        	frameThree.setVisible(true); 							  // displays frame three
-		//        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
-		//        	break;
-		//        }
-		//        else {
-		//        	frameFour.setVisible(true); 							  // displays river name 
-		//        	riverName.setText("testing purposes");
-		//        }
-		//    }
-		//}
+		for (Location location : locations) {
+			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
+		    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
+		    if (!location.arrivedAtLandmark()) {							  // checks to see if user arrived yet
+		    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  // if the user hasn't arrived update how far away the wagon is 
+		    	break;
+		    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
+		        location.updatevisited();									  // updates the object/landmark to be visited by the user 
+		        clock.stop();												  // stops the days from passing
+		        dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
+		        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
+		        	frameFour.setVisible(true); 							  // displays river name 
+		        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
+		        	River.openFile();
+		        	heightNumLbl.setText(((River) location).getHeight()+ ""); // displays height of river user is at 
+		        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
+		        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at
+		        	River.closeFile();
+		        	break;
+		        } else if (location instanceof Fort){
+		        	Fort fort = (Fort)location;
+		        	updateCurrentLocation(fort);// since the object wasn't an instance of river, it must be an instance of fort
+		        	frameThree.setVisible(true); 							  // displays frame three
+		        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
+		        	break;
+		        }
+		        else {
+		        	frameFour.setVisible(true); 							  // displays river name 
+		        	riverName.setText("testing purposes");
+		        }
+		    }
+		}
     }
 				
 	/**
@@ -559,6 +568,12 @@ public class Interface {
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 // Check if the current location is a fort and adjust prices accordingly
+	            if (currentLocation instanceof Fort) {
+	                Fort fort = (Fort) currentLocation;
+	             // Adjust prices based on the fort
+	                store.adjustPrices(fort);
+	                } 
 				store.StoreWindow();
 			}
 		});
