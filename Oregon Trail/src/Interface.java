@@ -64,7 +64,6 @@ public class Interface {
 	private Food food	        = new Food("Food", 1, 0, true);
 
 	private Money bank			= new Money(80000);
-	private Location currentLocation;
 	private Fort fort1			= new Fort("Kanesville", 100, 1);
 	private Fort fort2			= new Fort("Mormon Graveyard", 100, 2);
 	private Fort fort3          = new Fort("Fort Hall", 100, 2);
@@ -87,12 +86,6 @@ public class Interface {
 	private Store store;
 
 	private ArrayList<Location> locations = new ArrayList<>();
-	
-	
-	 // Method to update the current location
-    private void updateCurrentLocation(Location location) {
-        currentLocation = location;
-    }
 	
 	//initalize forts, rivers and landmarks here in order of appearance on map
 	
@@ -191,9 +184,7 @@ public class Interface {
 		        	qwert.openFortFrame((Fort) location, store);
 		        } else if (location instanceof Fort){
 		        	Fort fort = (Fort)location;
-		        	updateCurrentLocation(fort);// since the object wasn't an instance of river, it must be an instance of fort
-		        	frameThree.setVisible(true); 							  // displays frame three
-		        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
+		        	qwert.openFortFrame(fort, store);
 		        	break;
 		        }
 		        else {
@@ -459,46 +450,7 @@ public class Interface {
 		
 
 
-		// player decides to shop in the store
-		JButton Shop = new JButton("Shop");
-		Shop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 // Check if the current location is a fort and adjust prices accordingly
-	            if (currentLocation instanceof Fort) {
-	                Fort fort = (Fort) currentLocation;
-	             // Adjust prices based on the fort
-	                store.adjustPrices(fort);
-	                } 
-				store.StoreWindow();
-			}
-		});
-		Shop.setBounds(31, 310, 133, 21);
-		
-		// Greeting header for the fort frames
-	    fortName = new JLabel(" ");
-		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
-		fortName.setBounds(343, 11, 569, 86);
-		
-		// panel to hold all fort objects to the frame
-		JPanel PanelThree = new JPanel();
-		PanelThree.setLayout(null);
-		PanelThree.add(Gossip);
-		PanelThree.add(Talking);
-		PanelThree.add(Rest);
-		PanelThree.add(LookAround);
-		PanelThree.add(dateLbl_3);
-		PanelThree.add(dateQtyLbl_3);
-		PanelThree.add(fortName);
-		PanelThree.add(Shop);
-		PanelThree.add(forts);
-		frameThree.getContentPane().add(PanelThree);
-		
-		// panel for the fort images 
-		JPanel imagePanel = new JPanel();
-		imagePanel.setLayout(null);
-		imagePanel.add(fortImage);
-		frameImage.getContentPane().add(imagePanel);	
-
+	
 	
 		// FRAME THREE ENDS 
 		frameFour = new JFrame();
