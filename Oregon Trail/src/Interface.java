@@ -13,10 +13,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,10 +23,6 @@ import java.util.ArrayList;
 
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -40,21 +34,12 @@ public class Interface {
 	private JLabel rationsQtyLbl;
 	private JLabel trvlSpeedQtyLbl;
 	private JLabel foodQtyLbl;
-	private JFrame frameTwo;
 	private JFrame frameFour;
 	private JLabel dateQtyLbl;
-	private JLabel dateQtyLbl_2;
 	private JLabel milToQtyLbl;
-	private JLabel riverName;
-	private JTextArea inventory;
-	private JLabel heightNumLbl;
-	private JLabel widthNumLbl;
-	private JLabel flowNumLbl;
 	
-	private Trade offer			= new Trade();
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
-	private River river 		= new River();
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
 	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 0);
@@ -68,7 +53,7 @@ public class Interface {
 	private Fort fort2			= new Fort("Mormon Graveyard", 100, 2);
 	private Fort fort3          = new Fort("Fort Hall", 100, 2);
 	private Fort fort4          = new Fort("Fort Boise", 100, 3);
-	private River river1  		= new River("Grand River", 100);			// change back to 300
+	private River river1  		= new River("Grand River", 100);			
 	private River river2 		= new River("Missouri River", 100);
 	private River river3 		= new River("Loup Fork", 100);
 	private River river4 		= new River("Elkhorn River", 100);
@@ -80,14 +65,13 @@ public class Interface {
 	private Landmarks landmark1 = new Landmarks("Chimney Rock", 100); //I am not sure where these would go order wise
 	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 100);// I added these just so we'd remember
 	
-	private FortFrame qwert = new FortFrame(travel, wagon, food);
-	
-
-	private Store store;
-
 	private ArrayList<Location> locations = new ArrayList<>();
 	
-	//initalize forts, rivers and landmarks here in order of appearance on map
+	private FortFrame fortFrame = new FortFrame(travel, wagon, food);
+	private StopFrame trvlStoppedFrame = new StopFrame(travel, wagon, food, bank);
+	private RiverFrame riverFrame = new RiverFrame(locations, bank); 
+
+	private Store store;
 	
 	/**
 	 * Launch the application.
@@ -120,7 +104,7 @@ public class Interface {
 		wagon.addItem(water);
 		wagon.addItem(food);
 		
-		
+		//initalize forts, rivers and landmarks here in order of appearance on map
 		// locations.add(new Fort("name", 100, null));
 		locations.add(fort1);
 		locations.add(river2);
@@ -170,26 +154,17 @@ public class Interface {
 		        location.updatevisited();									  // updates the object/landmark to be visited by the user 
 		        clock.stop();												  // stops the days from passing
 		        //dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
-		        if(location instanceof River){ 								  // checks to see if it is an instance of fort 
-		        	frameFour.setVisible(true); 							  // displays river name 
-		        	riverName.setText("Welcome to " + location.getName());    // displays welcome message 
-		        	River.openFile();
-		        	heightNumLbl.setText(((River) location).getHeight()+ ""); // displays height of river user is at 
-		        	flowNumLbl.setText(((River) location).getFlow()); 		  // displays flow of river the user is at 
-		        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at
-		        	River.closeFile();
+		        if(location instanceof River){ 								  // checks to see if it is an instance of river 
+		        	riverFrame.openRiverFrame((River) location); 							  // displays river frame 
 		        	break;
 
-		        } else if (location instanceof Fort){													  // since the object wasn't an instance of river, it must be an instance of fort
-		        	qwert.openFortFrame((Fort) location, store);
-		        } else if (location instanceof Fort){
-		        	Fort fort = (Fort)location;
-		        	qwert.openFortFrame(fort, store);
+		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
+		        	fortFrame.openFortFrame((Fort) location, store);		  // displays fort frame
 		        	break;
 		        }
 		        else {
-		        	frameFour.setVisible(true); 							  // displays river name 
-		        	riverName.setText("testing purposes");
+		        	frameFour.setVisible(true); 							  // is this for location?
+		        	//riverName.setText("testing purposes");
 		        }
 		    }
 		}
@@ -255,12 +230,12 @@ public class Interface {
 		foodQtyLbl.setBounds(415, 160, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);
 		
-		rationsQtyLbl = new JLabel("Filling");
+		rationsQtyLbl = new JLabel(travel.displayRations());
 		rationsQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		rationsQtyLbl.setBounds(415, 222, 137, 51);
 		frame.getContentPane().add(rationsQtyLbl);
 		
-		milTrvlQtyLbl = new JLabel("0");
+		milTrvlQtyLbl = new JLabel(travel.updateMilesTravelled() + "");
 		milTrvlQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		milTrvlQtyLbl.setBounds(415, 284, 137, 51);
 		frame.getContentPane().add(milTrvlQtyLbl);
@@ -270,7 +245,7 @@ public class Interface {
 		milToQtyLbl.setBounds(415, 346, 137, 51);
 		frame.getContentPane().add(milToQtyLbl);
 		
-		trvlSpeedQtyLbl = new JLabel("12");
+		trvlSpeedQtyLbl = new JLabel(travel.getPace() + "");
 		trvlSpeedQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		trvlSpeedQtyLbl.setBounds(415, 408, 137, 51);
 		frame.getContentPane().add(trvlSpeedQtyLbl);
@@ -291,7 +266,7 @@ public class Interface {
 		dateLbl.setBounds(586, 631, 93, 51);
 		frame.getContentPane().add(dateLbl);
 		
-		dateQtyLbl = new JLabel("March 1, 1860");
+		dateQtyLbl = new JLabel(travel.getDate());
 		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		dateQtyLbl.setBounds(676, 631, 284, 51);
 		frame.getContentPane().add(dateQtyLbl);
@@ -302,9 +277,7 @@ public class Interface {
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
-				frameTwo.setVisible(true);
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
-				dateQtyLbl_2.setText(travel.getDate());
+				trvlStoppedFrame.openStopFrame();
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
@@ -316,270 +289,5 @@ public class Interface {
 		JLabel trailImage = new JLabel(icon);
 		trailImage.setBounds(562, 108, 684, 511);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
-		
-		// FRAME ONE ENDS
-				
-		// This is frame two (wagon inventory, pace, and rations) setup
-		frameTwo = new JFrame();
-		frameTwo.setBounds(100,100,1289,767);
-		frameTwo.setTitle("OPTIONS");
-		frameTwo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameTwo.setVisible(false);
-		
-		// ComboBox for miles per day/pace
-		JComboBox<String> paceComboBox= new JComboBox<String>();
-		paceComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				travel.setPace(paceComboBox);
-			}
-		});
-		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
-		paceComboBox.setBounds(300, 313, 152, 54);
-		paceComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-
-		// ComboBox for rations/how much the user would like to eat per day 
-		JComboBox<String> rationsComboBox = new JComboBox<String>();
-		rationsComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				travel.setRations(rationsComboBox);
-			}
-		});
-		rationsComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Bare Bones", "Meager", "Filling"}));
-		rationsComboBox.setBounds(300, 200, 220, 54);
-		rationsComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-
-		// Inventory of the wagon 
-		inventory = new JTextArea();
-		inventory.setEditable(false); // Optional: make the text area read-only
-		inventory.setWrapStyleWord(true);
-		inventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		inventory.setBounds(575, 108, 671, 505);
-		
-		// Label for frame two changing rations combobox
-		JLabel changeRatLbl = new JLabel("Change Rations:");
-		changeRatLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changeRatLbl.setBounds(10, 187, 275, 86);
-		changeRatLbl.setHorizontalAlignment(SwingConstants.TRAILING);
-		
-		// Label for frame two changing pace combobox
-		JLabel changePaceLbl = new JLabel("Change Pace:");
-		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changePaceLbl.setBounds(10, 300, 275, 86);
-		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
-
-		// Label for frame two date label
-		JLabel dateLbl_2 = new JLabel("Date:");
-		dateLbl_2.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		dateLbl_2.setBounds(586, 631, 93, 51);
-		
-		dateQtyLbl_2 = new JLabel(travel.getDate());
-		dateQtyLbl_2.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		dateQtyLbl_2.setBounds(676, 631, 284, 51);
-		
-		// A button that will allow you to rest.
-		// When you rest food decreases and a day will pass everytime button is pushed.
-		JButton restBtn = new JButton("Rest");
-		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		restBtn.setBounds(180, 521, 189, 62);
-		restBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * 4); 
-				foodQtyLbl.setText(wagon.getConsumableWeight() + "");
-				dateQtyLbl_2.setText(travel.getDate());
-				dateQtyLbl.setText(travel.getDate());
-		        
-				// Update the inventory display so user can see correct food value
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
-			}
-		});
-		
-		JButton tradeBtn = new JButton("Trade");
-		tradeBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		tradeBtn.setBounds(180, 430, 189, 62);
-		tradeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// generates the trade offer
-				offer.getTrader(travel.getMilesTravelled());
-				offer.getOffer(wagon.getItems());
-				
-				// day increments and food decrements
-				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * 4);
-				dateQtyLbl.setText(travel.getDate());
-				dateQtyLbl_2.setText(travel.getDate());
-		        // Update the inventory display so user can see correct food value
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
-				
-				// displays the trade offer in a dialogue box
-				String text = offer.displayTradeOffer();;
-				String title = "Trade";
-				int type = JOptionPane.QUESTION_MESSAGE;
-				int response = JOptionPane.showConfirmDialog(frameTwo,  text, title, JOptionPane.YES_NO_OPTION, type);
-				
-				// checks if the user accepted the trade or not
-		        if (response == JOptionPane.YES_OPTION) {
-		        	// Yes, add/remove the items and update the inventory display
-		        	offer.tradeAccepted(wagon.getItems(), wagon);
-					inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
-					
-		        } else if (response == JOptionPane.NO_OPTION) {
-		            // No, close the dialogue box
-		        }
-		        
-		        // updates the food label on frame 1
-		        foodQtyLbl.setText(wagon.getConsumableWeight() + "");
-			}
-		});
-		
-		// Panel with added components for frame two 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.add(inventory);
-		panel.add(changePaceLbl);
-		panel.add(paceComboBox);
-		panel.add(changeRatLbl);
-		panel.add(rationsComboBox);
-		panel.add(dateLbl_2);
-		panel.add(dateQtyLbl_2);
-		panel.add(restBtn);
-		panel.add(tradeBtn);
-		frameTwo.getContentPane().add(panel);
-
-		// FRAME TWO ENDS
-		
-
-
-	
-	
-		// FRAME THREE ENDS 
-		frameFour = new JFrame();
-		frameFour.setBounds(100, 100, 1289, 767);
-		frameFour.setTitle("River");
-		frameFour.setVisible(false);
-		frameFour.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
-        frameFour.setResizable(false);
-        
-        //Image of a river for the frame
-        ImageIcon riverImage = new ImageIcon(this.getClass().getResource("/image/river image.png"));
-        JLabel riverImg = new JLabel(riverImage);
-        riverImg.setBounds(562, 108, 684, 493);
-    	
-		
-        // displays river name
-	    riverName = new JLabel(" ");
-	    riverName.setHorizontalAlignment(SwingConstants.CENTER);
-	    riverName.setBounds(222, 11, 821, 86);
-		riverName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
-		
-		// this is a height label so the user knows what is being displayed
-		JLabel heightLbl = new JLabel("Height:");
-		heightLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		heightLbl.setBounds(10, 160, 158, 51);
-		heightLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-		// this is a flow label so the user knows what is being displayed
-		JLabel flowLbl = new JLabel("Flow:");
-		flowLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		flowLbl.setBounds(10, 222, 158, 51);
-		flowLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-		// this is a width label so the user knows what is being displayed 
-		JLabel widthLbl = new JLabel("Width:");
-		widthLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		widthLbl.setBounds(10, 284, 158, 51);
-		widthLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-		// this displays the height of the river water level 
-		heightNumLbl = new JLabel("");
-		heightNumLbl.setBounds(178, 160, 137, 51);
-		heightNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-		// this displays the flow of the river
-		flowNumLbl = new JLabel("");
-		flowNumLbl.setBounds(178, 222, 137, 51);
-		flowNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-		// this displays the width of the river
-		widthNumLbl = new JLabel("");
-		widthNumLbl.setBounds(178, 284, 137, 51);
-		widthNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-		JLabel crossingLbl = new JLabel("How would you like to traverse the river?");
-		crossingLbl.setBounds(10, 592, 832, 83);
-		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-
-		//button to cross river with wagon 
-		JButton crossBtn = new JButton("Cross yourself");
-		crossBtn.setBounds(369, 668, 261, 51);
-		crossBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, river.randomEvtCross(bank)); // Displays if the user made it across safely, or with consequences
-				frameFour.dispose();		  									  // closes frame after button is hit
-			}
-		});
-		crossBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		
-		// button to cross river on ferry 
-		JButton ferryBtn = new JButton("Pay the Ferry ($8)");
-		ferryBtn.setBounds(20, 668, 324, 51);
-		ferryBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				bank.spendMoney(800);; 									  // removes money because user paid to cross with ferry 
-				JOptionPane.showMessageDialog(null, river.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
-				frameFour.dispose();		   									  // closes frame after button hit
-			}
-		});
-		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-
-		JButton fordBtn = new JButton("Ford the river");
-		fordBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		fordBtn.setBounds(655, 668, 253, 51);
-		
-		JButton waitBtn = new JButton("Wait");
-		waitBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		waitBtn.setBounds(933, 668, 253, 51);
-		
-		JTextPane conversationPane = new JTextPane();
-		conversationPane.setEditable(false);
-		conversationPane.setFont(new Font("Bookman Old Style", Font.PLAIN, 22));
-		conversationPane.setBounds(178, 371, 357, 215);
-		
-		JButton talkBtn = new JButton("Talk");
-		talkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		talkBtn.setBounds(10, 371, 158, 51);
-		talkBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (Location location : locations) {
-					if(location instanceof River && !location.hasvisited()) {
-						conversationPane.setText(((River) location).generatePhrase());
-						break;
-					}
-				}
-			}
-		});
-
-		
-		// panel for frame four 
-		JPanel panelFour = new JPanel();
-		panelFour.setLayout(null);
-		panelFour.add(heightLbl);
-		panelFour.add(flowLbl);
-		panelFour.add(widthLbl);
-		panelFour.add(heightNumLbl);
-		panelFour.add(flowNumLbl);
-		panelFour.add(widthNumLbl);
-		panelFour.add(riverName);
-		panelFour.add(crossingLbl);
-		panelFour.add(crossBtn);
-		panelFour.add(ferryBtn);
-		panelFour.add(riverImg);
-		panelFour.add(fordBtn);
-		panelFour.add(waitBtn);
-		panelFour.add(conversationPane);
-		panelFour.add(talkBtn);
-		frameFour.getContentPane().add(panelFour);
-
 	}
 }

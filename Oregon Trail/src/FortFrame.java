@@ -114,14 +114,14 @@ public class FortFrame {
 		JButton Shop = new JButton("Shop");
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				store.adjustPrices(currentFort);
-				store.StoreWindow();
+          store.adjustPrices(currentFort);
+				  store.StoreWindow();
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);
 		
 		// Greeting header for the fort frames
-	    JLabel fortName = new JLabel(currentFort.getName());
+	    JLabel fortName = new JLabel("Welcome to " + currentFort.getName());
 		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
 		fortName.setBounds(343, 11, 569, 86);
 		
