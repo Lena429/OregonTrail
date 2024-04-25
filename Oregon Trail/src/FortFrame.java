@@ -115,7 +115,7 @@ public class FortFrame {
 		Shop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
           store.adjustPrices(currentFort);
-				  store.StoreWindow();
+				  store.openStoreWindow(false);
 			}
 		});
 		Shop.setBounds(31, 310, 133, 21);

@@ -54,17 +54,20 @@ public class Store {
 	private JSlider TongueAmount;
 	private JSlider BlanketAmount;
 	private JLabel AmountOwed;
+	private JLabel foodMainLbl;
 	
 	/**
-	 * Creates a store object containing the wagon inventory and an object of wagon
+	 * Creates a store object containing the wagon inventory, an object of wagon, the user's money, and a label
 	 * @param money - the amount of money in the wagon
 	 * @param inventory - where all of the items in the wagon are stored
 	 * @param wagon - where the inventory arrayList is stored
+	 * @param foodMainLbl - the food label on the main frame that needs to be updated
 	 */
-	public Store(Money bank, ArrayList<Equipment> inventory, Wagon wagon) {
+	public Store(Money bank, ArrayList<Equipment> inventory, Wagon wagon, JLabel foodMainLbl) {
 		this.bank = bank;
 		this.inventory = inventory;
 		this.wagon = wagon;
+		this.foodMainLbl = foodMainLbl;
 	}
 	
 	/**
@@ -83,12 +86,13 @@ public class Store {
 	
 	 /**
      * Simulates shopping for items at the fort.
+     * @param initialStore - if true then the window does not have a cancel button, false it does
      * @return A list of equipment items available for sale at the fort
      */
-	public void StoreWindow() {
+	public void openStoreWindow(boolean initialStore) {
 		JFrame storeWindow = new JFrame();
 		storeWindow.setBounds(100, 100, 1289, 767);
-		storeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		storeWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
 		storeWindow.setVisible(true);
 		storeWindow.getContentPane().setLayout(null);
 		
@@ -304,27 +308,30 @@ public class Store {
 					JOptionPane.showMessageDialog(null, " ", null, JOptionPane.WARNING_MESSAGE);
 				} else {
 					updateSupplies();
-
-					storeWindow.dispose();
+					foodMainLbl.setText(wagon.getConsumableWeight() + "");
 					resetPrices();
+					storeWindow.dispose();
 				}
 			}
 		});
 		buyButton.setBounds(450, 657, 201, 43);
 		storeWindow.getContentPane().add(buyButton);
 		
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// closes store window without purchasing anything
-
-				storeWindow.dispose();
-				resetPrices();
-			}
-		});
-		cancelButton.setBounds(707, 657, 201, 43);
-		storeWindow.getContentPane().add(cancelButton);
+		
+		if (!initialStore) {
+			JButton cancelButton = new JButton("Cancel");
+			cancelButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+			cancelButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// closes store window without purchasing anything
+	
+					storeWindow.dispose();
+					resetPrices();
+				}
+			});
+			cancelButton.setBounds(707, 657, 201, 43);
+			storeWindow.getContentPane().add(cancelButton);
+		}
 		
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override

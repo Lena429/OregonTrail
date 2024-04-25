@@ -33,13 +33,14 @@ public class Interface {
 	private JLabel milTrvlQtyLbl;
 	private JLabel rationsQtyLbl;
 	private JLabel trvlSpeedQtyLbl;
-	private JLabel foodQtyLbl;
+	private JLabel foodQtyLbl = new JLabel();
 	private JFrame frameFour;
 	private JLabel dateQtyLbl;
 	private JLabel milToQtyLbl;
 	
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
+	private Store store;
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
 	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 0);
@@ -71,7 +72,6 @@ public class Interface {
 	private StopFrame trvlStoppedFrame = new StopFrame(travel, wagon, food, bank);
 	private RiverFrame riverFrame = new RiverFrame(locations, bank); 
 
-	private Store store;
 	
 	/**
 	 * Launch the application.
@@ -122,7 +122,7 @@ public class Interface {
 		locations.add(landmark1);
 		locations.add(landmark2);
 		
-		store = new Store(bank, wagon.getItems(), wagon);
+		store = new Store(bank, wagon.getItems(), wagon, foodQtyLbl);
 		
 		initialize();
 		
@@ -175,7 +175,7 @@ public class Interface {
 	 */
 	private void initialize() {
 		
-		store.StoreWindow();
+		store.openStoreWindow(true);
 		
 		// This is frame one setup (main frame)
 		frame = new JFrame();
@@ -225,17 +225,17 @@ public class Interface {
 		weatherLbl.setBounds(10, 470, 395, 51);
 		frame.getContentPane().add(weatherLbl);
 		
-		foodQtyLbl = new JLabel(wagon.getConsumableWeight() + "");
+		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		foodQtyLbl.setBounds(415, 160, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);
 		
 		rationsQtyLbl = new JLabel(travel.displayRations());
 		rationsQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		rationsQtyLbl.setBounds(415, 222, 137, 51);
+		rationsQtyLbl.setBounds(415, 222, 200, 51);
 		frame.getContentPane().add(rationsQtyLbl);
 		
-		milTrvlQtyLbl = new JLabel(travel.updateMilesTravelled() + "");
+		milTrvlQtyLbl = new JLabel(travel.getMilesTravelled() + "");
 		milTrvlQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		milTrvlQtyLbl.setBounds(415, 284, 137, 51);
 		frame.getContentPane().add(milTrvlQtyLbl);
@@ -277,7 +277,7 @@ public class Interface {
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
-				trvlStoppedFrame.openStopFrame();
+				trvlStoppedFrame.openStopFrame(dateQtyLbl, foodQtyLbl, rationsQtyLbl, trvlSpeedQtyLbl);
 			}
 		});
 		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
@@ -287,7 +287,7 @@ public class Interface {
 		//Picture of the trail that the wagon is travelling
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/trailPic.jpg"));
 		JLabel trailImage = new JLabel(icon);
-		trailImage.setBounds(562, 108, 684, 511);
+		trailImage.setBounds(575, 108, 684, 511);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
 	}
 }

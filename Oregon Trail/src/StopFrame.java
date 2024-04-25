@@ -42,8 +42,12 @@ public class StopFrame {
 	
 	/**
 	 * 
+	 * @param dateMainLbl
+	 * @param foodMainLbl
+	 * @param rationsMainLbl
+	 * @param paceMainLbl
 	 */
-	public void openStopFrame() {
+	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl) {
 		Trade offer	= new Trade();
 		
 		JFrame frame = new JFrame();
@@ -57,6 +61,7 @@ public class StopFrame {
 		paceComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.setPace(paceComboBox);
+				paceMainLbl.setText(travel.getPace() + "");
 			}
 		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
@@ -68,6 +73,7 @@ public class StopFrame {
 		rationsComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.setRations(rationsComboBox);
+				rationsMainLbl.setText(travel.displayRations());
 			}
 		});
 		rationsComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Bare Bones", "Meager", "Filling"}));
@@ -111,9 +117,9 @@ public class StopFrame {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
 				wagon.removeItemQty(food, travel.getRations() * 4); 
-				//foodQtyLbl.setText(wagon.getConsumableWeight() + "");
+				foodMainLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl_2.setText(travel.getDate());
-				//dateQtyLbl.setText(travel.getDate());
+				dateMainLbl.setText(travel.getDate());
 		        
 				// Update the inventory display so user can see correct food value
 				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
@@ -132,7 +138,7 @@ public class StopFrame {
 				// day increments and food decrements
 				travel.updateDate();
 				wagon.removeItemQty(food, travel.getRations() * 4);
-				//dateQtyLbl.setText(travel.getDate());
+				dateMainLbl.setText(travel.getDate());
 				dateQtyLbl_2.setText(travel.getDate());
 		        // Update the inventory display so user can see correct food value
 				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
@@ -154,7 +160,7 @@ public class StopFrame {
 		        }
 		        
 		        // updates the food label on frame 1
-		        //foodQtyLbl.setText(wagon.getConsumableWeight() + "");
+		        foodMainLbl.setText(wagon.getConsumableWeight() + "");
 			}
 		});
 		
