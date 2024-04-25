@@ -1,3 +1,5 @@
+
+
 /**
  * Location.java
  * Holds all information for different locations throughout the trail

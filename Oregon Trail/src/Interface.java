@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -63,21 +64,22 @@ public class Interface {
 	private Food food	        = new Food("Food", 1, 0, true);
 
 	private Money bank			= new Money(80000);
-	private Fort fort1			= new Fort("Kanesville", 100);
-	private Fort fort2			= new Fort("Mormon Graveyard", 200);
-	private Fort fort3          = new Fort("Fort Hall", 1200);
-	private Fort fort4          = new Fort("Fort Boise", 1300);
-	private River river1  		= new River("Grand River", 30);			// change back to 300
-	private River river2 		= new River("Missouri River", 400);
-	private River river3 		= new River("Loup Fork", 500);
-	private River river4 		= new River("Elkhorn River", 600);
-	private River river5 		= new River("Platte River", 700);
-	private River river6 		= new River("Raft River", 800);
-	private River river7 		= new River("Salmon River", 900);
-	private River river8 		= new River("Snake River", 1000);
-	private River river9 		= new River("Columbia River", 1100);
-	private Landmarks landmark1 = new Landmarks("Chimney Rock", 1200); //I am not sure where these would go order wise
-	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 1300);// I added these just so we'd remember
+	private Location currentLocation;
+	private Fort fort1			= new Fort("Kanesville", 100, 1);
+	private Fort fort2			= new Fort("Mormon Graveyard", 100, 2);
+	private Fort fort3          = new Fort("Fort Hall", 100, 2);
+	private Fort fort4          = new Fort("Fort Boise", 100, 3);
+	private River river1  		= new River("Grand River", 100);			// change back to 300
+	private River river2 		= new River("Missouri River", 100);
+	private River river3 		= new River("Loup Fork", 100);
+	private River river4 		= new River("Elkhorn River", 100);
+	private River river5 		= new River("Platte River", 100);
+	private River river6 		= new River("Raft River", 100);
+	private River river7 		= new River("Salmon River", 100);
+	private River river8 		= new River("Snake River", 100);
+	private River river9 		= new River("Columbia River", 100);
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 100); //I am not sure where these would go order wise
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 100);// I added these just so we'd remember
 	
 	private FortFrame qwert = new FortFrame(travel, wagon, food);
 	
@@ -85,6 +87,12 @@ public class Interface {
 	private Store store;
 
 	private ArrayList<Location> locations = new ArrayList<>();
+	
+	
+	 // Method to update the current location
+    private void updateCurrentLocation(Location location) {
+        currentLocation = location;
+    }
 	
 	//initalize forts, rivers and landmarks here in order of appearance on map
 	
@@ -122,15 +130,15 @@ public class Interface {
 		
 		// locations.add(new Fort("name", 100, null));
 		locations.add(fort1);
+		locations.add(river2);
+		locations.add(fort3);
+		locations.add(river6);
 		locations.add(river1);
 		locations.add(fort2);
-		locations.add(fort3);
-		locations.add(fort4);
-		locations.add(river2);
 		locations.add(river3);
 		locations.add(river4);
 		locations.add(river5);
-		locations.add(river6);
+		locations.add(fort4);
 		locations.add(river7);
 		locations.add(river8);
 		locations.add(river9);
@@ -157,6 +165,7 @@ public class Interface {
 		wagon.removeItemQty(food, travel.getRations() * 4);
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
+	
 		
 		for (Location location : locations) {
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
@@ -177,8 +186,14 @@ public class Interface {
 		        	widthNumLbl.setText(((River) location).getWidth()+ "");   // displays width of the river the user is at
 		        	River.closeFile();
 		        	break;
+
 		        } else if (location instanceof Fort){													  // since the object wasn't an instance of river, it must be an instance of fort
 		        	qwert.openFortFrame((Fort) location, store);
+		        } else if (location instanceof Fort){
+		        	Fort fort = (Fort)location;
+		        	updateCurrentLocation(fort);// since the object wasn't an instance of river, it must be an instance of fort
+		        	frameThree.setVisible(true); 							  // displays frame three
+		        	fortName.setText("Welcome to " + location.getName());	  // displays fort name
 		        	break;
 		        }
 		        else {
@@ -442,6 +457,47 @@ public class Interface {
 
 		// FRAME TWO ENDS
 		
+
+
+		// player decides to shop in the store
+		JButton Shop = new JButton("Shop");
+		Shop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 // Check if the current location is a fort and adjust prices accordingly
+	            if (currentLocation instanceof Fort) {
+	                Fort fort = (Fort) currentLocation;
+	             // Adjust prices based on the fort
+	                store.adjustPrices(fort);
+	                } 
+				store.StoreWindow();
+			}
+		});
+		Shop.setBounds(31, 310, 133, 21);
+		
+		// Greeting header for the fort frames
+	    fortName = new JLabel(" ");
+		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
+		fortName.setBounds(343, 11, 569, 86);
+		
+		// panel to hold all fort objects to the frame
+		JPanel PanelThree = new JPanel();
+		PanelThree.setLayout(null);
+		PanelThree.add(Gossip);
+		PanelThree.add(Talking);
+		PanelThree.add(Rest);
+		PanelThree.add(LookAround);
+		PanelThree.add(dateLbl_3);
+		PanelThree.add(dateQtyLbl_3);
+		PanelThree.add(fortName);
+		PanelThree.add(Shop);
+		PanelThree.add(forts);
+		frameThree.getContentPane().add(PanelThree);
+		
+		// panel for the fort images 
+		JPanel imagePanel = new JPanel();
+		imagePanel.setLayout(null);
+		imagePanel.add(fortImage);
+		frameImage.getContentPane().add(imagePanel);	
 
 	
 		// FRAME THREE ENDS 
