@@ -37,7 +37,9 @@ public class Interface {
 	private JFrame frameFour;
 	private JLabel dateQtyLbl;
 	private JLabel milToQtyLbl;
+	private JLabel wthrQtyLbl;
 	
+	private Weather weather		= new Weather();
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
 	private Store store;
@@ -142,7 +144,8 @@ public class Interface {
 		wagon.removeItemQty(food, travel.getRations() * 4);
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
-	
+		weather.calculateWeather("May");
+		wthrQtyLbl.setText(weather.displayTemperature());
 		
 		for (Location location : locations) {
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
@@ -250,7 +253,7 @@ public class Interface {
 		trvlSpeedQtyLbl.setBounds(415, 408, 137, 51);
 		frame.getContentPane().add(trvlSpeedQtyLbl);
 		
-		JLabel wthrQtyLbl = new JLabel("Good");
+		wthrQtyLbl = new JLabel("Good");
 		wthrQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		wthrQtyLbl.setBounds(415, 470, 137, 51);
 		frame.getContentPane().add(wthrQtyLbl);
