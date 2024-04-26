@@ -52,8 +52,8 @@ public class Interface {
 	private Money bank			= new Money(80000);
 	private Fort fort1			= new Fort("Kanesville", 100, 1);
 	private Fort fort2			= new Fort("Mormon Graveyard", 100, 2);
-	private Fort fort3          = new Fort("Fort Hall", 100, 2);
-	private Fort fort4          = new Fort("Fort Boise", 100, 3);
+	private Fort fort3          = new Fort("Fort Boise", 100, 2);
+	private Fort fort4          = new Fort("Fort Walla Walla", 100, 3);
 	private River river1  		= new River("Grand River", 100);			
 	private River river2 		= new River("Missouri River", 100);
 	private River river3 		= new River("Loup Fork", 100);
@@ -68,7 +68,7 @@ public class Interface {
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
-	private FortFrame fortFrame = new FortFrame(travel, wagon, food);
+	private FortFrame fortFrame = new FortFrame(travel, wagon, food, locations);
 	private StopFrame trvlStoppedFrame = new StopFrame(travel, wagon, food, bank);
 	private RiverFrame riverFrame = new RiverFrame(locations, bank); 
 

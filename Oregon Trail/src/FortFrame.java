@@ -8,18 +8,21 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 
 public class FortFrame {
 	
 	private Travel travel;
 	private Wagon wagon;
 	private Equipment food;
+	private ArrayList<Location> locations;
 	
 	
 	/**
@@ -28,10 +31,11 @@ public class FortFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public FortFrame(Travel travel, Wagon wagon, Equipment food) {
+	public FortFrame(Travel travel, Wagon wagon, Equipment food, ArrayList<Location> locations) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
+		this.locations = locations;
 	}
 
 	
@@ -74,24 +78,32 @@ public class FortFrame {
 		dateQtyLbl_3.setBounds(676, 631, 284, 51);
 		
 		// Label to hold generated phrases of conversation
-		JLabel Gossip = new JLabel("");
-		Gossip.setBounds(187, 146, 654, 13);
+		JTextPane conversationPane = new JTextPane();
+		conversationPane.setEditable(false);
+		conversationPane.setFont(new Font("Bookman Old Style", Font.PLAIN, 22));
+		conversationPane.setBounds(178, 371, 357, 215);
 		
 		// player talks to other people inside fort
 		// randomly selected phrases from Fort Class
-		JButton Talking = new JButton("Talk to people");
-		Talking.addActionListener(new ActionListener() {
+		JButton talkBtn = new JButton("Talk to people");
+		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String phrase = currentFort.generatePhrase();
-               			Gossip.setText(phrase);
+				//String phrase = currentFort.generatePhrase();
+				for (Location location : locations) {
+					if(location instanceof Fort && !location.hasvisited()) {
+						conversationPane.setText(((Fort) location).generatePhrase());
+						break;
+					}
+				}
+				
 			}
 		});
-		Talking.setBounds(31, 138, 133, 21);
+		talkBtn.setBounds(31, 138, 133, 21);
 		
 		// player decides to rest in the fort
 		// updates day counter while in the fort and resting
-		JButton Rest = new JButton("Rest");
-		Rest.addActionListener(new ActionListener() {
+		JButton restBtn = new JButton("Rest");
+		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
 				wagon.removeItemQty(food, travel.getRations() * 4);
@@ -99,26 +111,34 @@ public class FortFrame {
 				dateQtyLbl_3.setText(travel.getDate());
 			}
 		});
-		Rest.setBounds(31, 256, 133, 21);
+		restBtn.setBounds(31, 256, 133, 21);
 		
 		//player decides to look around at fort
-		JButton LookAround = new JButton("Look Around");
-		LookAround.addActionListener(new ActionListener() {
+		JButton lookBtn = new JButton("Look Around");
+		lookBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameImage.setVisible(true);
 			}
 		});
-		LookAround.setBounds(31, 194, 133, 21);
+		lookBtn.setBounds(31, 194, 133, 21);
 
 		// player decides to shop in the store
-		JButton Shop = new JButton("Shop");
-		Shop.addActionListener(new ActionListener() {
+		JButton shopBtn = new JButton("Shop");
+		shopBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
           store.adjustPrices(currentFort);
 				  store.openStoreWindow(false);
 			}
 		});
-		Shop.setBounds(31, 310, 133, 21);
+		shopBtn.setBounds(31, 310, 133, 21);
+		
+		JButton leaveBtn = new JButton ("Continue Trail");
+		leaveBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameThree.dispose();
+			}
+		});
+		leaveBtn.setBounds(31, 370, 133, 21);
 		
 		// Greeting header for the fort frames
 	    JLabel fortName = new JLabel("Welcome to " + currentFort.getName());
@@ -128,14 +148,15 @@ public class FortFrame {
 		// panel to hold all fort objects to the frame
 		JPanel PanelThree = new JPanel();
 		PanelThree.setLayout(null);
-		PanelThree.add(Gossip);
-		PanelThree.add(Talking);
-		PanelThree.add(Rest);
-		PanelThree.add(LookAround);
+		PanelThree.add(conversationPane);
+		PanelThree.add(talkBtn);
+		PanelThree.add(restBtn);
+		PanelThree.add(lookBtn);
 		PanelThree.add(dateLbl_3);
 		PanelThree.add(dateQtyLbl_3);
 		PanelThree.add(fortName);
-		PanelThree.add(Shop);
+		PanelThree.add(shopBtn);
+		PanelThree.add(leaveBtn);
 		PanelThree.add(forts);
 		frameThree.getContentPane().add(PanelThree);
 		
