@@ -8,18 +8,21 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 
 public class FortFrame {
 	
 	private Travel travel;
 	private Wagon wagon;
 	private Equipment food;
+	private ArrayList<Location> locations;
 	
 	
 	/**
@@ -28,10 +31,11 @@ public class FortFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public FortFrame(Travel travel, Wagon wagon, Equipment food) {
+	public FortFrame(Travel travel, Wagon wagon, Equipment food, ArrayList<Location> locations) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
+		this.locations = locations;
 	}
 
 	
@@ -74,16 +78,24 @@ public class FortFrame {
 		dateQtyLbl_3.setBounds(676, 631, 284, 51);
 		
 		// Label to hold generated phrases of conversation
-		JLabel Gossip = new JLabel("");
-		Gossip.setBounds(187, 146, 654, 13);
+		JTextPane conversationPane = new JTextPane();
+		conversationPane.setEditable(false);
+		conversationPane.setFont(new Font("Bookman Old Style", Font.PLAIN, 22));
+		conversationPane.setBounds(178, 371, 357, 215);
 		
 		// player talks to other people inside fort
 		// randomly selected phrases from Fort Class
 		JButton talkBtn = new JButton("Talk to people");
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String phrase = currentFort.generatePhrase();
-               			Gossip.setText(phrase);
+				//String phrase = currentFort.generatePhrase();
+				for (Location location : locations) {
+					if(location instanceof Fort && !location.hasvisited()) {
+						conversationPane.setText(((Fort) location).generatePhrase());
+						break;
+					}
+				}
+				
 			}
 		});
 		talkBtn.setBounds(31, 138, 133, 21);
@@ -136,7 +148,7 @@ public class FortFrame {
 		// panel to hold all fort objects to the frame
 		JPanel PanelThree = new JPanel();
 		PanelThree.setLayout(null);
-		PanelThree.add(Gossip);
+		PanelThree.add(conversationPane);
 		PanelThree.add(talkBtn);
 		PanelThree.add(restBtn);
 		PanelThree.add(lookBtn);
