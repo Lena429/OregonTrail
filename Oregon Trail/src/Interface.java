@@ -37,7 +37,10 @@ public class Interface {
 	private JFrame frameFour;
 	private JLabel dateQtyLbl;
 	private JLabel milToQtyLbl;
+	private JLabel wthrQtyLbl;
+	private JLabel milesToNextLbl;
 	
+	private Weather weather		= new Weather();
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
 	private Store store;
@@ -50,29 +53,29 @@ public class Interface {
 	private Food food	        = new Food("Food", 1, 0, true);
 
 	private Money bank			= new Money(80000);
-	private Fort fort1			= new Fort("Kanesville", 100, 1);
-	private Fort fort2			= new Fort("Mormon Graveyard", 100, 2);
-	private Fort fort3          = new Fort("Fort Boise", 100, 2);
-	private Fort fort4          = new Fort("Fort Walla Walla", 100, 3);
-	private River river1  		= new River("Grand River", 100);			
-	private River river2 		= new River("Missouri River", 100);
-	private River river3 		= new River("Loup Fork", 100);
-	private River river4 		= new River("Elkhorn River", 100);
-	private River river5 		= new River("Platte River", 100);
-	private River river6 		= new River("Raft River", 100);
-	private River river7 		= new River("Salmon River", 100);
-	private River river8 		= new River("Snake River", 100);
-	private River river9 		= new River("Columbia River", 100);
-	private Landmarks landmark1 = new Landmarks("Chimney Rock", 20); //I am not sure where these would go order wise
-	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 40);// I added these just so we'd remember
+	private Fort fort1			= new Fort("Kanesville", 83, 1);
+	private Fort fort2			= new Fort("Mormon Graveyard", 97, 2);
+	private Fort fort3          = new Fort("Fort Boise", 91, 2);
+	private Fort fort4          = new Fort("Fort Laramie", 129, 3);
+	private River river1  		= new River("Grand River", 85);			
+	private River river2 		= new River("Missouri River", 86);
+	private River river3 		= new River("Loup Fork", 188);
+	private River river4 		= new River("Elkhorn River", 106);
+	private River river5 		= new River("Platte River", 80);
+	private River river6 		= new River("Raft River", 207);
+	private River river7 		= new River("Snake River", 294);
+	private River river8 		= new River("Columbia River", 93);
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 101);
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48);
+	private Landmarks landmark3 = new Landmarks("Independence Rock", 327);
+	private Location house		= new Location("New House", 53);
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
-	private FortFrame fortFrame = new FortFrame(travel, wagon, food, locations, bank);
+	private FortFrame fortFrame 	   = new FortFrame(travel, wagon, food, locations, bank);
 	private StopFrame trvlStoppedFrame = new StopFrame(travel, wagon, food, bank);
-	private RiverFrame riverFrame = new RiverFrame(locations, bank); 
-	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
-
+	private RiverFrame riverFrame 	   = new RiverFrame(locations, bank); 
+  private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 	
 	/**
 	 * Launch the application.
@@ -106,23 +109,23 @@ public class Interface {
 		wagon.addItem(food);
 		
 		//initalize forts, rivers and landmarks here in order of appearance on map
-		// locations.add(new Fort("name", 100, null));
-		locations.add(landmark1);
-		locations.add(landmark2);
+		locations.add(river1);
 		locations.add(fort1);
 		locations.add(river2);
-		locations.add(fort3);
-		locations.add(river6);
-		locations.add(river1);
 		locations.add(fort2);
-		locations.add(river3);
 		locations.add(river4);
+		locations.add(river3);
 		locations.add(river5);
+		locations.add(landmark1);
+		locations.add(landmark2);
 		locations.add(fort4);
+		locations.add(landmark3);
+		locations.add(river6);
+		locations.add(fort3);
 		locations.add(river7);
 		locations.add(river8);
-		locations.add(river9);
-				
+		locations.add(house);
+
 		store = new Store(bank, wagon.getItems(), wagon, foodQtyLbl);
 		
 		initialize();
@@ -143,12 +146,28 @@ public class Interface {
 		wagon.removeItemQty(food, travel.getRations() * 4);
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
-	
+		
+		// Determines if the weather label needs to be updated
+		if (weather.isWeatherDifferent()) {
+			// yes it does
+			weather.setZone(travel.getMilesTravelled());
+			weather.calculateWeather(travel.getMonth());
+			
+			// checks for rain or snow
+			if (weather.willItRainOrSnow())
+				// updates label w/ rain or snow
+				wthrQtyLbl.setText(weather.displayRainOrSnow());
+			else 
+				// updates label with temperature
+				wthrQtyLbl.setText(weather.displayTemperature());
+		}
+
 		
 		for (Location location : locations) {
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
 		    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
 		    if (!location.arrivedAtLandmark()) {							  // checks to see if user arrived yet
+		    	milesToNextLbl.setText("Miles to " + location.getName() + ":");
 		    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  // if the user hasn't arrived update how far away the wagon is 
 		    	break;
 		    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
@@ -214,7 +233,7 @@ public class Interface {
 		milesTravelledLbl.setBounds(10, 284, 395, 51);
 		frame.getContentPane().add(milesTravelledLbl);
 		
-		JLabel milesToNextLbl = new JLabel("Miles to Next Landmark:");
+		milesToNextLbl = new JLabel("Miles to " + river1.getName() + ":");
 		milesToNextLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		milesToNextLbl.setBounds(10, 346, 395, 51);
 		frame.getContentPane().add(milesToNextLbl);
@@ -244,7 +263,7 @@ public class Interface {
 		milTrvlQtyLbl.setBounds(415, 284, 137, 51);
 		frame.getContentPane().add(milTrvlQtyLbl);
 		
-		milToQtyLbl = new JLabel("100");
+		milToQtyLbl = new JLabel(river1.getMilesAway() + "");
 		milToQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		milToQtyLbl.setBounds(415, 346, 137, 51);
 		frame.getContentPane().add(milToQtyLbl);
@@ -254,9 +273,9 @@ public class Interface {
 		trvlSpeedQtyLbl.setBounds(415, 408, 137, 51);
 		frame.getContentPane().add(trvlSpeedQtyLbl);
 		
-		JLabel wthrQtyLbl = new JLabel("Good");
+		wthrQtyLbl = new JLabel("Warm");
 		wthrQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		wthrQtyLbl.setBounds(415, 470, 137, 51);
+		wthrQtyLbl.setBounds(415, 470, 150, 51);
 		frame.getContentPane().add(wthrQtyLbl);
 		
 		JLabel titleLbl = new JLabel("Oregon Trail");
