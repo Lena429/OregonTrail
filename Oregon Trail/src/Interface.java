@@ -74,8 +74,8 @@ public class Interface {
 	
 	private FortFrame fortFrame 	   = new FortFrame(travel, wagon, food, locations, bank);
 	private StopFrame trvlStoppedFrame = new StopFrame(travel, wagon, food, bank);
-	private RiverFrame riverFrame 	   = new RiverFrame(locations, bank); 
-  private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
+	private RiverFrame riverFrame = new RiverFrame(locations, bank, travel); 
+	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 	
 	/**
 	 * Launch the application.
@@ -175,7 +175,7 @@ public class Interface {
 		        clock.stop();												  // stops the days from passing
 		        //dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
 		        if(location instanceof River){ 								  // checks to see if it is an instance of river 
-		        	riverFrame.openRiverFrame((River) location); 							  // displays river frame 
+		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl); 							  // displays river frame 
 		        	break;
 
 		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
