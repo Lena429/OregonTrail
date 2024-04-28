@@ -72,10 +72,10 @@ public class Interface {
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
-	private FortFrame fortFrame 	   = new FortFrame(travel, wagon, food, locations);
+	private FortFrame fortFrame 	   = new FortFrame(travel, wagon, food, locations, bank);
 	private StopFrame trvlStoppedFrame = new StopFrame(travel, wagon, food, bank);
 	private RiverFrame riverFrame 	   = new RiverFrame(locations, bank); 
-
+  private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 	
 	/**
 	 * Launch the application.
@@ -109,7 +109,6 @@ public class Interface {
 		wagon.addItem(food);
 		
 		//initalize forts, rivers and landmarks here in order of appearance on map
-		// locations.add(new Fort("name", 100, null));
 		locations.add(river1);
 		locations.add(fort1);
 		locations.add(river2);
@@ -126,7 +125,7 @@ public class Interface {
 		locations.add(river7);
 		locations.add(river8);
 		locations.add(house);
-		
+
 		store = new Store(bank, wagon.getItems(), wagon, foodQtyLbl);
 		
 		initialize();
@@ -181,6 +180,9 @@ public class Interface {
 
 		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store);		  // displays fort frame
+		        	break;
+		        }else if(location instanceof Landmarks) {
+		        	landmarkFrame.openLandmarkFrame((Landmarks)location);
 		        	break;
 		        }
 		        else {
