@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 public class FortFrame {
@@ -23,6 +24,7 @@ public class FortFrame {
 	private Wagon wagon;
 	private Equipment food;
 	private ArrayList<Location> locations;
+	private Money bank;
 	
 	
 	/**
@@ -31,11 +33,12 @@ public class FortFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public FortFrame(Travel travel, Wagon wagon, Equipment food, ArrayList<Location> locations) {
+	public FortFrame(Travel travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
 		this.locations = locations;
+		this.bank = bank;
 	}
 
 	
@@ -137,6 +140,26 @@ public class FortFrame {
 			}
 		});
 		leaveBtn.setBounds(31, 370, 133, 21);
+		//player decides to check wagon inventory while in the fort
+		JButton inventoryBtn = new JButton("Inventory");
+		inventoryBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame fortInventory = new JFrame();
+				fortInventory.setBounds(575, 108, 671, 505);
+				fortInventory.setVisible(true);
+				
+				JTextArea currentInventory = new JTextArea("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
+				currentInventory.setEditable(false);
+				currentInventory.setWrapStyleWord(true);
+				currentInventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+				
+				JPanel fortInventoryPanel = new JPanel();
+				fortInventoryPanel.setLayout(null);
+				fortInventoryPanel.add(currentInventory);
+				fortInventory.getContentPane().add(currentInventory);
+			}
+		});
+		inventoryBtn.setBounds(31, 390, 133, 21);
 		
 		// Greeting header for the fort frames
 	    JLabel fortName = new JLabel("Welcome to " + currentFort.getName());
@@ -156,6 +179,7 @@ public class FortFrame {
 		PanelThree.add(shopBtn);
 		PanelThree.add(leaveBtn);
 		PanelThree.add(forts);
+		PanelThree.add(inventoryBtn);
 		frameThree.getContentPane().add(PanelThree);
 		
 		// panel for the fort images 
