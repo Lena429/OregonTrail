@@ -144,8 +144,22 @@ public class Interface {
 		wagon.removeItemQty(food, travel.getRations() * 4);
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
-		weather.calculateWeather("December");
-		wthrQtyLbl.setText(weather.displayTemperature());
+		
+		// Determines if the weather label needs to be updated
+		if (weather.isWeatherDifferent()) {
+			// yes it does
+			weather.setZone(travel.getMilesTravelled());
+			weather.calculateWeather(travel.getMonth());
+			
+			// checks for rain or snow
+			if (weather.willItRainOrSnow())
+				// updates label w/ rain or snow
+				wthrQtyLbl.setText(weather.displayRainOrSnow());
+			else 
+				// updates label with temperature
+				wthrQtyLbl.setText(weather.displayTemperature());
+		}
+
 		
 		for (Location location : locations) {
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
@@ -253,7 +267,7 @@ public class Interface {
 		trvlSpeedQtyLbl.setBounds(415, 408, 137, 51);
 		frame.getContentPane().add(trvlSpeedQtyLbl);
 		
-		wthrQtyLbl = new JLabel("Good");
+		wthrQtyLbl = new JLabel("Warm");
 		wthrQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		wthrQtyLbl.setBounds(415, 470, 137, 51);
 		frame.getContentPane().add(wthrQtyLbl);
