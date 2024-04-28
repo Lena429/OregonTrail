@@ -63,14 +63,15 @@ public class Interface {
 	private River river7 		= new River("Salmon River", 100);
 	private River river8 		= new River("Snake River", 100);
 	private River river9 		= new River("Columbia River", 100);
-	private Landmarks landmark1 = new Landmarks("Chimney Rock", 100); //I am not sure where these would go order wise
-	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 100);// I added these just so we'd remember
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 20); //I am not sure where these would go order wise
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 40);// I added these just so we'd remember
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
 	private FortFrame fortFrame = new FortFrame(travel, wagon, food, locations);
 	private StopFrame trvlStoppedFrame = new StopFrame(travel, wagon, food, bank);
 	private RiverFrame riverFrame = new RiverFrame(locations, bank); 
+	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 
 	
 	/**
@@ -106,6 +107,8 @@ public class Interface {
 		
 		//initalize forts, rivers and landmarks here in order of appearance on map
 		// locations.add(new Fort("name", 100, null));
+		locations.add(landmark1);
+		locations.add(landmark2);
 		locations.add(fort1);
 		locations.add(river2);
 		locations.add(fort3);
@@ -119,9 +122,7 @@ public class Interface {
 		locations.add(river7);
 		locations.add(river8);
 		locations.add(river9);
-		locations.add(landmark1);
-		locations.add(landmark2);
-		
+				
 		store = new Store(bank, wagon.getItems(), wagon, foodQtyLbl);
 		
 		initialize();
@@ -160,6 +161,9 @@ public class Interface {
 
 		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store);		  // displays fort frame
+		        	break;
+		        }else if(location instanceof Landmarks) {
+		        	landmarkFrame.openLandmarkFrame((Landmarks)location);
 		        	break;
 		        }
 		        else {

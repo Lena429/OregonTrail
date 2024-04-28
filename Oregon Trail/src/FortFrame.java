@@ -88,14 +88,12 @@ public class FortFrame {
 		JButton talkBtn = new JButton("Talk to people");
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//String phrase = currentFort.generatePhrase();
-				for (Location location : locations) {
-					if(location instanceof Fort && !location.hasvisited()) {
-						conversationPane.setText(((Fort) location).generatePhrase());
-						break;
-					}
+			   for (Location location : locations) {
+				if(location instanceof Fort && !location.hasvisited()) {
+					conversationPane.setText((currentFort).generatePhrase());
+					break;
 				}
-				
+			  }
 			}
 		});
 		talkBtn.setBounds(31, 138, 133, 21);
