@@ -23,6 +23,9 @@ public class RiverFrame {
 	
 	private Money bank;
 	private ArrayList<Location> locations;
+	private Travel travel;
+	private Wagon wagon;
+	private Equipment food; 
 	
 	/**
 	 * 
@@ -30,16 +33,17 @@ public class RiverFrame {
 	 * @param bank
 	 */
 
-	public RiverFrame(ArrayList<Location> locations, Money bank) {
+	public RiverFrame(ArrayList<Location> locations, Money bank, Travel travel) {
 		this.locations = locations;
 		this.bank = bank;
+		this.travel = travel; 
 	}
 	
 	/**
 	 * 
 	 * @param currentRiver
 	 */
-	public void openRiverFrame(River currentRiver) {
+	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl) {
 		
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
@@ -51,7 +55,7 @@ public class RiverFrame {
         //Image of a river for the frame
         ImageIcon riverImage = new ImageIcon(this.getClass().getResource("/image/river image.png"));
         JLabel riverImg = new JLabel(riverImage);
-        riverImg.setBounds(562, 108, 684, 493);
+        riverImg.setBounds(562, 108, 684, 441);
     	
 		
         // displays river name
@@ -97,36 +101,60 @@ public class RiverFrame {
 		crossingLbl.setBounds(10, 592, 832, 83);
 		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		
-
+		JLabel 	dateQtyLbl = new JLabel("Date: ");
+		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		dateQtyLbl.setBounds(902, 592, 280, 51);
+		
+		JLabel dateLbl = new JLabel ("");
+		dateLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		dateLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		dateLbl.setBounds(734, 592, 158, 51);
+		
 		//button to cross river with wagon 
-		JButton crossBtn = new JButton("Cross yourself");
-		crossBtn.setBounds(369, 668, 261, 51);
-		crossBtn.addActionListener(new ActionListener() {
+		JButton fordBtn = new JButton("Ford the river");
+		fordBtn.setBounds(369, 668, 261, 51);
+		fordBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, currentRiver.randomEvtCross(bank)); // Displays if the user made it across safely, or with consequences
-				frame.dispose();		  									  // closes frame after button is hit
+				frame.dispose();		  											    // closes frame after button is hit
 			}
 		});
-		crossBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		fordBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		
 		// button to cross river on ferry 
 		JButton ferryBtn = new JButton("Pay the Ferry ($8)");
 		ferryBtn.setBounds(20, 668, 324, 51);
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bank.spendMoney(800);; 									  // removes money because user paid to cross with ferry 
+				bank.spendMoney(800);									  				// removes money because user paid to cross with ferry 
 				JOptionPane.showMessageDialog(null, currentRiver.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
-				frame.dispose();		   									  // closes frame after button hit
+				frame.dispose();		   											    // closes frame after button hit
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 
-		JButton fordBtn = new JButton("Ford the river");
-		fordBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		fordBtn.setBounds(655, 668, 253, 51);
+		JButton caulkBtn = new JButton("Caulk the wagon");
+		caulkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		caulkBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bank.spendMoney(800);									 			    // removes money because user paid to cross with ferry 
+				JOptionPane.showMessageDialog(null, currentRiver.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
+				frame.dispose();		   											    // closes frame after button hit
+			}
+		});
+		caulkBtn.setBounds(655, 668, 253, 51);
 		
 		JButton waitBtn = new JButton("Wait");
 		waitBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		waitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				travel.updateDate();
+				wagon.removeItemQty(food, travel.getRations() * 4); 
+				foodMainLbl.setText(wagon.getConsumableWeight() + "");
+				dateQtyLbl.setText(travel.getDate());
+				dateMainLbl.setText(travel.getDate());			
+				}
+		});
 		waitBtn.setBounds(933, 668, 253, 51);
 		
 		JTextPane conversationPane = new JTextPane();
@@ -165,13 +193,15 @@ public class RiverFrame {
 		panel.add(widthNumLbl);
 		panel.add(riverName);
 		panel.add(crossingLbl);
-		panel.add(crossBtn);
+		panel.add(caulkBtn);
 		panel.add(ferryBtn);
 		panel.add(riverImg);
 		panel.add(fordBtn);
 		panel.add(waitBtn);
 		panel.add(conversationPane);
 		panel.add(talkBtn);
+		panel.add(dateQtyLbl);
+		panel.add(dateLbl);
 		frame.getContentPane().add(panel);
 		
 		
