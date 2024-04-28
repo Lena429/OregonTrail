@@ -144,7 +144,7 @@ public class Interface {
 		wagon.removeItemQty(food, travel.getRations() * 4);
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
-		weather.calculateWeather("May");
+		weather.calculateWeather("December");
 		wthrQtyLbl.setText(weather.displayTemperature());
 		
 		for (Location location : locations) {
