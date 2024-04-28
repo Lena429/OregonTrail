@@ -156,11 +156,18 @@ public class Travel {
 	    String formattedDate = startDate.format(formatter);
 	    
 	    return formattedDate;
+	}	
+	
+	/**
+	 * This gets gets the month for the user
+	 * @return month - the full name of the month
+	 */
+	public String getMonth() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM");
+		String month = startDate.format(formatter);
+		
+		return month;
 	}
-	
-	//get array list
-	
-
 }
 
 
