@@ -78,6 +78,9 @@ public class Wagon {
 	public void removeItemQty(Equipment item, int quantity) {
 		// get the item's weight and remove the quantity
 		int weight = item.getWeight();
+		
+		// checks to see more of the item is being removed than is present
+		if(quantity > item.getQuantity()) quantity = item.getQuantity();
 		item.removeQuantity(quantity);
 
 		

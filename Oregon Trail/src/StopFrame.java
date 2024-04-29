@@ -144,7 +144,7 @@ public class StopFrame {
 				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
 				
 				// displays the trade offer in a dialogue box
-				String text = offer.displayTradeOffer();;
+				String text = offer.displayTradeOffer();
 				String title = "Trade";
 				int type = JOptionPane.QUESTION_MESSAGE;
 				int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.YES_NO_OPTION, type);
