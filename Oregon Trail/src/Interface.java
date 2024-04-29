@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -39,11 +40,14 @@ public class Interface {
 	private JLabel milToQtyLbl;
 	private JLabel wthrQtyLbl;
 	private JLabel milesToNextLbl;
+	private JLabel healthQtyLbl;
 	
 	private Weather weather		= new Weather();
 	private Travel travel 		= new Travel();
 	private Wagon wagon	  		= new Wagon();
+	private WagonParty health   = new WagonParty();
 	private Store store;
+	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
 	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 0);
@@ -51,8 +55,8 @@ public class Interface {
 	private Equipment blankets	= new Equipment("Blankets", 2, 0);
 	private Equipment water		= new Equipment("Water", 1, 0);
 	private Food food	        = new Food("Food", 1, 0, true);
-
 	private Money bank			= new Money(80000);
+	// Locations
 	private Fort fort1			= new Fort("Kanesville", 83, 1);
 	private Fort fort2			= new Fort("Mormon Graveyard", 97, 2);
 	private Fort fort3          = new Fort("Fort Boise", 91, 2);
@@ -69,6 +73,11 @@ public class Interface {
 	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48);
 	private Landmarks landmark3 = new Landmarks("Independence Rock", 327);
 	private Location house		= new Location("New House", 53);
+	// Wagon Members
+	private WagonMember one		= new WagonMember("Amy");
+	private WagonMember two		= new WagonMember("Bonnie");
+	private WagonMember three	= new WagonMember("Cora");
+	private WagonMember four	= new WagonMember("DeeDee");
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
@@ -125,6 +134,12 @@ public class Interface {
 		locations.add(river7);
 		locations.add(river8);
 		locations.add(house);
+		
+		// adding members to the wagon party
+		health.addMember(one);
+		health.addMember(two);
+		health.addMember(three);
+		health.addMember(four);
 
 		store = new Store(bank, wagon.getItems(), wagon, foodQtyLbl);
 		
@@ -143,9 +158,34 @@ public class Interface {
 		milTrvlQtyLbl.setText(travel.updateMilesTravelled() + "");
 		trvlSpeedQtyLbl.setText(travel.getPace() + "");
 		rationsQtyLbl.setText(travel.displayRations());
-		wagon.removeItemQty(food, travel.getRations() * 4);
-		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		dateQtyLbl.setText(travel.updateDate() + "");
+		
+		// update health and food
+		if(!food.outOfFood()) {
+			// if there is food to remove, remove it
+			wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
+		} 
+		// set the food label
+		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
+		
+		// regenerate health then lose some
+		health.recoverHealth();
+		health.loseHealth(travel.getRations(), food.outOfFood(), weather.displayTemperature(), travel.getPace());
+		
+		// check if the health is deadly
+		if(health.isHealthDeadly()) {
+			// update the health label and kill a random member
+			healthQtyLbl.setText("Death");
+			
+			if(health.removeRandomMember()) {
+				// if they are the last member remaining, end the game
+				String text = "All members of the wagon have perished :(";
+				String title = "Game Over!";
+				int type = JOptionPane.ERROR_MESSAGE;
+				int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.OK_OPTION, type);
+				if(response == JOptionPane.OK_OPTION) System.exit(1);
+			}
+		} else healthQtyLbl.setText(health.displayHealth()); // update health
 		
 		// Determines if the weather label needs to be updated
 		if (weather.isWeatherDifferent()) {
@@ -162,7 +202,6 @@ public class Interface {
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
 
-		
 		for (Location location : locations) {
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
 		    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
@@ -247,6 +286,11 @@ public class Interface {
 		weatherLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		weatherLbl.setBounds(10, 470, 395, 51);
 		frame.getContentPane().add(weatherLbl);
+		
+		healthQtyLbl = new JLabel(health.displayHealth());
+		healthQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		healthQtyLbl.setBounds(415, 110, 137, 51);
+		frame.getContentPane().add(healthQtyLbl);
 		
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));

@@ -31,4 +31,14 @@ public class Food extends Equipment {
 	public boolean getNutrition() {
 		return isNutritional;
 	}
+	
+	/**
+	 * returns if the user is out of food or not
+	 * @return true - user is out of food
+	 * @return false - user still has food
+	 */
+	public boolean outOfFood() {
+		if(getQuantity() == 0) return true;
+		return false;
+	}
 }

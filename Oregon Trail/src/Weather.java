@@ -1,19 +1,17 @@
-import java.util.Random;
-import java.util.Scanner;
-import java.io.InputStreamReader;
-
 /**
  * Weather.java
  * 
  * 
- * @author 
+ * @author - Lena Frate
  * @version
  */
+import java.util.Random;
+import java.util.Scanner;
+import java.io.InputStreamReader;
 
 public class Weather {
 
 	private int zone = 0;
-	private String displayTemp;
 	private int tempValue;
 	private double rainfall;
 	private int snowfall;
@@ -110,7 +108,8 @@ public class Weather {
 	 * @return displayTemp - the string describing the weather
 	 */
 	public String displayTemperature() {
-		
+		String displayTemp;
+
 		// generates a random number -20 to 20 and adds it to the avg temp of the month
 		Random rnd = new Random(); 
 		int random = rnd.nextInt(41) - 20;
