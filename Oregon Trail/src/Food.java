@@ -13,7 +13,7 @@ public class Food extends Equipment {
 	boolean isNutritional;
 	
 	/**
-	 * Creates an Food object containing a name, weight, and if its nutritional or not
+	 * Creates a Food object containing a name, weight, and if its nutritional or not
 	 * @param name - name of the food
 	 * @param weight - weight of the food
 	 * @param quantity - quantity of the food

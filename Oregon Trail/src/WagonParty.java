@@ -1,14 +1,18 @@
-import java.util.ArrayList;
-import java.util.Random;
-
 /**
- * TotalHealth.java
+ * WagonParty.java
  * 
- * make sure to say something about the chapter 16 reference to health
+ * The wagonParty class contains an arrayList of the members of the wagon. Additionally,
+ * it calculates the total health of the wagon party based on factors like pace, rations, 
+ * temperature, and food available.
+ * 
+ * Note: math and other factors of health were taken from Chapter 16 of You Have Died of 
+ * Dysentery by R. Philip Bouchard
  * 
  * @author - Lena Frate
- * @version
+ * @version 1.1.1 - April 29 2024
  */
+import java.util.ArrayList;
+import java.util.Random;
 
 public class WagonParty {
 	

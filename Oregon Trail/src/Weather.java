@@ -1,9 +1,18 @@
 /**
  * Weather.java
  * 
+ * The weather class reads in a csv file of weather data for 4 zones along the Oregon Trail.
+ * It then uses this data to randomly generate the weather for the day. It has a 50% chance
+ * of copying the previous day's weather and a varying chance of rain or snow depending
+ * on average rainfall/snowfall for the zone.
+ * 
+ * Note: Weather data was gathered from: https://www.usclimatedata.com/climate/united-states/us
+ * 
+ * Note 2: the basics of calculating weather were taken from Chapter 16 of You Have Died of 
+ * Dysentery by R. Philip Bouchard
  * 
  * @author - Lena Frate
- * @version
+ * @version 1.1.1 - April 28 2024
  */
 import java.util.Random;
 import java.util.Scanner;
@@ -17,7 +26,7 @@ public class Weather {
 	private int snowfall;
 	
 	/*
-	 * 
+	 * creates an object of weather
 	 */
 	public Weather() {}
 	
@@ -44,52 +53,51 @@ public class Weather {
 	 * Reads the csv file and stores the appropriate rainfall, snowfall, and temp based
 	 * on the month and the zone the user is in
 	 */
-	public void calculateWeather(String month) {
+	public void calculateWeather(String month) {	
+		Scanner scr;
+		try {
+			// open up data file
+			InputStreamReader isr = new InputStreamReader(Weather.class.getResourceAsStream("WeatherData.csv"));
+			
+			scr = new Scanner (isr);
+			
+			// read in file
+			// first two lines are headers so ignore them
+			// column 1 is the month followed by the 3 zones
+				// ex: January1
+				//	   January2
+			// column 2 is rainfall
+			// column 3 is snowfall
+			// column 4 is temperature
+			
+			// headers
+			scr.nextLine();
+			scr.nextLine();
+			
+			while (scr.hasNextLine()) {				
+				Scanner tempData = new Scanner(scr.nextLine());
+				tempData.useDelimiter(",");
 				
-			Scanner scr;
-			try {
-				// open up data file
-				InputStreamReader isr = new InputStreamReader(Weather.class.getResourceAsStream("WeatherData.csv"));
+				// store the first column of the line containing the month + zone
+				String comparedMonth = tempData.next();
 				
-				scr = new Scanner (isr);
-				
-				// read in file
-				// first two lines are headers so ignore them
-				// column 1 is the month followed by the 3 zones
-					// ex: January1
-					//	   January2
-				// column 2 is rainfall
-				// column 3 is snowfall
-				// column 4 is temperature
-				
-				// headers
-				scr.nextLine();
-				scr.nextLine();
-				
-				while (scr.hasNextLine()) {				
-					Scanner tempData = new Scanner(scr.nextLine());
-					tempData.useDelimiter(",");
+				// search for the right month and zone in the data
+				if(comparedMonth.equals(month + zone)) {
 					
-					// store the first column of the line containing the month + zone
-					String comparedMonth = tempData.next();
-					
-					// search for the right month and zone in the data
-					if(comparedMonth.equals(month + zone)) {
-						
-						// store the appropriate weather data and break out of the loop
-						rainfall = tempData.nextDouble();
-						snowfall = tempData.nextInt();
-						tempValue = tempData.nextInt();
-	
-						break;
-					}			
-				}
-				// close the file
-				scr.close();
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(null, "Weather data error - exiting...");
-				System.exit(1);
+					// store the appropriate weather data and break out of the loop
+					rainfall = tempData.nextDouble();
+					snowfall = tempData.nextInt();
+					tempValue = tempData.nextInt();
+
+					break;
+				}			
 			}
+			// close the file
+			scr.close();
+		} catch (Exception e) {
+			javax.swing.JOptionPane.showMessageDialog(null, "Weather data error - exiting...");
+			System.exit(1);
+		}
 	}
 	
 	/**
@@ -136,13 +144,13 @@ public class Weather {
 		Random rnd = new Random(); 
 		
 		if (tempValue <= 30) {
+			// temp is low enough for snow
 			double probabilityOfSnow = snowfall / 14.0;
-			
 			return rnd.nextDouble() <= probabilityOfSnow;
 
 		} else {
+			// temp is not low enough for snow
 			double probabilityOfRain = rainfall / 8.0;
-			
 			return rnd.nextDouble() <= probabilityOfRain;
 		}
 	}
@@ -159,7 +167,4 @@ public class Weather {
 			return "Rainy";
 		}
 	}
-	
-
 }
-

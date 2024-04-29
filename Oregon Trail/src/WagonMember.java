@@ -1,9 +1,14 @@
 /**
  * WagonMember.java
  * 
+ * The wagonMember class contains the name of a certain member of the wagon 
+ * and their disease and injury status.
+ * 
+ * Note: how diseases and injuries are handled were taken from Chapter 16 
+ * of You Have Died of Dysentery by R. Philip Bouchard
  * 
  * @author - Lena Frate
- * @version
+ * @version 1.1.1 - April 29 2024
  */
 public class WagonMember {
 	
@@ -14,8 +19,8 @@ public class WagonMember {
 	private int injuryCount;
 	
 	/**
-	 * 
-	 * @param name
+	 * creates a wagon member with a name
+	 * @param name - the name of the member
 	 */
 	public WagonMember(String name) {
 		this.name = name;
@@ -79,7 +84,7 @@ public class WagonMember {
 	}
 	
 	/**
-	 * returns if the member is injured ot diseased
+	 * returns if the member is injured or diseased
 	 * @return true - member is injured/diseased
 	 * @return false - member is not injured/diseased
 	 */
