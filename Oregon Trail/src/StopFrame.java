@@ -109,7 +109,7 @@ public class StopFrame {
 		dateQtyLbl_2.setBounds(676, 631, 284, 51);
 		
 		// A button that will allow you to rest.
-		// When you rest food decreases and a day will pass everytime button is pushed.
+		// When you rest food decreases and a day will pass every time button is pushed.
 		JButton restBtn = new JButton("Rest");
 		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		restBtn.setBounds(180, 521, 189, 62);
