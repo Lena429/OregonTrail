@@ -257,9 +257,14 @@ public class Interface {
 		startTrvlBtn.setBounds(26, 570, 258, 125);
 		frame.getContentPane().add(startTrvlBtn);
 		
+		JLabel HealthLbl = new JLabel("Health:");
+		HealthLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		HealthLbl.setBounds(10, 110, 395, 51);
+		frame.getContentPane().add(HealthLbl);
+		
 		JLabel foodLbl = new JLabel("Food (lbs):");
 		foodLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		foodLbl.setBounds(10, 160, 395, 51);
+		foodLbl.setBounds(10, 163, 395, 51);
 		frame.getContentPane().add(foodLbl);
 		
 		JLabel rationsLbl = new JLabel("Rations:");
@@ -294,7 +299,7 @@ public class Interface {
 		
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		foodQtyLbl.setBounds(415, 160, 137, 51);
+		foodQtyLbl.setBounds(415, 163, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);
 		
 		rationsQtyLbl = new JLabel(travel.displayRations());
