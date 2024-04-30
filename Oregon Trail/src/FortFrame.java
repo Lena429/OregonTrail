@@ -20,7 +20,7 @@ import javax.swing.JTextPane;
 
 public class FortFrame {
 	
-	private Travel travel;
+	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
 	private ArrayList<Location> locations;
@@ -33,7 +33,7 @@ public class FortFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public FortFrame(Travel travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
+	public FortFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;

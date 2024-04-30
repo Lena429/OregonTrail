@@ -26,6 +26,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import java.awt.Color;
+import java.awt.Cursor;
 
 public class Interface {
 
@@ -35,24 +37,23 @@ public class Interface {
 	private JLabel rationsQtyLbl;
 	private JLabel trvlSpeedQtyLbl;
 	private JLabel foodQtyLbl = new JLabel();
-	private JFrame frameFour;
 	private JLabel dateQtyLbl;
 	private JLabel milToQtyLbl;
 	private JLabel wthrQtyLbl;
 	private JLabel milesToNextLbl;
 	private JLabel healthQtyLbl;
 	
-	private Weather weather		= new Weather();
-	private Travel travel 		= new Travel();
-	private Wagon wagon	  		= new Wagon();
-	private WagonParty health   = new WagonParty();
+	private Weather weather		 = new Weather();
+	private TravelManager travel = new TravelManager();
+	private Wagon wagon	  		 = new Wagon();
+	private WagonParty health    = new WagonParty();
 	private Store store;
 	// Equipment
-	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 0);
+	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 300, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
 	private Equipment wagTong 	= new Equipment("Wagon Tongue", 45, 0);
-	private Equipment clothes	= new Equipment("Clothes", 2, 0);
-	private Equipment blankets	= new Equipment("Blankets", 2, 0);
+	private Equipment clothes	= new Equipment("Clothes", 5, 0);
+	private Equipment oxen		= new Equipment("Oxen", 1000, 0);
 	private Equipment water		= new Equipment("Water", 1, 0);
 	private Food food	        = new Food("Food", 1, 0, true);
 	private Money bank			= new Money(80000);
@@ -102,22 +103,21 @@ public class Interface {
 		});
 	}
 
-
 	/**
 	 * Create the application.
 	 */
 	public Interface() {
 		
-		// Preloaded wagon 
+		// wagon items
 		wagon.addItem(wagWheel);
 		wagon.addItem(wagAxle);
 		wagon.addItem(wagTong);
 		wagon.addItem(clothes);
-		wagon.addItem(blankets);
+		wagon.addItem(oxen);
 		wagon.addItem(water);
 		wagon.addItem(food);
 		
-		//initalize forts, rivers and landmarks here in order of appearance on map
+		// initialize forts, rivers and landmarks here in order of appearance on map
 		locations.add(river1);
 		locations.add(fort1);
 		locations.add(river2);
@@ -176,22 +176,12 @@ public class Interface {
 		if(health.isHealthDeadly()) {
 			// update the health label and kill a random member
 			healthQtyLbl.setText("Deadly");
-			String name = health.removeRandomMember();
+			health.removeRandomMember(frame);
 			
-			if(!health.membersStillAlive()) {
+			if(!health.membersStillAlive())
 				// if they are the last member remaining, end the game
-				String text = "All members of the wagon have perished :(";
-				String title = "Game Over!";
-				int type = JOptionPane.ERROR_MESSAGE;
-				int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
-				if(response == JOptionPane.OK_OPTION) System.exit(1);
-			} else {
-				// notify user of the member that died
-				String text = name + " has died.";
-				String title = "OH NO!";
-				int type = JOptionPane.ERROR_MESSAGE;
-				JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
-			}
+				health.displayGameOver(frame);
+
 		} else healthQtyLbl.setText(health.displayHealth()); // update health
 		
 		// Determines if the weather label needs to be updated
@@ -227,13 +217,16 @@ public class Interface {
 		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store);		  // displays fort frame
 		        	break;
-		        }else if(location instanceof Landmarks) {
-		        	landmarkFrame.openLandmarkFrame((Landmarks)location);
+		        } else if(location instanceof Landmarks) {					  // checks to see if it is an instance of landmark 
+		        	landmarkFrame.openLandmarkFrame((Landmarks)location);	  // displays landmark frame
 		        	break;
-		        }
-		        else {
-		        	frameFour.setVisible(true); 							  // is this for location?
-		        	//riverName.setText("testing purposes");
+		        } else {
+		        	// THE USER HAS WON THE GAME (arrived at the house in Oregon)
+		    		String text = "Congratulations! You successfully traveled the Oregon Trail.";
+		    		String title = "You made it to Oregon!";
+		    		int type = JOptionPane.PLAIN_MESSAGE;
+		    		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		    		if(response == JOptionPane.OK_OPTION) System.exit(1);
 		        }
 		    }
 		}
@@ -248,125 +241,165 @@ public class Interface {
 		
 		// This is frame one setup (main frame)
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.toBack();
+		frame.setTitle("Trail");
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		//Start travelling again button for frame one
 		JButton startTrvlBtn = new JButton("Start Travel");
+		startTrvlBtn.setForeground(new Color(255, 255, 255));
+		startTrvlBtn.setBackground(new Color(0, 128, 0));
+		startTrvlBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		startTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				clock.start();
+				// if the user doesn't have any oxen to pull the wagon then they cannot travel
+				if(oxen.getQuantity() == 0) {
+		    		String text = "You do not have any oxen to pull the wagon. Try trading for some...";
+		    		String title = "Uh-oh";
+		    		int type = JOptionPane.ERROR_MESSAGE;
+		    		JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+				} else clock.start();
 			}
 		});
-		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		startTrvlBtn.setBounds(26, 570, 258, 125);
+		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 40));
+		startTrvlBtn.setBounds(20, 425, 298, 125);
 		frame.getContentPane().add(startTrvlBtn);
 		
-		JLabel HealthLbl = new JLabel("Health:");
-		HealthLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		HealthLbl.setBounds(10, 110, 395, 51);
-		frame.getContentPane().add(HealthLbl);
+		JLabel healthLbl = new JLabel("Health: ");
+		healthLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		healthLbl.setForeground(new Color(255, 255, 255));
+		healthLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		healthLbl.setBounds(314, 430, 298, 51);
+		frame.getContentPane().add(healthLbl);
 		
-		JLabel foodLbl = new JLabel("Food (lbs):");
+		JLabel foodLbl = new JLabel("Food (lbs): ");
+		foodLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		foodLbl.setForeground(new Color(255, 255, 255));
 		foodLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		foodLbl.setBounds(10, 163, 395, 51);
+		foodLbl.setBounds(314, 499, 298, 51);
 		frame.getContentPane().add(foodLbl);
 		
-		JLabel rationsLbl = new JLabel("Rations:");
+		JLabel rationsLbl = new JLabel(" Rations: ");
+		rationsLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		rationsLbl.setForeground(new Color(255, 255, 255));
 		rationsLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		rationsLbl.setBounds(10, 222, 395, 51);
+		rationsLbl.setBounds(712, 430, 298, 51);
 		frame.getContentPane().add(rationsLbl);
 		
-		JLabel milesTravelledLbl = new JLabel("Miles Travelled:");
+		JLabel milesTravelledLbl = new JLabel("Miles Travelled: ");
+		milesTravelledLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		milesTravelledLbl.setForeground(new Color(255, 255, 255));
 		milesTravelledLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		milesTravelledLbl.setBounds(10, 284, 395, 51);
+		milesTravelledLbl.setBounds(314, 575, 298, 51);
 		frame.getContentPane().add(milesTravelledLbl);
 		
-		milesToNextLbl = new JLabel("Miles to " + river1.getName() + ":");
+		milesToNextLbl = new JLabel("Miles to Grand River: ");
+		milesToNextLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		milesToNextLbl.setForeground(new Color(255, 255, 255));
 		milesToNextLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		milesToNextLbl.setBounds(10, 346, 395, 51);
+		milesToNextLbl.setBounds(313, 644, 550, 51);
 		frame.getContentPane().add(milesToNextLbl);
 		
-		JLabel travelSpeedLbl = new JLabel("Travel Speed:");
+		JLabel travelSpeedLbl = new JLabel("Travel Speed: ");
+		travelSpeedLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		travelSpeedLbl.setForeground(new Color(255, 255, 255));
 		travelSpeedLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		travelSpeedLbl.setBounds(10, 408, 395, 51);
+		travelSpeedLbl.setBounds(712, 501, 298, 51);
 		frame.getContentPane().add(travelSpeedLbl);
 		
-		JLabel weatherLbl = new JLabel("Weather:");
+		JLabel weatherLbl = new JLabel("Weather: ");
+		weatherLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		weatherLbl.setForeground(new Color(255, 255, 255));
 		weatherLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		weatherLbl.setBounds(10, 470, 395, 51);
+		weatherLbl.setBounds(712, 575, 298, 51);
 		frame.getContentPane().add(weatherLbl);
 		
 		healthQtyLbl = new JLabel(health.displayHealth());
+		healthQtyLbl.setForeground(new Color(255, 255, 255));
 		healthQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		healthQtyLbl.setBounds(415, 110, 137, 51);
+		healthQtyLbl.setBounds(622, 430, 137, 51);
 		frame.getContentPane().add(healthQtyLbl);
+		foodQtyLbl.setForeground(new Color(255, 255, 255));
 		
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		foodQtyLbl.setBounds(415, 163, 137, 51);
+		foodQtyLbl.setBounds(622, 499, 137, 51);
 		frame.getContentPane().add(foodQtyLbl);
 		
 		rationsQtyLbl = new JLabel(travel.displayRations());
+		rationsQtyLbl.setForeground(new Color(255, 255, 255));
 		rationsQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		rationsQtyLbl.setBounds(415, 222, 200, 51);
+		rationsQtyLbl.setBounds(1020, 430, 245, 51);
 		frame.getContentPane().add(rationsQtyLbl);
 		
 		milTrvlQtyLbl = new JLabel(travel.getMilesTravelled() + "");
+		milTrvlQtyLbl.setForeground(new Color(255, 255, 255));
 		milTrvlQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		milTrvlQtyLbl.setBounds(415, 284, 137, 51);
+		milTrvlQtyLbl.setBounds(622, 575, 137, 51);
 		frame.getContentPane().add(milTrvlQtyLbl);
 		
 		milToQtyLbl = new JLabel(river1.getMilesAway() + "");
+		milToQtyLbl.setForeground(new Color(255, 255, 255));
 		milToQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		milToQtyLbl.setBounds(415, 346, 137, 51);
+		milToQtyLbl.setBounds(873, 644, 137, 51);
 		frame.getContentPane().add(milToQtyLbl);
 		
 		trvlSpeedQtyLbl = new JLabel(travel.getPace() + "");
+		trvlSpeedQtyLbl.setForeground(new Color(255, 255, 255));
 		trvlSpeedQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		trvlSpeedQtyLbl.setBounds(415, 408, 137, 51);
+		trvlSpeedQtyLbl.setBounds(1020, 501, 137, 51);
 		frame.getContentPane().add(trvlSpeedQtyLbl);
 		
 		wthrQtyLbl = new JLabel("Warm");
+		wthrQtyLbl.setForeground(new Color(255, 255, 255));
 		wthrQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		wthrQtyLbl.setBounds(415, 470, 150, 51);
+		wthrQtyLbl.setBounds(1020, 575, 235, 51);
 		frame.getContentPane().add(wthrQtyLbl);
 		
 		JLabel titleLbl = new JLabel("Oregon Trail");
-		titleLbl.setFont(new Font("Felix Titling", Font.PLAIN, 50));
+		titleLbl.setForeground(new Color(255, 255, 255));
+		titleLbl.setFont(new Font("Felix Titling", Font.PLAIN, 55));
 		titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLbl.setBounds(343, 11, 569, 86);
+		titleLbl.setBounds(351, 0, 569, 86);
 		frame.getContentPane().add(titleLbl);
 		
-		JLabel dateLbl = new JLabel("Date:");
-		dateLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		dateLbl.setBounds(586, 631, 93, 51);
+		JLabel dateLbl = new JLabel("Date: ");
+		dateLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		dateLbl.setForeground(new Color(255, 255, 255));
+		dateLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 25));
+		dateLbl.setBounds(20, 48, 74, 51);
 		frame.getContentPane().add(dateLbl);
 		
 		dateQtyLbl = new JLabel(travel.getDate());
-		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		dateQtyLbl.setBounds(676, 631, 284, 51);
+		dateQtyLbl.setForeground(new Color(255, 255, 255));
+		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 25));
+		dateQtyLbl.setBounds(99, 48, 320, 51);
 		frame.getContentPane().add(dateQtyLbl);
 		
 		// When this stop button is pushed, the clock is stopped and frame two auto pops up. 
 		// Displays inventory 
 		JButton stopTrvlBtn = new JButton("Stop Travel");
+		stopTrvlBtn.setForeground(new Color(255, 255, 255));
+		stopTrvlBtn.setBackground(new Color(185, 0, 0));
+		stopTrvlBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();
 				trvlStoppedFrame.openStopFrame(dateQtyLbl, foodQtyLbl, rationsQtyLbl, trvlSpeedQtyLbl);
 			}
 		});
-		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		stopTrvlBtn.setBounds(294, 570, 258, 125);
+		stopTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 40));
+		stopTrvlBtn.setBounds(20, 582, 298, 125);
 		frame.getContentPane().add(stopTrvlBtn);
 		
 		//Picture of the trail that the wagon is travelling
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/trailPic.jpg"));
 		JLabel trailImage = new JLabel(icon);
-		trailImage.setBounds(575, 108, 684, 511);
+		trailImage.setOpaque(true);
+		trailImage.setBounds(20, 90, 1233, 305);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
 	}
 }

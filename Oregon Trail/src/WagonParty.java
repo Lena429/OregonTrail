@@ -14,6 +14,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class WagonParty {
 	
 	private boolean starvedPreviousDay = false;
@@ -22,9 +25,10 @@ public class WagonParty {
 	private int health = 0;
 	private ArrayList<WagonMember> people = new ArrayList<>();
 	
-	public WagonParty() {
-		
-	}
+	/**
+	 * creates a wagon party object
+	 */
+	public WagonParty() {}
 	
 	/**
 	 * adds a member to the people arrayList
@@ -35,30 +39,28 @@ public class WagonParty {
 	}
 	
 	/**
-	 * removes a member from the people arrayList
+	 * removes a member from the people arrayList and displays death
 	 * @param person - the person to be removed
+	 * @param frame - the frame to center the message on
 	 */
-	public void removeMember(WagonMember person) {
+	public void removeMember(WagonMember person, JFrame frame) {
+		person.displayMemberDeath(frame);
 		people.remove(person);
 	}
 	
 	/**
-	 * removes a random member from the people arrayList and returns
-	 * if their name to report to the user
-	 * @return name - the name of the member killed
+	 * removes a random member from the people arrayList and displays
+	 * death message
+	 * @param frame - the frame to center the message on
 	 */
-	public String removeRandomMember() {
+	public void removeRandomMember(JFrame frame) {
 		// generates a random index
 		Random rnd = new Random();
 		int index = rnd.nextInt(people.size());
 		
-		// get the name of the player killed
-		String name = people.get(index).getName();
-		
-		// removes that person
+		// displays who died and remove that person
+		people.get(index).displayMemberDeath(frame);
 		people.remove(index);
-		
-		return name;
 	}
 	
 	/**
@@ -104,7 +106,7 @@ public class WagonParty {
 	 * @param weather - the current weather for the day
 	 * @param clothes - the sets of clothes the user has
 	 */
-	public void loseHealth(Travel travel, boolean outOfFood, String weather, Equipment clothes ) {
+	public void loseHealth(TravelManager travel, boolean outOfFood, String weather, Equipment clothes ) {
 		// loses health based on food status
 		if(!outOfFood) {
 			switch (travel.getRations()) {
@@ -185,7 +187,7 @@ public class WagonParty {
 		else if(health < 105) displayHealth = "Poor";
 		else 				  displayHealth = "Very Poor";
 		
-		return health + displayHealth;
+		return displayHealth;
 	}
 	
 	/**
@@ -194,5 +196,18 @@ public class WagonParty {
 	 */
 	public int getHealth() {
 		return health;
+	}
+	
+	/**
+	 * displays a dialogue box that lets the user know all the members have died.
+	 * also ends the game
+	 * @param frame - the frame to center the message on
+	 */
+	public void displayGameOver(JFrame frame) {
+		String text = "All members of the wagon have perished :(";
+		String title = "Game Over!";
+		int type = JOptionPane.ERROR_MESSAGE;
+		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		if(response == JOptionPane.OK_OPTION) System.exit(1);
 	}
 }
