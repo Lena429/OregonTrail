@@ -17,12 +17,15 @@ import javax.swing.SwingConstants;
 
 
 public class teatime {
-
+	private WagonParty wagon;
 	private JFrame frame;
 	private List<TeaIngredient> availableIngredients;
     private List<TeaIngredient> inventory;
     private Random random;
     
+ public teatime(WagonParty wagon ) {
+    	this.wagon = wagon;
+    }
     
     private static class TeaIngredient {
         private String name;
@@ -42,17 +45,16 @@ public class teatime {
         }
     }
     
- // Initialize tea ingredients
+    // Initialize tea ingredients
     private void initializeIngredients() {
-        availableIngredients.add(new TeaIngredient("Lavender", ""));
-        availableIngredients.add(new TeaIngredient("Hyssop", ""));
-        availableIngredients.add(new TeaIngredient("Lemon Balm", ""));
+        availableIngredients.add(new TeaIngredient("Lavender", "You feel relaxed"));
+        availableIngredients.add(new TeaIngredient("Hyssop", "You feel energized"));
+        availableIngredients.add(new TeaIngredient("Lemon Balm", "Your stomach feels better"));
         // Add more ingredients as needed
     }
     
     // Method to simulate foraging for tea ingredients
     public TeaIngredient forage() {
-        //System.out.println("You forage for tea ingredients...");
         // Simulate finding a random ingredient
         TeaIngredient foundIngredient = availableIngredients.get(random.nextInt(availableIngredients.size()));
         inventory.add(foundIngredient);
@@ -70,15 +72,13 @@ public class teatime {
         inventory.remove(selectedIngredient);
         return selectedIngredient;
     }
+    
 
-	public teatime() {
-		initialize();
-	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void openTeaTime() {
 		availableIngredients = new ArrayList<>();
         inventory = new ArrayList<>();
         random = new Random();
@@ -131,11 +131,6 @@ public class teatime {
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1_1.setBounds(852, 505, 202, 63);
 		frame.getContentPane().add(btnNewButton_1_1);
-		
-		
-		
-		
-		
 		
 	}
 }

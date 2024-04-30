@@ -47,6 +47,7 @@ public class Interface {
 	private Wagon wagon	  		= new Wagon();
 	private WagonParty health   = new WagonParty();
 	private Store store;
+	private teatime teatime;
 	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 45, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
@@ -225,7 +226,7 @@ public class Interface {
 		        	break;
 
 		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
-		        	fortFrame.openFortFrame((Fort) location, store);		  // displays fort frame
+		        	fortFrame.openFortFrame((Fort) location, store, teatime);		  // displays fort frame
 		        	break;
 		        }else if(location instanceof Landmarks) {
 		        	landmarkFrame.openLandmarkFrame((Landmarks)location);
