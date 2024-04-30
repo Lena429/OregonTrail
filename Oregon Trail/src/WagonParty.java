@@ -22,9 +22,10 @@ public class WagonParty {
 	private int health = 0;
 	private ArrayList<WagonMember> people = new ArrayList<>();
 	
-	public WagonParty() {
-		
-	}
+	/**
+	 * creates a wagon party object
+	 */
+	public WagonParty() {}
 	
 	/**
 	 * adds a member to the people arrayList
