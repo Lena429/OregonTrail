@@ -217,13 +217,16 @@ public class Interface {
 		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store);		  // displays fort frame
 		        	break;
-		        }else if(location instanceof Landmarks) {
-		        	landmarkFrame.openLandmarkFrame((Landmarks)location);
+		        } else if(location instanceof Landmarks) {					  // checks to see if it is an instance of landmark 
+		        	landmarkFrame.openLandmarkFrame((Landmarks)location);	  // displays landmark frame
 		        	break;
-		        }
-		        else {
-		        	frameFour.setVisible(true); 							  // is this for location?
-		        	//riverName.setText("testing purposes");
+		        } else {
+		        	// THE USER HAS WON THE GAME (arrived at the house in Oregon)
+		    		String text = "Congratulations! You successfully traveled the Oregon Trail.";
+		    		String title = "You made it to Oregon!";
+		    		int type = JOptionPane.PLAIN_MESSAGE;
+		    		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		    		if(response == JOptionPane.OK_OPTION) System.exit(1);
 		        }
 		    }
 		}

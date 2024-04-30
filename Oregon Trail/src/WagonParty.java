@@ -169,7 +169,7 @@ public class WagonParty {
 	 * @return false - health is not deadly
 	 */
 	public boolean isHealthDeadly() {
-		if(health > 14) {
+		if(health > 140) {
 			return true;
 		}
 		return false;
@@ -187,7 +187,7 @@ public class WagonParty {
 		else if(health < 105) displayHealth = "Poor";
 		else 				  displayHealth = "Very Poor";
 		
-		return health + displayHealth;
+		return displayHealth;
 	}
 	
 	/**
