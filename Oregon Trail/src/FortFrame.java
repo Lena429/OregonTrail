@@ -47,7 +47,7 @@ public class FortFrame {
 	 * @param currentFort
 	 * @param store
 	 */
-	public void openFortFrame(Fort currentFort, Store store, teatime teatime) {
+	public void openFortFrame(Fort currentFort, Store store, TeaTime teatime) {
         // Creates the frame for fort objects and actions
 		JFrame frameThree = new JFrame();
 		frameThree.setBounds(100, 100, 1289, 767);
@@ -140,6 +140,7 @@ public class FortFrame {
 			}
 		});
 		leaveBtn.setBounds(31, 370, 133, 21);
+		
 		//player decides to check wagon inventory while in the fort
 		JButton inventoryBtn = new JButton("Inventory");
 		inventoryBtn.addActionListener(new ActionListener() {
@@ -167,6 +168,7 @@ public class FortFrame {
 				teatime.openTeaTime();
 			}
 		});
+		teaTimeBtn.setBounds(31,450,133,21);
 		
 		// Greeting header for the fort frames
 	    JLabel fortName = new JLabel("Welcome to " + currentFort.getName());

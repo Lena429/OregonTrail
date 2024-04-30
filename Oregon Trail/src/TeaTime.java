@@ -1,4 +1,4 @@
-import java.awt.EventQueue;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,21 +9,19 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Color;
 import javax.swing.SwingConstants;
 
 
 
 
-public class teatime {
+public class TeaTime {
 	private WagonParty wagon;
 	private JFrame frame;
 	private List<TeaIngredient> availableIngredients;
     private List<TeaIngredient> inventory;
     private Random random;
     
- public teatime(WagonParty wagon ) {
+ public TeaTime(WagonParty wagon ) {
     	this.wagon = wagon;
     }
     
@@ -87,7 +85,9 @@ public class teatime {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		frame.getContentPane().setLayout(null);
+		
 		
 		JLabel lblNewLabel = new JLabel("Tea Time on the Trail");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -115,7 +115,7 @@ public class teatime {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TeaIngredient brewedIngredient = brewTea();
-				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." );
+				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect() );
 				}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));
