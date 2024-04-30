@@ -44,9 +44,9 @@ public class teatime {
     
  // Initialize tea ingredients
     private void initializeIngredients() {
-        availableIngredients.add(new TeaIngredient("Chamomile", "Relaxation"));
-        availableIngredients.add(new TeaIngredient("Peppermint", "Refreshing"));
-        availableIngredients.add(new TeaIngredient("Nettle", "Energizing"));
+        availableIngredients.add(new TeaIngredient("Lavender", ""));
+        availableIngredients.add(new TeaIngredient("Hyssop", ""));
+        availableIngredients.add(new TeaIngredient("Lemon Balm", ""));
         // Add more ingredients as needed
     }
     
@@ -71,25 +71,6 @@ public class teatime {
         return selectedIngredient;
     }
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					teatime window = new teatime();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public teatime() {
 		initialize();
 	}
