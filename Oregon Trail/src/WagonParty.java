@@ -44,21 +44,31 @@ public class WagonParty {
 	
 	/**
 	 * removes a random member from the people arrayList and returns
-	 * if they were the last one alive
-	 * @return true - if they were the last alive
-	 * @return false - if there are others alive
+	 * if their name to report to the user
+	 * @return name - the name of the member killed
 	 */
-	public boolean removeRandomMember() {
+	public String removeRandomMember() {
 		// generates a random index
 		Random rnd = new Random();
 		int index = rnd.nextInt(people.size());
 		
+		// get the name of the player killed
+		String name = people.get(index).getName();
+		
 		// removes that person
 		people.remove(index);
 		
-		// checks if they were the last alive
-		if(people.size() == 0) return true;
-		return false;
+		return name;
+	}
+	
+	/**
+	 * checks if there are still people alive
+	 * @return true - if there are still others alive
+	 * @return false - if there is no one left
+	 */
+	public boolean membersStillAlive() {
+		if(people.size() == 0) return false;
+		return true;
 	}
 	
 	/**
@@ -72,23 +82,32 @@ public class WagonParty {
 	/**
 	 * recovers 10% of the wagon health
 	 */
-	public void recoverHealth() {
+	public void recoverDailyHealth() {
 		health = (int) (health * .9);
+	}
+	
+	/**
+	 * recovers the specified amount of health
+	 * @param recoveredHealth - the value to recover
+	 */
+	public void recoverHealth(int recoveredHealth) {
+		if(recoveredHealth > health) health = 0;
+		else health -= recoveredHealth;
 	}
 	
 	/**
 	 * calculates how much health the wagon party loses based on factors like food, 
 	 * weather, and diseases/injuries
 	 * Note: recoverHealth should be called first
-	 * @param rations - the consumable rate chosen by the user
+	 * @param travel  - the reference to the travel object to access pace and rations
 	 * @param hasFood - if the user has food or not
 	 * @param weather - the current weather for the day
-	 * @param pace    - the speed at which the party is travelling
+	 * @param clothes - the sets of clothes the user has
 	 */
-	public void loseHealth(int rations, boolean outOfFood, String weather, int pace) {
+	public void loseHealth(Travel travel, boolean outOfFood, String weather, Equipment clothes ) {
 		// loses health based on food status
 		if(!outOfFood) {
-			switch (rations) {
+			switch (travel.getRations()) {
 				case 1: health +=4; break; // Bare Bones
 				case 2: health +=2; break; // Meager
 				case 3: break;			   // Filling
@@ -113,14 +132,27 @@ public class WagonParty {
 			case "Hot":		  health += 1; break;
 			case "Cool":							// cool and warm are optimal temps
 			case "Warm": 	  break;
-			case "Cold": 	  health += 2; break;
+			case "Cold":
+				// adjust health based on clothing quantity
+				if(2 * people.size() < clothes.getQuantity())
+					// adequate clothing
+					break;
+				else if(people.size() < clothes.getQuantity()) {
+					// only 1 set of clothes per person
+					health += 1;
+					break;
+				} else {
+					// not enough clothes for everyone
+					health += 2;
+					break;
+				}
 			case "Very Cold": health += 4; break;
 		}
 		
 		// loses health based on pace
-		if(pace < 15) 		health += 2;	// steady
-		else if (pace < 18) health += 4;	// strenuous
-		else 				health += 6;	// grueling
+		if(travel.getPace() < 15) 		health += 2;	// steady
+		else if (travel.getPace() < 18) health += 4;	// strenuous
+		else 							health += 6;	// grueling
 		
 		// loses health based on diseases/injuries of members
 		for(WagonMember person : people) {
@@ -135,14 +167,14 @@ public class WagonParty {
 	 * @return false - health is not deadly
 	 */
 	public boolean isHealthDeadly() {
-		if(health > 140) {
+		if(health > 20) {		// lowered for testing
 			return true;
 		}
 		return false;
 	}
 	
 	/**
-	 * Displays the health as a string from Good to Very Poor
+	 * displays the health as a string from Good to Very Poor
 	 * @return displayHealth - the string describing health
 	 */
 	public String displayHealth() {
@@ -154,5 +186,13 @@ public class WagonParty {
 		else 				  displayHealth = "Very Poor";
 		
 		return health + displayHealth;
+	}
+	
+	/**
+	 * returns the health of the wagon
+	 * @return health - the overall health of the wagon
+	 */
+	public int getHealth() {
+		return health;
 	}
 }
