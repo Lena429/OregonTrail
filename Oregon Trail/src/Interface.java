@@ -176,22 +176,12 @@ public class Interface {
 		if(health.isHealthDeadly()) {
 			// update the health label and kill a random member
 			healthQtyLbl.setText("Deadly");
-			String name = health.removeRandomMember();
+			health.removeRandomMember(frame);
 			
-			if(!health.membersStillAlive()) {
+			if(!health.membersStillAlive())
 				// if they are the last member remaining, end the game
-				String text = "All members of the wagon have perished :(";
-				String title = "Game Over!";
-				int type = JOptionPane.ERROR_MESSAGE;
-				int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
-				if(response == JOptionPane.OK_OPTION) System.exit(1);
-			} else {
-				// notify user of the member that died
-				String text = name + " has died.";
-				String title = "OH NO!";
-				int type = JOptionPane.ERROR_MESSAGE;
-				JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
-			}
+				health.displayGameOver(frame);
+
 		} else healthQtyLbl.setText(health.displayHealth()); // update health
 		
 		// Determines if the weather label needs to be updated

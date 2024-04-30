@@ -14,6 +14,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class WagonParty {
 	
 	private boolean starvedPreviousDay = false;
@@ -36,30 +39,28 @@ public class WagonParty {
 	}
 	
 	/**
-	 * removes a member from the people arrayList
+	 * removes a member from the people arrayList and displays death
 	 * @param person - the person to be removed
+	 * @param frame - the frame to center the message on
 	 */
-	public void removeMember(WagonMember person) {
+	public void removeMember(WagonMember person, JFrame frame) {
+		person.displayMemberDeath(frame);
 		people.remove(person);
 	}
 	
 	/**
-	 * removes a random member from the people arrayList and returns
-	 * if their name to report to the user
-	 * @return name - the name of the member killed
+	 * removes a random member from the people arrayList and displays
+	 * death message
+	 * @param frame - the frame to center the message on
 	 */
-	public String removeRandomMember() {
+	public void removeRandomMember(JFrame frame) {
 		// generates a random index
 		Random rnd = new Random();
 		int index = rnd.nextInt(people.size());
 		
-		// get the name of the player killed
-		String name = people.get(index).getName();
-		
-		// removes that person
+		// displays who died and remove that person
+		people.get(index).displayMemberDeath(frame);
 		people.remove(index);
-		
-		return name;
 	}
 	
 	/**
@@ -168,7 +169,7 @@ public class WagonParty {
 	 * @return false - health is not deadly
 	 */
 	public boolean isHealthDeadly() {
-		if(health > 140) {
+		if(health > 14) {
 			return true;
 		}
 		return false;
@@ -195,5 +196,18 @@ public class WagonParty {
 	 */
 	public int getHealth() {
 		return health;
+	}
+	
+	/**
+	 * displays a dialogue box that lets the user know all the members have died.
+	 * also ends the game
+	 * @param frame - the frame to center the message on
+	 */
+	public void displayGameOver(JFrame frame) {
+		String text = "All members of the wagon have perished :(";
+		String title = "Game Over!";
+		int type = JOptionPane.ERROR_MESSAGE;
+		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		if(response == JOptionPane.OK_OPTION) System.exit(1);
 	}
 }
