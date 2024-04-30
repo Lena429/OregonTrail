@@ -15,23 +15,26 @@ import javax.swing.SwingConstants;
 
 
 public class TeaTime {
-	private WagonParty wagon;
+	private WagonParty health;
 	private JFrame frame;
 	private List<TeaIngredient> availableIngredients;
     private List<TeaIngredient> inventory;
     private Random random;
     
- public TeaTime(WagonParty wagon ) {
-    	this.wagon = wagon;
+    
+ public TeaTime(WagonParty health ) {
+    	this.health = health;
     }
     
     private static class TeaIngredient {
         private String name;
         private String effect;
-
-        public TeaIngredient(String name, String effect) {
+        private int recover;
+        
+        public TeaIngredient(String name, String effect, int recover) {
             this.name = name;
             this.effect = effect;
+            this.recover = recover;
         }
 
         public String getName() {
@@ -41,13 +44,16 @@ public class TeaTime {
         public String getEffect() {
             return effect;
         }
+        public int getHealth() {
+        	return recover;
+        }
     }
     
     // Initialize tea ingredients
     private void initializeIngredients() {
-        availableIngredients.add(new TeaIngredient("Lavender", "You feel relaxed"));
-        availableIngredients.add(new TeaIngredient("Hyssop", "You feel energized"));
-        availableIngredients.add(new TeaIngredient("Lemon Balm", "Your stomach feels better"));
+        availableIngredients.add(new TeaIngredient("Lavender", "You feel relaxed", 1));
+        availableIngredients.add(new TeaIngredient("Hyssop", "You feel energized", 2));
+        availableIngredients.add(new TeaIngredient("Lemon Balm", "Your stomach feels better", 3));
         // Add more ingredients as needed
     }
     
@@ -105,6 +111,7 @@ public class TeaTime {
 			public void actionPerformed(ActionEvent e) {
 				TeaIngredient herb = forage();
 				lblNewLabel_1.setText("You found: " + herb.getName());
+				
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -115,7 +122,9 @@ public class TeaTime {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TeaIngredient brewedIngredient = brewTea();
-				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect() );
+				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect()
+				+" \n You gain: " + brewedIngredient.getHealth() + " health");
+				health.recoverHealth(brewedIngredient.getHealth());
 				}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));

@@ -162,6 +162,8 @@ public class FortFrame {
 		});
 		inventoryBtn.setBounds(31, 390, 133, 21);
 		
+		
+		//player decides to look for tea
 		JButton teaTimeBtn = new JButton("Tea Time");
 		teaTimeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

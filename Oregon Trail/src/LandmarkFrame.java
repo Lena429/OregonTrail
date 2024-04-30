@@ -22,7 +22,7 @@ public class LandmarkFrame {
 		this.locations = locations;
 	}
 	
-	public void openLandmarkFrame(Landmarks currentLandmark) {
+	public void openLandmarkFrame(Landmarks currentLandmark, TeaTime teaTime) {
 		//frame for the landmarks and the interactions to be had
 		JFrame frameFive = new JFrame();
 		frameFive.setBounds(100, 100, 1289, 767);
@@ -84,6 +84,15 @@ public class LandmarkFrame {
 		});
 		leaveBtn.setBounds(31, 370, 133, 21);
 		
+		//player decides to look for tea
+		JButton teaTimeBtn = new JButton("Tea Time");
+			teaTimeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				teaTime.openTeaTime();
+			}
+		});
+		teaTimeBtn.setBounds(31,450,133,21);
+		
 		
 		JPanel landPanel = new JPanel();
 		landPanel.setLayout(null);
@@ -94,6 +103,7 @@ public class LandmarkFrame {
 		landPanel.add(dateLbl_3);
 		landPanel.add(talkBtn);
 		landPanel.add(leaveBtn);
+		landPanel.add(teaTimeBtn);
 		frameFive.getContentPane().add(landPanel);
 		
 	}
