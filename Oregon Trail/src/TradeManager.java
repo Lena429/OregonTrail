@@ -10,7 +10,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Trade {
+public class TradeManager {
 	
 	private Random rnd = new Random();
 	private String trader = "";
@@ -24,7 +24,7 @@ public class Trade {
 	/**
 	 * Creates a trade object
 	 */
-	Trade(){}
+	TradeManager(){}
 	
 	/**
 	 * randomly determines who the user will trade with

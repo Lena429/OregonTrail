@@ -30,7 +30,7 @@ public class Store {
 	private int foodCost = 0;
 	private int wheelCost = 0;
 	private int clothesCost = 0;
-	private int blanketCost = 0;
+	private int oxCost = 0;
 	private int tongueCost = 0;
 	private int axleCost = 0;
 	private int waterCost = 0;
@@ -38,7 +38,7 @@ public class Store {
 	
 	//trying something with prices
 	private int foodPrice = 20;
-	private int blanketPrice = 200;
+	private int oxPrice = 2000;
 	private int clothesPrice = 25;
 	private int wheelPrice = 1000;
 	private int tonguePrice = 1000;
@@ -46,14 +46,14 @@ public class Store {
 	private int waterPrice = 100;
 	
 	
-	private JSlider ClothesAmount;
-	private JSlider FoodAmount;
-	private JSlider WheelAmount;
-	private JSlider WaterAmount;
-	private JSlider AxleAmount;
-	private JSlider TongueAmount;
-	private JSlider BlanketAmount;
-	private JLabel AmountOwed;
+	private JSlider clothesSlider;
+	private JSlider foodSlider;
+	private JSlider wheelSlider;
+	private JSlider waterSlider;
+	private JSlider axleSlider;
+	private JSlider tongueSlider;
+	private JSlider oxSlider;
+	private JLabel amountOwed;
 	private JLabel foodMainLbl;
 	
 	/**
@@ -76,7 +76,7 @@ public class Store {
 	 */
 	public void adjustPrices(Fort fort) {
 		foodPrice *= fort.getPriceFactor();
-		blanketPrice *= fort.getPriceFactor();
+		oxPrice *= fort.getPriceFactor();
 		clothesPrice *= fort.getPriceFactor();
 		wheelPrice  *= fort.getPriceFactor();
 		tonguePrice  *= fort.getPriceFactor();
@@ -92,6 +92,7 @@ public class Store {
 	public void openStoreWindow(boolean initialStore) {
 		JFrame storeWindow = new JFrame();
 		storeWindow.setBounds(100, 100, 1289, 767);
+		storeWindow.setTitle("Store");
 		storeWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
 		storeWindow.setVisible(true);
 		storeWindow.getContentPane().setLayout(null);
@@ -107,11 +108,11 @@ public class Store {
 		foodItem.setBounds(44, 490, 171, 24);
 		storeWindow.getContentPane().add(foodItem);
 		
-		JLabel blanket = new JLabel("Blanket $2");
-		blanket.setHorizontalAlignment(SwingConstants.RIGHT);
-		blanket.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
-		blanket.setBounds(25, 79, 190, 29);
-		storeWindow.getContentPane().add(blanket);
+		JLabel ox = new JLabel("Ox $20");
+		ox.setHorizontalAlignment(SwingConstants.RIGHT);
+		ox.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		ox.setBounds(25, 79, 190, 29);
+		storeWindow.getContentPane().add(ox);
 		
 		JLabel clothes = new JLabel("Clothes $0.25 / pair");
 		clothes.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,144 +161,144 @@ public class Store {
 		moneyLbl.setBounds(165, 15, 150, 29);
 		storeWindow.getContentPane().add(moneyLbl);
 		
-		AmountOwed = new JLabel("0.00");
-		AmountOwed.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		AmountOwed.setBounds(300, 657, 130, 49);
-		storeWindow.getContentPane().add(AmountOwed);
+		amountOwed = new JLabel("0.00");
+		amountOwed.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		amountOwed.setBounds(300, 657, 130, 49);
+		storeWindow.getContentPane().add(amountOwed);
 		
-		FoodAmount = new JSlider();
-		FoodAmount.setSnapToTicks(true);
-		FoodAmount.setMajorTickSpacing(300);
-		FoodAmount.setMaximum(1500);
-		FoodAmount.setValueIsAdjusting(true);
-		FoodAmount.setPaintLabels(true);
-		FoodAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		FoodAmount.setValue(0);
-		FoodAmount.setPaintTicks(true);
-		FoodAmount.setMinorTickSpacing(20);
-		FoodAmount.setBounds(226, 490, 990, 44);
-		FoodAmount.addChangeListener(new ChangeListener() {
+		foodSlider = new JSlider();
+		foodSlider.setSnapToTicks(true);
+		foodSlider.setMajorTickSpacing(300);
+		foodSlider.setMaximum(1500);
+		foodSlider.setValueIsAdjusting(true);
+		foodSlider.setPaintLabels(true);
+		foodSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		foodSlider.setValue(0);
+		foodSlider.setPaintTicks(true);
+		foodSlider.setMinorTickSpacing(20);
+		foodSlider.setBounds(226, 490, 990, 44);
+		foodSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates food cost and total owed
-				foodCost = FoodAmount.getValue() * foodPrice;
+				foodCost = foodSlider.getValue() * foodPrice;
 				updateTotalOwed();			
 			}
 		});
-		storeWindow.getContentPane().add(FoodAmount);
+		storeWindow.getContentPane().add(foodSlider);
 		
-		BlanketAmount = new JSlider();
-		BlanketAmount.setMajorTickSpacing(2);
-		BlanketAmount.setPaintLabels(true);
-		BlanketAmount.setSnapToTicks(true);
-		BlanketAmount.setMaximum(10);
-		BlanketAmount.setValue(0);
-		BlanketAmount.setPaintTicks(true);
-		BlanketAmount.setMinorTickSpacing(1);
-		BlanketAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		BlanketAmount.setBounds(234, 77, 982, 44);
-		BlanketAmount.addChangeListener(new ChangeListener() {
+		oxSlider = new JSlider();
+		oxSlider.setMajorTickSpacing(2);
+		oxSlider.setPaintLabels(true);
+		oxSlider.setSnapToTicks(true);
+		oxSlider.setMaximum(10);
+		oxSlider.setValue(0);
+		oxSlider.setPaintTicks(true);
+		oxSlider.setMinorTickSpacing(1);
+		oxSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		oxSlider.setBounds(234, 77, 982, 44);
+		oxSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				blanketCost = BlanketAmount.getValue() * blanketPrice;
+				oxCost = oxSlider.getValue() * oxPrice;
 				updateTotalOwed();	
 			}
 		});
-		storeWindow.getContentPane().add(BlanketAmount);
+		storeWindow.getContentPane().add(oxSlider);
 		
-		ClothesAmount = new JSlider();
-		ClothesAmount.setMajorTickSpacing(2);
-		ClothesAmount.setValue(0);
-		ClothesAmount.setSnapToTicks(true);
-		ClothesAmount.setPaintTicks(true);
-		ClothesAmount.setPaintLabels(true);
-		ClothesAmount.setMinorTickSpacing(1);
-		ClothesAmount.setMaximum(20);
-		ClothesAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ClothesAmount.setBounds(234, 156, 982, 44);
-		ClothesAmount.addChangeListener(new ChangeListener() {
+		clothesSlider = new JSlider();
+		clothesSlider.setMajorTickSpacing(2);
+		clothesSlider.setValue(0);
+		clothesSlider.setSnapToTicks(true);
+		clothesSlider.setPaintTicks(true);
+		clothesSlider.setPaintLabels(true);
+		clothesSlider.setMinorTickSpacing(1);
+		clothesSlider.setMaximum(20);
+		clothesSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		clothesSlider.setBounds(234, 156, 982, 44);
+		clothesSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				clothesCost = ClothesAmount.getValue() * clothesPrice;
+				clothesCost = clothesSlider.getValue() * clothesPrice;
 				updateTotalOwed();	
 			}
 		});
-		storeWindow.getContentPane().add(ClothesAmount);
+		storeWindow.getContentPane().add(clothesSlider);
 		
-		WheelAmount = new JSlider();
-		WheelAmount.setValue(0);
-		WheelAmount.setSnapToTicks(true);
-		WheelAmount.setPaintTicks(true);
-		WheelAmount.setPaintLabels(true);
-		WheelAmount.setMinorTickSpacing(1);
-		WheelAmount.setMaximum(10);
-		WheelAmount.setMajorTickSpacing(2);
-		WheelAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		WheelAmount.setBounds(234, 245, 982, 44);
-		WheelAmount.addChangeListener(new ChangeListener() {
+		wheelSlider = new JSlider();
+		wheelSlider.setValue(0);
+		wheelSlider.setSnapToTicks(true);
+		wheelSlider.setPaintTicks(true);
+		wheelSlider.setPaintLabels(true);
+		wheelSlider.setMinorTickSpacing(1);
+		wheelSlider.setMaximum(10);
+		wheelSlider.setMajorTickSpacing(2);
+		wheelSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		wheelSlider.setBounds(234, 245, 982, 44);
+		wheelSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates wheel cost and total owed
-				wheelCost = WheelAmount.getValue() * wheelPrice;
+				wheelCost = wheelSlider.getValue() * wheelPrice;
 				updateTotalOwed();	
 			}
 		});
-		storeWindow.getContentPane().add(WheelAmount);
+		storeWindow.getContentPane().add(wheelSlider);
 		
-		TongueAmount = new JSlider();
-		TongueAmount.setValue(0);
-		TongueAmount.setSnapToTicks(true);
-		TongueAmount.setPaintTicks(true);
-		TongueAmount.setPaintLabels(true);
-		TongueAmount.setMinorTickSpacing(1);
-		TongueAmount.setMaximum(10);
-		TongueAmount.setMajorTickSpacing(2);
-		TongueAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		TongueAmount.setBounds(234, 330, 982, 44);
-		TongueAmount.addChangeListener(new ChangeListener() {
+		tongueSlider = new JSlider();
+		tongueSlider.setValue(0);
+		tongueSlider.setSnapToTicks(true);
+		tongueSlider.setPaintTicks(true);
+		tongueSlider.setPaintLabels(true);
+		tongueSlider.setMinorTickSpacing(1);
+		tongueSlider.setMaximum(10);
+		tongueSlider.setMajorTickSpacing(2);
+		tongueSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tongueSlider.setBounds(234, 330, 982, 44);
+		tongueSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				tongueCost = TongueAmount.getValue() * tonguePrice;
+				tongueCost = tongueSlider.getValue() * tonguePrice;
 				updateTotalOwed();	
 			}
 		});
-		storeWindow.getContentPane().add(TongueAmount);
+		storeWindow.getContentPane().add(tongueSlider);
 		
-		AxleAmount = new JSlider();
-		AxleAmount.setValue(0);
-		AxleAmount.setSnapToTicks(true);
-		AxleAmount.setPaintTicks(true);
-		AxleAmount.setPaintLabels(true);
-		AxleAmount.setMinorTickSpacing(1);
-		AxleAmount.setMaximum(10);
-		AxleAmount.setMajorTickSpacing(2);
-		AxleAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		AxleAmount.setBounds(234, 410, 982, 44);
-		AxleAmount.addChangeListener(new ChangeListener() {
+		axleSlider = new JSlider();
+		axleSlider.setValue(0);
+		axleSlider.setSnapToTicks(true);
+		axleSlider.setPaintTicks(true);
+		axleSlider.setPaintLabels(true);
+		axleSlider.setMinorTickSpacing(1);
+		axleSlider.setMaximum(10);
+		axleSlider.setMajorTickSpacing(2);
+		axleSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		axleSlider.setBounds(234, 410, 982, 44);
+		axleSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates clothes cost and total owed
-				axleCost = AxleAmount.getValue() * axlePrice;
+				axleCost = axleSlider.getValue() * axlePrice;
 				updateTotalOwed();	
 			}
-		});		storeWindow.getContentPane().add(AxleAmount);
+		});		storeWindow.getContentPane().add(axleSlider);
 		
-		WaterAmount = new JSlider();
-		WaterAmount.setValueIsAdjusting(true);
-		WaterAmount.setValue(0);
-		WaterAmount.setSnapToTicks(true);
-		WaterAmount.setPaintTicks(true);
-		WaterAmount.setPaintLabels(true);
-		WaterAmount.setMinorTickSpacing(20);
-		WaterAmount.setMaximum(1500);
-		WaterAmount.setMajorTickSpacing(300);
-		WaterAmount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		WaterAmount.setBounds(226, 571, 990, 44);
-		WaterAmount.addChangeListener(new ChangeListener() {
+		waterSlider = new JSlider();
+		waterSlider.setValueIsAdjusting(true);
+		waterSlider.setValue(0);
+		waterSlider.setSnapToTicks(true);
+		waterSlider.setPaintTicks(true);
+		waterSlider.setPaintLabels(true);
+		waterSlider.setMinorTickSpacing(20);
+		waterSlider.setMaximum(1500);
+		waterSlider.setMajorTickSpacing(300);
+		waterSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		waterSlider.setBounds(226, 571, 990, 44);
+		waterSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				// updates food cost and total owed
-				waterCost = WaterAmount.getValue() * waterPrice;
+				waterCost = waterSlider.getValue() * waterPrice;
 				updateTotalOwed();			
 			}
 		});
-		storeWindow.getContentPane().add(WaterAmount);
+		storeWindow.getContentPane().add(waterSlider);
 		
 		JButton buyButton = new JButton("Buy");
 		buyButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
@@ -347,7 +348,7 @@ public class Store {
 	 */
 	public void resetPrices() {
 		foodPrice = 20;
-		blanketPrice = 200;
+		oxPrice = 2000;
 		clothesPrice = 25;
 		wheelPrice = 1000;
 		tonguePrice = 1000;
@@ -359,9 +360,9 @@ public class Store {
 	 * updates the amount owed label to be properly formatted
 	 */
 	private void updateTotalOwed() {
-        totalCost = foodCost + wheelCost + clothesCost + blanketCost + tongueCost + axleCost + waterCost;
+        totalCost = foodCost + wheelCost + clothesCost + oxCost + tongueCost + axleCost + waterCost;
         double formattedAmount = totalCost / 100.0; // Convert to double for decimal formatting
-        AmountOwed.setText(String.format("%.2f", formattedAmount));
+        amountOwed.setText(String.format("%.2f", formattedAmount));
     }
 	
 	/**
@@ -381,13 +382,13 @@ public class Store {
 	 */
 	private void updateSupplies() {
 	    // Get the values from the sliders
-	    int foodAmount = FoodAmount.getValue();
-	    int wheelAmount = WheelAmount.getValue();
-	    int clothesAmount = ClothesAmount.getValue();
-	    int tongueAmount = TongueAmount.getValue();
-	    int axleAmount = AxleAmount.getValue();
-	    int waterAmount = WaterAmount.getValue();
-	    int blanketAmount = BlanketAmount.getValue();
+	    int foodAmount = foodSlider.getValue();
+	    int wheelAmount = wheelSlider.getValue();
+	    int clothesAmount = clothesSlider.getValue();
+	    int tongueAmount = tongueSlider.getValue();
+	    int axleAmount = axleSlider.getValue();
+	    int waterAmount = waterSlider.getValue();
+	    int oxAmount = oxSlider.getValue();
 
 
 	    // Determines if any of a certain item was bought
@@ -457,14 +458,14 @@ public class Store {
 					break;
 				}
 	    }
-	    if (blanketAmount > 0) {
+	    if (oxAmount > 0) {
 	    	// Wagon wheel was bought, so add it to inventory
-	        String blanket = "Blankets";
+	        String ox = "Oxen";
 	        
 	        // adds the item to the wagon
 	        for (Equipment item: inventory)
-		    	if (blanket.equals(item.getName())) {
-					wagon.addItemQty(item, blanketAmount);
+		    	if (ox.equals(item.getName())) {
+					wagon.addItemQty(item, oxAmount);
 					break;
 				}
 	    }

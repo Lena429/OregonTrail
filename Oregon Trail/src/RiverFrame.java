@@ -23,7 +23,7 @@ public class RiverFrame {
 	
 	private Money bank;
 	private ArrayList<Location> locations;
-	private Travel travel;
+	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food; 
 	
@@ -33,7 +33,7 @@ public class RiverFrame {
 	 * @param bank
 	 */
 
-	public RiverFrame(ArrayList<Location> locations, Money bank, Travel travel) {
+	public RiverFrame(ArrayList<Location> locations, Money bank, TravelManager travel) {
 		this.locations = locations;
 		this.bank = bank;
 		this.travel = travel; 

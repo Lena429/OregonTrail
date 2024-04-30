@@ -5,6 +5,7 @@
  * @version
  * 
  */
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,7 @@ import javax.swing.SwingConstants;
 
 public class StopFrame {
 	
-	private Travel travel;
+	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
 	private Money bank;
@@ -33,13 +34,14 @@ public class StopFrame {
 	 * @param food
 	 * @param bank
 	 */
-	public StopFrame(Travel travel, Wagon wagon, Equipment food, Money bank) {
+	public StopFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
 		this.bank = bank;
 	}
 	
+	// THE FOOD IN REST NEEDS TO BE BASED ON PEOPLE ALIVE
 	/**
 	 * 
 	 * @param dateMainLbl
@@ -48,13 +50,17 @@ public class StopFrame {
 	 * @param paceMainLbl
 	 */
 	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl) {
-		Trade offer	= new Trade();
+		TradeManager offer	= new TradeManager();
 		
 		JFrame frame = new JFrame();
 		frame.setBounds(100,100,1289,767);
 		frame.setTitle("OPTIONS");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 0, 0));
+		panel.setLayout(null);
 		
 		// ComboBox for miles per day/pace
 		JComboBox<String> paceComboBox= new JComboBox<String>();
@@ -65,8 +71,9 @@ public class StopFrame {
 			}
 		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
-		paceComboBox.setBounds(300, 313, 152, 54);
+		paceComboBox.setBounds(930, 227, 152, 54);
 		paceComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		panel.add(paceComboBox);
 
 		// ComboBox for rations/how much the user would like to eat per day 
 		JComboBox<String> rationsComboBox = new JComboBox<String>();
@@ -77,58 +84,79 @@ public class StopFrame {
 			}
 		});
 		rationsComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Bare Bones", "Meager", "Filling"}));
-		rationsComboBox.setBounds(300, 200, 220, 54);
+		rationsComboBox.setBounds(930, 132, 220, 54);
 		rationsComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		panel.add(rationsComboBox);
 
 		// Inventory of the wagon 
-		JTextArea inventory = new JTextArea("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
+		JTextArea inventory = new JTextArea(wagon.displayingInventory() + "\n" + bank.displayMoney());
+		inventory.setForeground(new Color(255, 255, 255));
+		inventory.setOpaque(false);
 		inventory.setEditable(false);
 		inventory.setWrapStyleWord(true);
-		inventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		inventory.setBounds(575, 108, 671, 505);
+		inventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 34));
+		inventory.setBounds(110, 185, 517, 477);
+		panel.add(inventory);
+		
+		JLabel inventoryLbl = new JLabel("Inventory:");
+		inventoryLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		inventoryLbl.setForeground(Color.WHITE);
+		inventoryLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 36));
+		inventoryLbl.setBounds(110, 130, 200, 54);
+		panel.add(inventoryLbl);
 		
 		// Label for frame two changing rations combobox
 		JLabel changeRatLbl = new JLabel("Change Rations:");
+		changeRatLbl.setForeground(new Color(255, 255, 255));
 		changeRatLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changeRatLbl.setBounds(10, 187, 275, 86);
+		changeRatLbl.setBounds(640, 116, 275, 86);
 		changeRatLbl.setHorizontalAlignment(SwingConstants.TRAILING);
+		panel.add(changeRatLbl);
 		
 		// Label for frame two changing pace combobox
 		JLabel changePaceLbl = new JLabel("Change Pace:");
+		changePaceLbl.setForeground(new Color(255, 255, 255));
 		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changePaceLbl.setBounds(10, 300, 275, 86);
+		changePaceLbl.setBounds(640, 211, 275, 86);
 		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
+		panel.add(changePaceLbl);
 
 		// Label for frame two date label
-		JLabel dateLbl_2 = new JLabel("Date:");
-		dateLbl_2.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		dateLbl_2.setBounds(586, 631, 93, 51);
+		JLabel dateLbl = new JLabel("Date:");
+		dateLbl.setForeground(new Color(255, 255, 255));
+		dateLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		dateLbl.setBounds(742, 546, 93, 51);
+		panel.add(dateLbl);
 		
-		JLabel dateQtyLbl_2 = new JLabel(travel.getDate());
-		dateQtyLbl_2.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		dateQtyLbl_2.setBounds(676, 631, 284, 51);
+		JLabel dateQtyLbl = new JLabel(travel.getDate());
+		dateQtyLbl.setForeground(new Color(255, 255, 255));
+		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		dateQtyLbl.setBounds(832, 546, 318, 51);
+		panel.add(dateQtyLbl);
 		
 		// A button that will allow you to rest.
 		// When you rest food decreases and a day will pass every time button is pushed.
 		JButton restBtn = new JButton("Rest");
 		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		restBtn.setBounds(180, 521, 189, 62);
+		restBtn.setBounds(787, 437, 295, 86);
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
 				wagon.removeItemQty(food, travel.getRations() * 4); 
 				foodMainLbl.setText(wagon.getConsumableWeight() + "");
-				dateQtyLbl_2.setText(travel.getDate());
+				dateQtyLbl.setText(travel.getDate());
 				dateMainLbl.setText(travel.getDate());
 		        
 				// Update the inventory display so user can see correct food value
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
+				inventory.setText(wagon.displayingInventory() + "\n" + bank.displayMoney());
 			}
 		});
+		panel.add(restBtn);
+
 		
 		JButton tradeBtn = new JButton("Trade");
 		tradeBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		tradeBtn.setBounds(180, 430, 189, 62);
+		tradeBtn.setBounds(787, 318, 295, 86);
 		tradeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// generates the trade offer
@@ -139,9 +167,9 @@ public class StopFrame {
 				travel.updateDate();
 				wagon.removeItemQty(food, travel.getRations() * 4);
 				dateMainLbl.setText(travel.getDate());
-				dateQtyLbl_2.setText(travel.getDate());
+				dateQtyLbl.setText(travel.getDate());
 		        // Update the inventory display so user can see correct food value
-				inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
+				inventory.setText(wagon.displayingInventory() + "\n" + bank.displayMoney());
 				
 				// displays the trade offer in a dialogue box
 				String text = offer.displayTradeOffer();
@@ -153,7 +181,7 @@ public class StopFrame {
 		        if (response == JOptionPane.YES_OPTION) {
 		        	// Yes, add/remove the items and update the inventory display
 		        	offer.tradeAccepted(wagon.getItems(), wagon);
-					inventory.setText("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
+					inventory.setText(wagon.displayingInventory() + "\n" + bank.displayMoney());
 					
 		        } else if (response == JOptionPane.NO_OPTION) {
 		            // No, close the dialogue box
@@ -163,20 +191,24 @@ public class StopFrame {
 		        foodMainLbl.setText(wagon.getConsumableWeight() + "");
 			}
 		});
-		
-		// Panel with added components for frame two 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.add(inventory);
-		panel.add(changePaceLbl);
-		panel.add(paceComboBox);
-		panel.add(changeRatLbl);
-		panel.add(rationsComboBox);
-		panel.add(dateLbl_2);
-		panel.add(dateQtyLbl_2);
-		panel.add(restBtn);
 		panel.add(tradeBtn);
+		
+		JLabel titleLbl = new JLabel("What would you like to do?");
+		titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLbl.setForeground(Color.WHITE);
+		titleLbl.setFont(new Font("Felix Titling", Font.PLAIN, 40));
+		titleLbl.setBounds(227, 21, 797, 69);
+		panel.add(titleLbl);
+		
+		JButton btnContinueTrail = new JButton("Continue Trail");
+		btnContinueTrail.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		btnContinueTrail.setBounds(48, 630, 1170, 75);
+		btnContinueTrail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		panel.add(btnContinueTrail);
 		frame.getContentPane().add(panel);
-
 	}
 }

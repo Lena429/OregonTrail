@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.JComboBox;
 
-public class Travel {
+public class TravelManager {
 	private int rations;
 	private int speed;
 	private int milesTravelled = 0;
@@ -23,7 +23,7 @@ public class Travel {
 	/*
 	 * Creates a Travel object containing default rations (3) and speed (12) values
 	 */
-	public Travel() {	
+	public TravelManager() {	
 		rations = 3;
 		speed = 12;
 	}

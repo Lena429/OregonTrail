@@ -106,7 +106,7 @@ public class WagonParty {
 	 * @param weather - the current weather for the day
 	 * @param clothes - the sets of clothes the user has
 	 */
-	public void loseHealth(Travel travel, boolean outOfFood, String weather, Equipment clothes ) {
+	public void loseHealth(TravelManager travel, boolean outOfFood, String weather, Equipment clothes ) {
 		// loses health based on food status
 		if(!outOfFood) {
 			switch (travel.getRations()) {
