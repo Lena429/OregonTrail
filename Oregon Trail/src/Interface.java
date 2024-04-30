@@ -169,21 +169,28 @@ public class Interface {
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		
 		// regenerate health then lose some
-		health.recoverHealth();
-		health.loseHealth(travel.getRations(), food.outOfFood(), weather.displayTemperature(), travel.getPace());
+		health.recoverDailyHealth();
+		health.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes);
 		
 		// check if the health is deadly
 		if(health.isHealthDeadly()) {
 			// update the health label and kill a random member
-			healthQtyLbl.setText("Death");
+			healthQtyLbl.setText("Deadly");
+			String name = health.removeRandomMember();
 			
-			if(health.removeRandomMember()) {
+			if(!health.membersStillAlive()) {
 				// if they are the last member remaining, end the game
 				String text = "All members of the wagon have perished :(";
 				String title = "Game Over!";
 				int type = JOptionPane.ERROR_MESSAGE;
-				int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.OK_OPTION, type);
+				int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
 				if(response == JOptionPane.OK_OPTION) System.exit(1);
+			} else {
+				// notify user of the member that died
+				String text = name + " has died.";
+				String title = "OH NO!";
+				int type = JOptionPane.ERROR_MESSAGE;
+				JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
 			}
 		} else healthQtyLbl.setText(health.displayHealth()); // update health
 		
