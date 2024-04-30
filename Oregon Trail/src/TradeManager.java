@@ -10,6 +10,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class TradeManager {
 	
 	private Random rnd = new Random();
@@ -175,23 +177,6 @@ public class TradeManager {
 	}
 	
 	/**
-	 * displays the trade offer on a label
-	 * @param tradeLbl - the label to display the trade offer on
-	 */
-	public String displayTradeOffer() {
-		String offer;
-		
-		// checks if there is no trade offer
-		if (gainName.equals("") || qtyLost == 0) {
-			offer = "You cannot find anyone to trade with you.";
-		} else {
-			offer = trader + " wants to give you " + gain + " for " + lose;
-		}
-		
-		return offer;
-	}
-	
-	/**
 	 * Adds and removes the appropriate item quantities for the accepted trade offer
 	 * @param inventory - what the user has in their inventory
 	 * @param wagon - the object that stores the inventory array list
@@ -209,5 +194,34 @@ public class TradeManager {
 		}
 	}
 	
+	/**
+	 * displays the offer as a dialogue box and returns the users response
+	 * @return response - which option yes/no/ok the user clicks
+	 */
+	public int displayOffer() {
+		// generates the offer as a string
+		String offer;
+		int buttonsOfDialogue;
+		// checks if there is no trade offer
+		if (gainName.equals("") || qtyLost == 0) {
+			offer = "You cannot find anyone to trade with you.";
+			// sets the dialogue buttons to just ok
+			buttonsOfDialogue = -1; 
+		} else {
+			offer = trader + " wants to give you " + gain + " for " + lose;
+			// sets the dialogue buttons to yes or no
+			buttonsOfDialogue = 0;
+		}
+		
+		String text = offer;
+		String title = "Trade";
+		int type = JOptionPane.QUESTION_MESSAGE;
+		int response = JOptionPane.showConfirmDialog(null,  text, title, buttonsOfDialogue, type);
+		
+		// ok and yes give the same response value of 0 so adjustments are needed
+		if(buttonsOfDialogue == -1) return -1;
+		
+		return response;
+	}
 
 }

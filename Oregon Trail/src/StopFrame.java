@@ -165,26 +165,21 @@ public class StopFrame {
 				offer.getTrader(travel.getMilesTravelled());
 				offer.getOffer(wagon.getItems());
 				
+				// displays the trade offer in a dialogue box
+				int response = offer.displayOffer();
+				// checks if the user accepted the trade or not
+		        if (response == JOptionPane.YES_OPTION) {
+		        	// Yes, add/remove the items and update the inventory display
+		        	offer.tradeAccepted(wagon.getItems(), wagon);
+		        }
+		        
 				// day increments and food decrements
 				travel.updateDate();
 				wagon.removeItemQty(food, travel.getRations() * 4);
 				dateMainLbl.setText(travel.getDate());
 				dateQtyLbl.setText(travel.getDate());
-		        // Update the inventory display so user can see correct food value
+		        // Update the inventory display so user can see correct values
 				inventory.setText(wagon.displayingInventory() + "\n" + bank.displayMoney());
-				
-				// displays the trade offer in a dialogue box
-				String text = offer.displayTradeOffer();
-				String title = "Trade";
-				int type = JOptionPane.QUESTION_MESSAGE;
-				int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.YES_NO_OPTION, type);
-				
-				// checks if the user accepted the trade or not
-		        if (response == JOptionPane.YES_OPTION) {
-		        	// Yes, add/remove the items and update the inventory display
-		        	offer.tradeAccepted(wagon.getItems(), wagon);
-					inventory.setText(wagon.displayingInventory() + "\n" + bank.displayMoney());
-		        }
 		        
 		        // updates the food label on frame 1
 		        foodMainLbl.setText(wagon.getConsumableWeight() + "");
