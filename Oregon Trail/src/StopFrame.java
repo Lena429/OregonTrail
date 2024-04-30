@@ -6,6 +6,7 @@
  * 
  */
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,7 +72,7 @@ public class StopFrame {
 			}
 		});
 		paceComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"12", "13", "14", "15", "16", "17", "18", "19", "20"}));
-		paceComboBox.setBounds(930, 227, 152, 54);
+		paceComboBox.setBounds(930, 541, 190, 54);
 		paceComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		panel.add(paceComboBox);
 
@@ -84,7 +85,7 @@ public class StopFrame {
 			}
 		});
 		rationsComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Bare Bones", "Meager", "Filling"}));
-		rationsComboBox.setBounds(930, 132, 220, 54);
+		rationsComboBox.setBounds(360, 541, 220, 54);
 		rationsComboBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		panel.add(rationsComboBox);
 
@@ -95,21 +96,21 @@ public class StopFrame {
 		inventory.setEditable(false);
 		inventory.setWrapStyleWord(true);
 		inventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 34));
-		inventory.setBounds(110, 185, 517, 477);
+		inventory.setBounds(107, 145, 484, 375);
 		panel.add(inventory);
 		
 		JLabel inventoryLbl = new JLabel("Inventory:");
 		inventoryLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		inventoryLbl.setForeground(Color.WHITE);
 		inventoryLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 36));
-		inventoryLbl.setBounds(110, 130, 200, 54);
+		inventoryLbl.setBounds(107, 88, 200, 54);
 		panel.add(inventoryLbl);
 		
 		// Label for frame two changing rations combobox
 		JLabel changeRatLbl = new JLabel("Change Rations:");
 		changeRatLbl.setForeground(new Color(255, 255, 255));
 		changeRatLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changeRatLbl.setBounds(640, 116, 275, 86);
+		changeRatLbl.setBounds(75, 541, 275, 54);
 		changeRatLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 		panel.add(changeRatLbl);
 		
@@ -117,7 +118,7 @@ public class StopFrame {
 		JLabel changePaceLbl = new JLabel("Change Pace:");
 		changePaceLbl.setForeground(new Color(255, 255, 255));
 		changePaceLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		changePaceLbl.setBounds(640, 211, 275, 86);
+		changePaceLbl.setBounds(645, 541, 275, 54);
 		changePaceLbl.setHorizontalAlignment(SwingConstants.TRAILING);
 		panel.add(changePaceLbl);
 
@@ -125,20 +126,21 @@ public class StopFrame {
 		JLabel dateLbl = new JLabel("Date:");
 		dateLbl.setForeground(new Color(255, 255, 255));
 		dateLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		dateLbl.setBounds(742, 546, 93, 51);
+		dateLbl.setBounds(726, 469, 93, 51);
 		panel.add(dateLbl);
 		
 		JLabel dateQtyLbl = new JLabel(travel.getDate());
 		dateQtyLbl.setForeground(new Color(255, 255, 255));
 		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		dateQtyLbl.setBounds(832, 546, 318, 51);
+		dateQtyLbl.setBounds(821, 469, 318, 51);
 		panel.add(dateQtyLbl);
 		
 		// A button that will allow you to rest.
 		// When you rest food decreases and a day will pass every time button is pushed.
 		JButton restBtn = new JButton("Rest");
 		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		restBtn.setBounds(787, 437, 295, 86);
+		restBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		restBtn.setBounds(771, 360, 295, 86);
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
@@ -153,10 +155,10 @@ public class StopFrame {
 		});
 		panel.add(restBtn);
 
-		
 		JButton tradeBtn = new JButton("Trade");
 		tradeBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		tradeBtn.setBounds(787, 318, 295, 86);
+		tradeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		tradeBtn.setBounds(771, 248, 295, 86);
 		tradeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// generates the trade offer
@@ -182,9 +184,6 @@ public class StopFrame {
 		        	// Yes, add/remove the items and update the inventory display
 		        	offer.tradeAccepted(wagon.getItems(), wagon);
 					inventory.setText(wagon.displayingInventory() + "\n" + bank.displayMoney());
-					
-		        } else if (response == JOptionPane.NO_OPTION) {
-		            // No, close the dialogue box
 		        }
 		        
 		        // updates the food label on frame 1
@@ -203,12 +202,19 @@ public class StopFrame {
 		JButton btnContinueTrail = new JButton("Continue Trail");
 		btnContinueTrail.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		btnContinueTrail.setBounds(48, 630, 1170, 75);
+		btnContinueTrail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnContinueTrail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
 		panel.add(btnContinueTrail);
-		frame.getContentPane().add(panel);
+		frame.getContentPane().add(panel);		
+		
+		JButton teaBtn = new JButton("Teatime");
+		teaBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		teaBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		teaBtn.setBounds(771, 133, 295, 86);
+		panel.add(teaBtn);
 	}
 }

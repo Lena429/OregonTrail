@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import java.awt.Color;
+import java.awt.Cursor;
 
 public class Interface {
 
@@ -251,6 +252,7 @@ public class Interface {
 		JButton startTrvlBtn = new JButton("Start Travel");
 		startTrvlBtn.setForeground(new Color(255, 255, 255));
 		startTrvlBtn.setBackground(new Color(0, 128, 0));
+		startTrvlBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		startTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// if the user doesn't have any oxen to pull the wagon then they cannot travel
@@ -305,7 +307,7 @@ public class Interface {
 		travelSpeedLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		travelSpeedLbl.setForeground(new Color(255, 255, 255));
 		travelSpeedLbl.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
-		travelSpeedLbl.setBounds(722, 501, 298, 51);
+		travelSpeedLbl.setBounds(712, 501, 298, 51);
 		frame.getContentPane().add(travelSpeedLbl);
 		
 		JLabel weatherLbl = new JLabel("Weather: ");
@@ -354,7 +356,7 @@ public class Interface {
 		wthrQtyLbl = new JLabel("Warm");
 		wthrQtyLbl.setForeground(new Color(255, 255, 255));
 		wthrQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		wthrQtyLbl.setBounds(1030, 575, 235, 51);
+		wthrQtyLbl.setBounds(1020, 575, 235, 51);
 		frame.getContentPane().add(wthrQtyLbl);
 		
 		JLabel titleLbl = new JLabel("Oregon Trail");
@@ -382,6 +384,7 @@ public class Interface {
 		JButton stopTrvlBtn = new JButton("Stop Travel");
 		stopTrvlBtn.setForeground(new Color(255, 255, 255));
 		stopTrvlBtn.setBackground(new Color(185, 0, 0));
+		stopTrvlBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		stopTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clock.stop();

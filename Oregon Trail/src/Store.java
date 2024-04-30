@@ -10,6 +10,8 @@
  * @author - Sarah Slusher
  * @version 1.1.1 - April 17 2024
  */
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,6 +93,7 @@ public class Store {
      */
 	public void openStoreWindow(boolean initialStore) {
 		JFrame storeWindow = new JFrame();
+		storeWindow.getContentPane().setBackground(new Color(0, 0, 0));
 		storeWindow.setBounds(100, 100, 1289, 767);
 		storeWindow.setTitle("Store");
 		storeWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
@@ -98,75 +101,140 @@ public class Store {
 		storeWindow.getContentPane().setLayout(null);
 		
 		JLabel storeLabel = new JLabel("Store");
-		storeLabel.setFont(new Font("Felix Titling", Font.PLAIN, 40));
-		storeLabel.setBounds(547, 11, 140, 44);
+		storeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		storeLabel.setForeground(new Color(255, 255, 255));
+		storeLabel.setFont(new Font("Felix Titling", Font.PLAIN, 44));
+		storeLabel.setBounds(494, 11, 278, 55);
 		storeWindow.getContentPane().add(storeLabel);
 		
 		JLabel foodItem = new JLabel("Food $0.20/ lbs");
+		foodItem.setForeground(new Color(255, 255, 255));
 		foodItem.setHorizontalAlignment(SwingConstants.RIGHT);
 		foodItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		foodItem.setBounds(44, 490, 171, 24);
 		storeWindow.getContentPane().add(foodItem);
 		
 		JLabel ox = new JLabel("Ox $20");
+		ox.setForeground(new Color(255, 255, 255));
 		ox.setHorizontalAlignment(SwingConstants.RIGHT);
 		ox.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		ox.setBounds(25, 79, 190, 29);
 		storeWindow.getContentPane().add(ox);
 		
 		JLabel clothes = new JLabel("Clothes $0.25 / pair");
+		clothes.setForeground(new Color(255, 255, 255));
 		clothes.setHorizontalAlignment(SwingConstants.RIGHT);
 		clothes.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		clothes.setBounds(10, 156, 205, 24);
 		storeWindow.getContentPane().add(clothes);
 		
 		JLabel waterItem = new JLabel("Water $1/ gal");
+		waterItem.setForeground(new Color(255, 255, 255));
 		waterItem.setHorizontalAlignment(SwingConstants.RIGHT);
 		waterItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		waterItem.setBounds(44, 571, 171, 24);
 		storeWindow.getContentPane().add(waterItem);
 		
-		JLabel dollarLabel = new JLabel("Total $: ");
+		JLabel dollarLabel = new JLabel("Total $");
+		dollarLabel.setForeground(new Color(255, 255, 255));
 		dollarLabel.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		dollarLabel.setBounds(180, 662, 133, 39);
+		dollarLabel.setBounds(272, 660, 129, 39);
 		storeWindow.getContentPane().add(dollarLabel);
 		
 		JLabel wheel = new JLabel("Wagon Wheel $10 ");
+		wheel.setForeground(new Color(255, 255, 255));
 		wheel.setHorizontalAlignment(SwingConstants.RIGHT);
 		wheel.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		wheel.setBounds(26, 239, 190, 29);
 		storeWindow.getContentPane().add(wheel);
 		
 		JLabel tongue = new JLabel("Wagon Tongue $10 ");
+		tongue.setForeground(new Color(255, 255, 255));
 		tongue.setHorizontalAlignment(SwingConstants.RIGHT);
 		tongue.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		tongue.setBounds(10, 326, 206, 29);
 		storeWindow.getContentPane().add(tongue);
 		
 		JLabel axle = new JLabel("Wagon Axle $10 ");
+		axle.setForeground(new Color(255, 255, 255));
 		axle.setHorizontalAlignment(SwingConstants.RIGHT);
 		axle.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		axle.setBounds(26, 410, 190, 29);
 		storeWindow.getContentPane().add(axle);
 		
 		JLabel moneyAvailLbl = new JLabel("Available money:");
+		moneyAvailLbl.setForeground(new Color(255, 255, 255));
 		moneyAvailLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		moneyAvailLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 16));
-		moneyAvailLbl.setBounds(5, 15, 150, 29);
+		moneyAvailLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
+		moneyAvailLbl.setBounds(25, 640, 150, 29);
 		storeWindow.getContentPane().add(moneyAvailLbl);
 		
 		JLabel moneyLbl = new JLabel (bank.displayMoney());
+		moneyLbl.setForeground(new Color(255, 255, 255));
 		moneyLbl.setHorizontalAlignment(SwingConstants.LEFT);
-		moneyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 16));
-		moneyLbl.setBounds(165, 15, 150, 29);
+		moneyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
+		moneyLbl.setBounds(25, 670, 150, 29);
 		storeWindow.getContentPane().add(moneyLbl);
 		
+		JLabel oxQtyLbl = new JLabel("0");
+		oxQtyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		oxQtyLbl.setForeground(Color.WHITE);
+		oxQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		oxQtyLbl.setBounds(1176, 79, 89, 29);
+		storeWindow.getContentPane().add(oxQtyLbl);
+		
+		JLabel clothesQtyLbl = new JLabel("0");
+		clothesQtyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		clothesQtyLbl.setForeground(Color.WHITE);
+		clothesQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		clothesQtyLbl.setBounds(1176, 156, 89, 29);
+		storeWindow.getContentPane().add(clothesQtyLbl);
+		
+		JLabel wheelQtyLbl = new JLabel("0");
+		wheelQtyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		wheelQtyLbl.setForeground(Color.WHITE);
+		wheelQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		wheelQtyLbl.setBounds(1176, 239, 89, 29);
+		storeWindow.getContentPane().add(wheelQtyLbl);
+		
+		JLabel tongueQtyLbl = new JLabel("0");
+		tongueQtyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		tongueQtyLbl.setForeground(Color.WHITE);
+		tongueQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		tongueQtyLbl.setBounds(1176, 326, 89, 29);
+		storeWindow.getContentPane().add(tongueQtyLbl);
+		
+		JLabel axleQtyLbl = new JLabel("0");
+		axleQtyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		axleQtyLbl.setForeground(Color.WHITE);
+		axleQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		axleQtyLbl.setBounds(1176, 410, 89, 29);
+		storeWindow.getContentPane().add(axleQtyLbl);
+		
+		JLabel foodQtyLbl = new JLabel("0");
+		foodQtyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		foodQtyLbl.setForeground(Color.WHITE);
+		foodQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		foodQtyLbl.setBounds(1176, 490, 89, 29);
+		storeWindow.getContentPane().add(foodQtyLbl);
+		
+		JLabel waterQtyLbl = new JLabel("0");
+		waterQtyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		waterQtyLbl.setForeground(Color.WHITE);
+		waterQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+		waterQtyLbl.setBounds(1176, 571, 89, 29);
+		storeWindow.getContentPane().add(waterQtyLbl);
+		
 		amountOwed = new JLabel("0.00");
+		amountOwed.setForeground(new Color(255, 255, 255));
 		amountOwed.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		amountOwed.setBounds(300, 657, 130, 49);
+		amountOwed.setBounds(387, 655, 165, 49);
 		storeWindow.getContentPane().add(amountOwed);
 		
 		foodSlider = new JSlider();
+		foodSlider.setForeground(new Color(255, 255, 255));
+		foodSlider.setOpaque(false);
+		foodSlider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		foodSlider.setSnapToTicks(true);
 		foodSlider.setMajorTickSpacing(300);
 		foodSlider.setMaximum(1500);
@@ -176,9 +244,10 @@ public class Store {
 		foodSlider.setValue(0);
 		foodSlider.setPaintTicks(true);
 		foodSlider.setMinorTickSpacing(20);
-		foodSlider.setBounds(226, 490, 990, 44);
+		foodSlider.setBounds(226, 490, 950, 44);
 		foodSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				foodQtyLbl.setText("" + foodSlider.getValue());
 				// updates food cost and total owed
 				foodCost = foodSlider.getValue() * foodPrice;
 				updateTotalOwed();			
@@ -187,6 +256,9 @@ public class Store {
 		storeWindow.getContentPane().add(foodSlider);
 		
 		oxSlider = new JSlider();
+		oxSlider.setForeground(new Color(255, 255, 255));
+		oxSlider.setOpaque(false);
+		oxSlider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		oxSlider.setMajorTickSpacing(2);
 		oxSlider.setPaintLabels(true);
 		oxSlider.setSnapToTicks(true);
@@ -195,9 +267,10 @@ public class Store {
 		oxSlider.setPaintTicks(true);
 		oxSlider.setMinorTickSpacing(1);
 		oxSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		oxSlider.setBounds(234, 77, 982, 44);
+		oxSlider.setBounds(234, 77, 934, 44);
 		oxSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				oxQtyLbl.setText("" + oxSlider.getValue());
 				// updates clothes cost and total owed
 				oxCost = oxSlider.getValue() * oxPrice;
 				updateTotalOwed();	
@@ -206,6 +279,9 @@ public class Store {
 		storeWindow.getContentPane().add(oxSlider);
 		
 		clothesSlider = new JSlider();
+		clothesSlider.setForeground(new Color(255, 255, 255));
+		clothesSlider.setOpaque(false);
+		clothesSlider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		clothesSlider.setMajorTickSpacing(2);
 		clothesSlider.setValue(0);
 		clothesSlider.setSnapToTicks(true);
@@ -214,9 +290,10 @@ public class Store {
 		clothesSlider.setMinorTickSpacing(1);
 		clothesSlider.setMaximum(20);
 		clothesSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		clothesSlider.setBounds(234, 156, 982, 44);
+		clothesSlider.setBounds(234, 156, 934, 44);
 		clothesSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				clothesQtyLbl.setText("" + clothesSlider.getValue());
 				// updates clothes cost and total owed
 				clothesCost = clothesSlider.getValue() * clothesPrice;
 				updateTotalOwed();	
@@ -225,6 +302,9 @@ public class Store {
 		storeWindow.getContentPane().add(clothesSlider);
 		
 		wheelSlider = new JSlider();
+		wheelSlider.setForeground(new Color(255, 255, 255));
+		wheelSlider.setOpaque(false);
+		wheelSlider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		wheelSlider.setValue(0);
 		wheelSlider.setSnapToTicks(true);
 		wheelSlider.setPaintTicks(true);
@@ -233,9 +313,10 @@ public class Store {
 		wheelSlider.setMaximum(10);
 		wheelSlider.setMajorTickSpacing(2);
 		wheelSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		wheelSlider.setBounds(234, 245, 982, 44);
+		wheelSlider.setBounds(234, 245, 934, 44);
 		wheelSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				wheelQtyLbl.setText("" + wheelSlider.getValue());
 				// updates wheel cost and total owed
 				wheelCost = wheelSlider.getValue() * wheelPrice;
 				updateTotalOwed();	
@@ -244,6 +325,9 @@ public class Store {
 		storeWindow.getContentPane().add(wheelSlider);
 		
 		tongueSlider = new JSlider();
+		tongueSlider.setForeground(new Color(255, 255, 255));
+		tongueSlider.setOpaque(false);
+		tongueSlider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		tongueSlider.setValue(0);
 		tongueSlider.setSnapToTicks(true);
 		tongueSlider.setPaintTicks(true);
@@ -252,9 +336,10 @@ public class Store {
 		tongueSlider.setMaximum(10);
 		tongueSlider.setMajorTickSpacing(2);
 		tongueSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tongueSlider.setBounds(234, 330, 982, 44);
+		tongueSlider.setBounds(234, 330, 934, 44);
 		tongueSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				tongueQtyLbl.setText("" + tongueSlider.getValue());
 				// updates clothes cost and total owed
 				tongueCost = tongueSlider.getValue() * tonguePrice;
 				updateTotalOwed();	
@@ -263,6 +348,9 @@ public class Store {
 		storeWindow.getContentPane().add(tongueSlider);
 		
 		axleSlider = new JSlider();
+		axleSlider.setForeground(new Color(255, 255, 255));
+		axleSlider.setOpaque(false);
+		axleSlider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		axleSlider.setValue(0);
 		axleSlider.setSnapToTicks(true);
 		axleSlider.setPaintTicks(true);
@@ -271,9 +359,10 @@ public class Store {
 		axleSlider.setMaximum(10);
 		axleSlider.setMajorTickSpacing(2);
 		axleSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		axleSlider.setBounds(234, 410, 982, 44);
+		axleSlider.setBounds(234, 410, 934, 44);
 		axleSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				axleQtyLbl.setText("" + axleSlider.getValue());
 				// updates clothes cost and total owed
 				axleCost = axleSlider.getValue() * axlePrice;
 				updateTotalOwed();	
@@ -281,6 +370,9 @@ public class Store {
 		});		storeWindow.getContentPane().add(axleSlider);
 		
 		waterSlider = new JSlider();
+		waterSlider.setForeground(new Color(255, 255, 255));
+		waterSlider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		waterSlider.setOpaque(false);
 		waterSlider.setValueIsAdjusting(true);
 		waterSlider.setValue(0);
 		waterSlider.setSnapToTicks(true);
@@ -290,9 +382,10 @@ public class Store {
 		waterSlider.setMaximum(1500);
 		waterSlider.setMajorTickSpacing(300);
 		waterSlider.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		waterSlider.setBounds(226, 571, 990, 44);
+		waterSlider.setBounds(226, 571, 950, 44);
 		waterSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				waterQtyLbl.setText("" + waterSlider.getValue());
 				// updates food cost and total owed
 				waterCost = waterSlider.getValue() * waterPrice;
 				updateTotalOwed();			
@@ -301,39 +394,45 @@ public class Store {
 		storeWindow.getContentPane().add(waterSlider);
 		
 		JButton buyButton = new JButton("Buy");
+		buyButton.setBackground(new Color(252, 252, 252));
+		buyButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		buyButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// subtracts cost from user, updates inventory, and closes store window
-				if(!removeMoney()) {
-					JOptionPane.showMessageDialog(null, " ", null, JOptionPane.WARNING_MESSAGE);
-				} else {
+				if(bank.isMoneyAvailable(totalCost)) {
+					bank.spendMoney(totalCost);
 					updateSupplies();
 					foodMainLbl.setText(wagon.getConsumableWeight() + "");
 					resetPrices();
 					storeWindow.dispose();
+				} else {
+					JOptionPane.showMessageDialog(storeWindow, "You do not have enough money.", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
-		buyButton.setBounds(450, 657, 201, 43);
+		buyButton.setBounds(573, 655, 283, 51);
 		storeWindow.getContentPane().add(buyButton);
 		
 		
 		if (!initialStore) {
 			JButton cancelButton = new JButton("Cancel");
+			cancelButton.setForeground(new Color(255, 255, 255));
+			cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			cancelButton.setBackground(new Color(206, 0, 0));
 			cancelButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					// closes store window without purchasing anything
-	
 					storeWindow.dispose();
 					resetPrices();
 				}
 			});
-			cancelButton.setBounds(707, 657, 201, 43);
+			cancelButton.setBounds(877, 655, 283, 51);
 			storeWindow.getContentPane().add(cancelButton);
 		}
 		
+		// moves the frame in front of all other frames
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -364,18 +463,6 @@ public class Store {
         double formattedAmount = totalCost / 100.0; // Convert to double for decimal formatting
         amountOwed.setText(String.format("%.2f", formattedAmount));
     }
-	
-	/**
-	 * removes the total cost of the items from the user's money
-	 */
-	public boolean removeMoney(){
-		if(bank.isMoneyAvailable(totalCost)) {
-			bank.spendMoney(totalCost);
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	/**
 	 * updates the wagon inventory in accordance with how much the user bought
