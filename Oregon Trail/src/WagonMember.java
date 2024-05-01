@@ -15,17 +15,23 @@ import javax.swing.JOptionPane;
  */
 public class WagonMember {
 	
-	private String name;
+	private String name = "";
 	private boolean hasDisease = false;
 	private boolean hasInjury = false;
 	private int diseaseCount;
 	private int injuryCount;
 	
 	/**
-	 * creates a wagon member with a name
+	 * creates a wagon member
+	 */
+	public WagonMember() {
+	}
+	
+	/**
+	 * sets the name of the member
 	 * @param name - the name of the member
 	 */
-	public WagonMember(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	

@@ -131,6 +131,14 @@ public class TravelManager {
 	}
 	
 	/**
+	 * sets the start date that the user inputs (default is March
+	 * @param month - the numerical value (1-12) of the chosen month
+	 */
+	public void setMonth(int month) {
+		startDate = LocalDate.of(1853, month, 1);
+	}
+	
+	/**
 	 * This updates the date as the clock continues.
 	 * @return formattedDate - the date correctly formatted MMMM, d, yyyy
 	 */

@@ -21,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -76,17 +75,18 @@ public class Interface {
 	private Landmarks landmark3 = new Landmarks("Independence Rock", 327);
 	private Location house		= new Location("New House", 53);
 	// Wagon Members
-	private WagonMember one		= new WagonMember("Amy");
-	private WagonMember two		= new WagonMember("Bonnie");
-	private WagonMember three	= new WagonMember("Cora");
-	private WagonMember four	= new WagonMember("DeeDee");
+	private WagonMember one		= new WagonMember();
+	private WagonMember two		= new WagonMember();
+	private WagonMember three	= new WagonMember();
+	private WagonMember four	= new WagonMember();
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, locations, bank);
-	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, food, bank);
+	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
 	private RiverFrame riverFrame 		= new RiverFrame(locations, bank, travel); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
+	private IntroFrame introFrame		= new IntroFrame();
 	
 	/**
 	 * Launch the application.
@@ -161,7 +161,10 @@ public class Interface {
 		rationsQtyLbl.setText(travel.displayRations());
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
-		// update health and food
+		// update water
+		wagon.removeItemQty(water, health.getAmountOfMembers());
+		
+		// update food
 		if(!food.outOfFood()) {
 			// if there is food to remove, remove it
 			wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
@@ -169,9 +172,10 @@ public class Interface {
 		// set the food label
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		
+		// update health
 		// regenerate health then lose some
 		health.recoverDailyHealth();
-		health.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes);
+		health.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes, water);
 		
 		// check if the health is deadly
 		if(health.isHealthDeadly()) {
@@ -252,9 +256,7 @@ public class Interface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		store.openStoreWindow(true);
-		
+						
 		// This is frame one setup (main frame)
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
@@ -333,10 +335,10 @@ public class Interface {
 		weatherLbl.setBounds(712, 575, 298, 51);
 		frame.getContentPane().add(weatherLbl);
 		
-		healthQtyLbl = new JLabel(health.displayHealth());
+		healthQtyLbl = new JLabel("Good");
 		healthQtyLbl.setForeground(new Color(255, 255, 255));
 		healthQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		healthQtyLbl.setBounds(622, 430, 137, 51);
+		healthQtyLbl.setBounds(622, 430, 178, 51);
 		frame.getContentPane().add(healthQtyLbl);
 		foodQtyLbl.setForeground(new Color(255, 255, 255));
 		
@@ -389,7 +391,7 @@ public class Interface {
 		dateLbl.setBounds(20, 48, 74, 51);
 		frame.getContentPane().add(dateLbl);
 		
-		dateQtyLbl = new JLabel(travel.getDate());
+		dateQtyLbl = new JLabel("");
 		dateQtyLbl.setForeground(new Color(255, 255, 255));
 		dateQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 25));
 		dateQtyLbl.setBounds(99, 48, 320, 51);
@@ -417,5 +419,8 @@ public class Interface {
 		trailImage.setOpaque(true);
 		trailImage.setBounds(20, 90, 1233, 305);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
+		
+		// opens the intro frame
+		introFrame.openIntroFrame(dateQtyLbl, travel, health, store);
 	}
 }
