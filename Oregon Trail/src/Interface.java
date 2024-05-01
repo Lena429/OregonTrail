@@ -48,6 +48,7 @@ public class Interface {
 	private Wagon wagon	  		 = new Wagon();
 	private WagonParty health    = new WagonParty();
 	private Store store;
+	private TeaTime teaTime     = new TeaTime(health);
 	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 300, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
@@ -184,6 +185,11 @@ public class Interface {
 
 		} else healthQtyLbl.setText(health.displayHealth()); // update health
 		
+		
+		
+		
+		
+		
 		// Determines if the weather label needs to be updated
 		if (weather.isWeatherDifferent()) {
 			// yes it does
@@ -198,6 +204,11 @@ public class Interface {
 				// updates label with temperature
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
+		
+		
+		
+		
+		
 
 		for (Location location : locations) {
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
@@ -215,10 +226,15 @@ public class Interface {
 		        	break;
 
 		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
-		        	fortFrame.openFortFrame((Fort) location, store);		  // displays fort frame
+		        	fortFrame.openFortFrame((Fort) location, store, teaTime);		  // displays fort frame
 		        	break;
+
+		        }else if(location instanceof Landmarks) {
+		        	landmarkFrame.openLandmarkFrame((Landmarks)location, teaTime);
+
 		        } else if(location instanceof Landmarks) {					  // checks to see if it is an instance of landmark 
 		        	landmarkFrame.openLandmarkFrame((Landmarks)location);	  // displays landmark frame
+
 		        	break;
 		        } else {
 		        	// THE USER HAS WON THE GAME (arrived at the house in Oregon)

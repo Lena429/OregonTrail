@@ -1,4 +1,4 @@
-import java.awt.EventQueue;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,28 +9,32 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Color;
 import javax.swing.SwingConstants;
 
 
 
 
-public class teatime {
-
+public class TeaTime {
+	private WagonParty health;
 	private JFrame frame;
 	private List<TeaIngredient> availableIngredients;
     private List<TeaIngredient> inventory;
     private Random random;
     
     
+ public TeaTime(WagonParty health ) {
+    	this.health = health;
+    }
+    
     private static class TeaIngredient {
         private String name;
         private String effect;
-
-        public TeaIngredient(String name, String effect) {
+        private int recover;
+        
+        public TeaIngredient(String name, String effect, int recover) {
             this.name = name;
             this.effect = effect;
+            this.recover = recover;
         }
 
         public String getName() {
@@ -40,19 +44,21 @@ public class teatime {
         public String getEffect() {
             return effect;
         }
+        public int getHealth() {
+        	return recover;
+        }
     }
     
- // Initialize tea ingredients
+    // Initialize tea ingredients
     private void initializeIngredients() {
-        availableIngredients.add(new TeaIngredient("Lavender", ""));
-        availableIngredients.add(new TeaIngredient("Hyssop", ""));
-        availableIngredients.add(new TeaIngredient("Lemon Balm", ""));
+        availableIngredients.add(new TeaIngredient("Lavender", "You feel relaxed", 1));
+        availableIngredients.add(new TeaIngredient("Hyssop", "You feel energized", 2));
+        availableIngredients.add(new TeaIngredient("Lemon Balm", "Your stomach feels better", 3));
         // Add more ingredients as needed
     }
     
     // Method to simulate foraging for tea ingredients
     public TeaIngredient forage() {
-        //System.out.println("You forage for tea ingredients...");
         // Simulate finding a random ingredient
         TeaIngredient foundIngredient = availableIngredients.get(random.nextInt(availableIngredients.size()));
         inventory.add(foundIngredient);
@@ -70,15 +76,13 @@ public class teatime {
         inventory.remove(selectedIngredient);
         return selectedIngredient;
     }
+    
 
-	public teatime() {
-		initialize();
-	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void openTeaTime() {
 		availableIngredients = new ArrayList<>();
         inventory = new ArrayList<>();
         random = new Random();
@@ -87,7 +91,9 @@ public class teatime {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		frame.getContentPane().setLayout(null);
+		
 		
 		JLabel lblNewLabel = new JLabel("Tea Time on the Trail");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -105,6 +111,7 @@ public class teatime {
 			public void actionPerformed(ActionEvent e) {
 				TeaIngredient herb = forage();
 				lblNewLabel_1.setText("You found: " + herb.getName());
+				
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -115,7 +122,9 @@ public class teatime {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TeaIngredient brewedIngredient = brewTea();
-				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." );
+				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect()
+				+" \n You gain: " + brewedIngredient.getHealth() + " health");
+				health.recoverHealth(brewedIngredient.getHealth());
 				}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -131,11 +140,6 @@ public class teatime {
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1_1.setBounds(852, 505, 202, 63);
 		frame.getContentPane().add(btnNewButton_1_1);
-		
-		
-		
-		
-		
 		
 	}
 }
