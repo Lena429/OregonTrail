@@ -55,7 +55,7 @@ public class StopFrame {
 	 * @param rationsMainLbl
 	 * @param paceMainLbl
 	 */
-	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl) {
+	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl, TeaTime teatime) {
 		TradeManager offer	= new TradeManager();
 		
 		JFrame frame = new JFrame();
@@ -215,6 +215,11 @@ public class StopFrame {
 		frame.getContentPane().add(panel);		
 		
 		JButton teaBtn = new JButton("Teatime");
+		teaBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				teatime.openTeaTime();
+			}
+		});
 		teaBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		teaBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		teaBtn.setBounds(771, 133, 295, 86);
