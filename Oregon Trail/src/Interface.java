@@ -233,7 +233,7 @@ public class Interface {
 		        	landmarkFrame.openLandmarkFrame((Landmarks)location, teaTime);
 
 		        } else if(location instanceof Landmarks) {					  // checks to see if it is an instance of landmark 
-		        	landmarkFrame.openLandmarkFrame((Landmarks)location);	  // displays landmark frame
+		        	landmarkFrame.openLandmarkFrame((Landmarks)location, teaTime);	  // displays landmark frame
 
 		        	break;
 		        } else {
@@ -412,7 +412,7 @@ public class Interface {
 		frame.getContentPane().add(stopTrvlBtn);
 		
 		//Picture of the trail that the wagon is travelling
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/trailPic.jpg"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/final map.png"));
 		JLabel trailImage = new JLabel(icon);
 		trailImage.setOpaque(true);
 		trailImage.setBounds(20, 90, 1233, 305);
