@@ -107,28 +107,28 @@ public class Store {
 		storeLabel.setBounds(494, 11, 278, 55);
 		storeWindow.getContentPane().add(storeLabel);
 		
-		JLabel foodItem = new JLabel("Food $0.20/ lbs");
+		JLabel foodItem = new JLabel("Food $" + (foodPrice / 100.0) + "0/ lbs");
 		foodItem.setForeground(new Color(255, 255, 255));
 		foodItem.setHorizontalAlignment(SwingConstants.RIGHT);
 		foodItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		foodItem.setBounds(44, 490, 171, 24);
 		storeWindow.getContentPane().add(foodItem);
 		
-		JLabel ox = new JLabel("Ox $20");
+		JLabel ox = new JLabel("Ox $" + (oxPrice / 100.0));
 		ox.setForeground(new Color(255, 255, 255));
 		ox.setHorizontalAlignment(SwingConstants.RIGHT);
 		ox.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		ox.setBounds(25, 79, 190, 29);
 		storeWindow.getContentPane().add(ox);
 		
-		JLabel clothes = new JLabel("Clothes $0.25 / pair");
+		JLabel clothes = new JLabel("Clothes $" + (clothesPrice / 100.0) + " / pair");
 		clothes.setForeground(new Color(255, 255, 255));
 		clothes.setHorizontalAlignment(SwingConstants.RIGHT);
 		clothes.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		clothes.setBounds(10, 156, 205, 24);
 		storeWindow.getContentPane().add(clothes);
 		
-		JLabel waterItem = new JLabel("Water $1/ gal");
+		JLabel waterItem = new JLabel("Water $" + (waterPrice / 100.0) + "/ gal");
 		waterItem.setForeground(new Color(255, 255, 255));
 		waterItem.setHorizontalAlignment(SwingConstants.RIGHT);
 		waterItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
@@ -141,21 +141,21 @@ public class Store {
 		dollarLabel.setBounds(272, 660, 129, 39);
 		storeWindow.getContentPane().add(dollarLabel);
 		
-		JLabel wheel = new JLabel("Wagon Wheel $10 ");
+		JLabel wheel = new JLabel("Wagon Wheel $" + (wheelPrice / 100.0));
 		wheel.setForeground(new Color(255, 255, 255));
 		wheel.setHorizontalAlignment(SwingConstants.RIGHT);
 		wheel.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
-		wheel.setBounds(26, 239, 190, 29);
+		wheel.setBounds(26, 239, 200, 29);
 		storeWindow.getContentPane().add(wheel);
 		
-		JLabel tongue = new JLabel("Wagon Tongue $10 ");
+		JLabel tongue = new JLabel("Wagon Tongue $" + (tonguePrice / 100.0));
 		tongue.setForeground(new Color(255, 255, 255));
 		tongue.setHorizontalAlignment(SwingConstants.RIGHT);
 		tongue.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
-		tongue.setBounds(10, 326, 206, 29);
+		tongue.setBounds(10, 326, 226, 29);
 		storeWindow.getContentPane().add(tongue);
 		
-		JLabel axle = new JLabel("Wagon Axle $10 ");
+		JLabel axle = new JLabel("Wagon Axle $" + (axlePrice / 100.0));
 		axle.setForeground(new Color(255, 255, 255));
 		axle.setHorizontalAlignment(SwingConstants.RIGHT);
 		axle.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
@@ -166,7 +166,7 @@ public class Store {
 		moneyAvailLbl.setForeground(new Color(255, 255, 255));
 		moneyAvailLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		moneyAvailLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
-		moneyAvailLbl.setBounds(25, 640, 150, 29);
+		moneyAvailLbl.setBounds(25, 640, 170, 29);
 		storeWindow.getContentPane().add(moneyAvailLbl);
 		
 		JLabel moneyLbl = new JLabel (bank.displayMoney());
