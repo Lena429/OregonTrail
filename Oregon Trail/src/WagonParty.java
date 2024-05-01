@@ -82,6 +82,14 @@ public class WagonParty {
 	}
 	
 	/**
+	 * gets the list of people in the wagon
+	 * @return people - the list of people in the wagon party
+	 */
+	public ArrayList<WagonMember> getMembers() {
+		return people;
+	}
+	
+	/**
 	 * recovers 10% of the wagon health
 	 * recovers the diseases/injuries of wagon members
 	 */
