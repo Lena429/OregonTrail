@@ -405,6 +405,7 @@ public class Store {
 					updateSupplies();
 					foodMainLbl.setText(wagon.getConsumableWeight() + "");
 					resetPrices();
+					totalCost = 0;
 					storeWindow.dispose();
 				} else {
 					JOptionPane.showMessageDialog(storeWindow, "You do not have enough money.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -424,8 +425,9 @@ public class Store {
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					// closes store window without purchasing anything
-					storeWindow.dispose();
+					totalCost = 0;
 					resetPrices();
+					storeWindow.dispose();
 				}
 			});
 			cancelButton.setBounds(877, 655, 283, 51);

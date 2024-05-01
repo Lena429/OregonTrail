@@ -319,10 +319,10 @@ public class Interface {
 		weatherLbl.setBounds(712, 575, 298, 51);
 		frame.getContentPane().add(weatherLbl);
 		
-		healthQtyLbl = new JLabel(health.displayHealth());
+		healthQtyLbl = new JLabel("Good");
 		healthQtyLbl.setForeground(new Color(255, 255, 255));
 		healthQtyLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		healthQtyLbl.setBounds(622, 430, 137, 51);
+		healthQtyLbl.setBounds(622, 430, 178, 51);
 		frame.getContentPane().add(healthQtyLbl);
 		foodQtyLbl.setForeground(new Color(255, 255, 255));
 		
