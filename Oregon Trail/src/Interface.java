@@ -83,7 +83,7 @@ public class Interface {
 	private ArrayList<Location> locations = new ArrayList<>();
 	
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, locations, bank);
-	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, food, bank);
+	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
 	private RiverFrame riverFrame 		= new RiverFrame(locations, bank, travel); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 	
@@ -160,7 +160,10 @@ public class Interface {
 		rationsQtyLbl.setText(travel.displayRations());
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
-		// update health and food
+		// update water
+		wagon.removeItemQty(water, health.getAmountOfMembers());
+		
+		// update food
 		if(!food.outOfFood()) {
 			// if there is food to remove, remove it
 			wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
@@ -168,9 +171,10 @@ public class Interface {
 		// set the food label
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		
+		// update health
 		// regenerate health then lose some
 		health.recoverDailyHealth();
-		health.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes);
+		health.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes, water);
 		
 		// check if the health is deadly
 		if(health.isHealthDeadly()) {
