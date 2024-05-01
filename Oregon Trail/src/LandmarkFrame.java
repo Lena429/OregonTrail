@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 public class LandmarkFrame {
-	private Travel travel;
+	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
 	private ArrayList<Location> locations;
 	
-	public LandmarkFrame(Travel travel, Wagon wagon, Equipment food, ArrayList<Location> locations) {
+	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;

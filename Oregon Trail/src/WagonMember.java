@@ -1,3 +1,6 @@
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  * WagonMember.java
  * 
@@ -91,5 +94,16 @@ public class WagonMember {
 	public boolean getAilmentStatus() {
 		if(hasInjury || hasDisease) return true;
 		return false;
+	}
+	
+	/**
+	 * displays a dialogue box that lets to user know who died
+	 * @param frame - the frame to center the message on
+	 */
+	public void displayMemberDeath(JFrame frame) {
+		String text = name + " has died.";
+		String title = "OH NO!";
+		int type = JOptionPane.ERROR_MESSAGE;
+		JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
 	}
 }
