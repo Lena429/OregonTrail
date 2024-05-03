@@ -192,9 +192,6 @@ public class Interface {
 		
 		
 		
-		
-		
-		
 		// Determines if the weather label needs to be updated
 		if (weather.isWeatherDifferent()) {
 			// yes it does
@@ -212,35 +209,40 @@ public class Interface {
 		
 		
 
-		for (Location location : locations) {
+		for (int i = 0; i < locations.size(); i++) {
+		    // store the index
+			Location location = locations.get(i);
+		    
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
+			
 			milTrvlQtyLbl.setText(travel.updateMilesTravelled(location.getMilesAway()) + "");
 		    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
 	    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  	  // update how far away the wagon is 
 			dot.moveDot(dotLbl, travel.getMilesTravelled());				  // move the dot on the map
-
 		    
-		    if (!location.arrivedAtLandmark()) {							  
-		    	// checks to see if user arrived yet
+	    	// checks to see if user arrived yet
+		    if (!location.arrivedAtLandmark()) {	
+		    	// they haven't
 		    	milesToNextLbl.setText("Miles to " + location.getName() + ":");
 		    	break;
 		    	
 		    } else { 			
-		    	// checks to see if the user has arrived at a landmark/fort/river
-		        location.updatevisited();									  // updates the object/landmark to be visited by the user 
-		        clock.stop();												  // stops the days from passing
+		    	// they have arrived at a landmark/fort/river
+		    	milesToNextLbl.setText("Miles to " + locations.get(i+1).getName() + ":"); 	// updates displayed info to the next fort's
+		    	milToQtyLbl.setText(locations.get(i+1).getMilesAway() + ""); 			  	  // update how far away the wagon is 
+
+		        
+		    	location.updatevisited();									  				// updates the object/landmark to be visited by the user 
+		        clock.stop();												  				// stops the days from passing
 		        
 		        if(location instanceof River){ 								  				// checks to see if it is an instance of river 
 		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl); 	// displays river frame 
-		        	break;
 
 		        } else if (location instanceof Fort){						  		  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store, teaTime);		  // displays fort frame
-		        	break;
 
 		        } else if(location instanceof Landmarks) {					  		  // checks to see if it is an instance of landmark 
 		        	landmarkFrame.openLandmarkFrame((Landmarks)location, teaTime);	  // displays landmark frame
-		        	break;
 		        	
 		        } else {
 		        	// THE USER HAS WON THE GAME (arrived at the house in Oregon)
@@ -250,6 +252,7 @@ public class Interface {
 		    		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
 		    		if(response == JOptionPane.OK_OPTION) System.exit(1);
 		        }
+		        break;
 		    }
 		}
     }
