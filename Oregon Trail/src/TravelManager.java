@@ -115,10 +115,15 @@ public class TravelManager {
 	
 	/**
 	 * This updates the miles travelled. 
+	 * @param milesToLndmrk - the distance to the next landmark
 	 * @return milesTravelled - the total milesTravelled. 
 	 */
-	public int updateMilesTravelled() {
-		milesTravelled += speed;
+	public int updateMilesTravelled(int milesToLndmrk) {
+		// if the user is travelling more miles in a day than the distanco to next 
+		// landmark, only add the distance to the landmark
+		if(milesToLndmrk < speed) milesTravelled += milesToLndmrk;
+		else milesTravelled += speed;
+		
 		return milesTravelled;
 	}
 	
