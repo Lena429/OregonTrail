@@ -134,7 +134,7 @@ public class WagonParty {
 			// starving
 			if(starvedPreviousDay) {
 				health = 6 + (STARVE_CONST * starveFactor);
-				starveFactor++;
+				starveFactor = starveFactor + 2;
 			} else {
 				starvedPreviousDay = true;
 				health += 6;
@@ -168,8 +168,10 @@ public class WagonParty {
 		}
 		
 		// loses health based on pace
-		if(travel.getPace() < 15) 		health += 2;	// steady
+		if(travel.getPace() < 14) 		health += 2;	// steady
+		else if (travel.getPace() < 16) health += 3;
 		else if (travel.getPace() < 18) health += 4;	// strenuous
+		else if (travel.getPace() < 19) health += 5;
 		else 							health += 6;	// grueling
 		
 		// loses health based on diseases/injuries of members
