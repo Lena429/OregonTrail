@@ -148,6 +148,7 @@ public class RandomEvents {
 	private String snakeBite() {
 		int random = rnd.nextInt(100)+1;
 		if (random == 1) {
+			
 			//how td do i get access to health 
 			//random member increment health 
 		}
@@ -161,8 +162,7 @@ public class RandomEvents {
 		int random = rnd.nextInt(100)+1;{
 		if (wthrQtyLbl.getText().equals("Hot"))
 			if (random <= 5) {
-				//how td do i get access to health 
-				//subtract some helath from all members
+				wagonParty.loseHealthQty(5);
 			}
 	 	
 		 return "ignore";
