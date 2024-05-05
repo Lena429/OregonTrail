@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -17,6 +18,11 @@ import javax.swing.SwingConstants;
 
 
 public class TeaTime {
+	private static final int MAX_FORAGE_TIMES = 2; //how many times you are able to forage for herbs each time game is played
+	private static final int MAX_BREW_TIMES = 2; // how many times you are able to brew tea each time game is played
+	private int forageCounter;
+	private int brewCounter;
+	
 	private WagonParty health;
 	private JFrame frame;
 	private List<TeaIngredient> availableIngredients;
@@ -24,7 +30,7 @@ public class TeaTime {
     private Random random;
     
     
- public TeaTime(WagonParty health ) {
+ public TeaTime(WagonParty health) {
     	this.health = health;
     }
     
@@ -61,7 +67,12 @@ public class TeaTime {
     
     // Method to simulate foraging for tea ingredients
     public TeaIngredient forage() {
-        // Simulate finding a random ingredient
+    	//Check if the maximum forage limit has been reached
+    	if(forageCounter >= MAX_FORAGE_TIMES) {
+    		JOptionPane.showMessageDialog(frame, "This area has no more herbs to brew.");
+    		return null;
+    	}
+    	forageCounter++;
         TeaIngredient foundIngredient = availableIngredients.get(random.nextInt(availableIngredients.size()));
         inventory.add(foundIngredient);
         return foundIngredient;
@@ -69,15 +80,31 @@ public class TeaTime {
 
     // Method to brew tea
     public TeaIngredient brewTea() {
+    	//Check if max brew limit has been reached
+    	if(brewCounter >= MAX_BREW_TIMES) {
+    		JOptionPane.showMessageDialog(frame, "You've made enough tea for now.");
+    		return null;
+    	}
+    	brewCounter++;
+    	
+    	//check if they haven't foraged yet
         if (inventory.isEmpty()) {
             return null;
         }
-        // Simulate selecting a random ingredient from inventory to brew
+        
+        
+        // Simulate selecting a random ingredient from tea inventory to brew
         TeaIngredient selectedIngredient = inventory.get(random.nextInt(inventory.size()));
         
         // Remove the ingredient from inventory
         inventory.remove(selectedIngredient);
         return selectedIngredient;
+        
+    }
+    
+    public void resetCounters() {
+    	forageCounter = 0;
+    	brewCounter = 0;
     }
     
 
@@ -85,7 +112,7 @@ public class TeaTime {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void openTeaTime() {
+	public void openTeaTime() {	
 		availableIngredients = new ArrayList<>();
         inventory = new ArrayList<>();
         random = new Random();
@@ -135,6 +162,7 @@ public class TeaTime {
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				resetCounters();
 			}
 		});
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));

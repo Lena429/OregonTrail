@@ -1,4 +1,4 @@
-
+import java.util.Random;
 
 /**
  * Fort.java
@@ -16,7 +16,7 @@
  */
 
 public class Fort extends Location {
-	private int priceFactor;
+	private int priceFactor; // the multiplier for how much the price changes from base prices at a given fort
 	public Fort(String name, int miles, int priceFactor) {
 		super(name, miles);
 		this.priceFactor = priceFactor;
@@ -28,36 +28,53 @@ public class Fort extends Location {
 	
 	
 	
-	// Phrases for chattering, categorized by fort names
-    private String[] phrasesForFortA = {"Amelia says to the group, \" We are sleeping in a lane while waiting to cross a river nearby and still can't feed our cows properly. I hope we can find feed or grass for them soon.\"" };
-    private String[] phrasesForFortB = {"Amelia points ahead \" We saw that wagon a few days ago didn’t we? It looks like the father is gone, probably drowned in the upcoming river. I feel terrible for the children and wife.\""};
-    		
-    private String[] phrasesForFortC = {"Amelia complains \"It's rather warm in this summer heat,and there is nothing in this Fort at all, just a couple of mud houses.\""};
-    private String[] phrasesForFortD = {"Amelia excitedly said \"There’s a shower at this fort! It’s only a couple of cents. I’m happy to get the dust from our journey off of me.\""};
-    		
-    // Add more fort-specific phrases as needed
+	private String[] phrasesForFortA = {
+	        "Amelia says to the group, \"We are sleeping in a lane while waiting to cross a river nearby and still can't feed our cows properly. I hope we can find feed or grass for them soon.\"",
+	        "Amelia says, this is a trail run for multiple conversations at a given place"
+	        // Add more phrases for Fort A as needed
+	    };
+	    private String[] phrasesForFortB = {
+	        "Amelia points ahead, \"We saw that wagon a few days ago, didn’t we? It looks like the father is gone, probably drowned in the upcoming river. I feel terrible for the children and wife.\"",
+	        // Add more phrases for Fort B as needed
+	    };
+	    private String[] phrasesForFortC = {
+	        "Amelia complains, \"It's rather warm in this summer heat, and there is nothing in this Fort at all, just a couple of mud houses.\"",
+	        // Add more phrases for Fort C as needed
+	    };
+	    private String[] phrasesForFortD = {
+	        "Amelia excitedly said, \"There’s a shower at this fort! It’s only a couple of cents. I’m happy to get the dust from our journey off of me.\"",
+	        // Add more phrases for Fort D as needed
+	    };
 
-    public String generatePhrase() {
-        String phrase = "";
+	    public String generatePhrase() {
+	        String[] selectedPhrases = null;
 
-        // Check the fort's name and select phrases accordingly
-        // More phrases can be added and selected later
-        if (getName().equals("Kanesville")) {
-            phrase = phrasesForFortA[0]; // Select the first phrase for Fort A
-        } else if (getName().equals("Mormon Graveyard")) {
-            phrase = phrasesForFortB[0]; // Select the first phrase for Fort B
-        }
-        else if(getName().equals("Fort Boise")) {
-        	phrase = phrasesForFortC[0]; // Select the first phrase for Fort C
-        }else if(getName().equals("Fort Walla Walla")) {
-        	phrase = phrasesForFortD[0]; //Select the first phrase for Fort D
-        }
-        
-        // Add more conditions for other forts as needed
+	        // Randomly select phrases based on the fort's name
+	        Random random = new Random();
+	        switch (getName()) {
+	            case "Kanesville":
+	                selectedPhrases = phrasesForFortA;
+	                break;
+	            case "Mormon Graveyard":
+	                selectedPhrases = phrasesForFortB;
+	                break;
+	            case "Fort Boise":
+	                selectedPhrases = phrasesForFortC;
+	                break;
+	            case "Fort Walla Walla":
+	                selectedPhrases = phrasesForFortD;
+	                break;
+	            // Add cases for other forts as needed
+	        }
 
-        return phrase;
-    }
-
+	        // Select a random phrase from the selected phrases
+	        if (selectedPhrases != null) {
+	            int index = random.nextInt(selectedPhrases.length);
+	            return selectedPhrases[index];
+	        } else {
+	            return "No phrases available for this fort.";
+	        }
+	    }
 	
 
 }
