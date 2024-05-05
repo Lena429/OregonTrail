@@ -64,6 +64,17 @@ public class WagonParty {
 	}
 	
 	/**
+	 * gets a random member
+	 * @return people.get(index) - the random party member
+	 */
+	public WagonMember getRandomMember() {
+		Random rnd = new Random();
+		int index = rnd.nextInt(people.size());
+		
+		return people.get(index);
+	}
+	
+	/**
 	 * checks if there are still people alive
 	 * @return true - if there are still others alive
 	 * @return false - if there is no one left
@@ -107,6 +118,14 @@ public class WagonParty {
 	public void recoverHealth(int recoveredHealth) {
 		if(recoveredHealth > health) health = 0;
 		else health -= recoveredHealth;
+	}
+	
+	/**
+	 * loses a specific amount of health
+	 * @param amountToLose - the amount of health to lose
+	 */
+	public void loseHealthQty(int amountToLose) {
+		health += amountToLose;
 	}
 	
 	/**

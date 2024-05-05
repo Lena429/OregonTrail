@@ -11,11 +11,13 @@ public class RandomEvents {
 	private ArrayList<Location> locations;
 	private TravelManager travel;
 	private Wagon wagon;
+	private WagonParty wagonParty;
 	private JLabel foodMainLbl;
 	private JLabel dateMainLbl;
 	private JLabel wthrQtyLbl;
 	private Equipment food; 
-	private int people = 4; 
+	private int people; //change this 
+
 	
 	/**
 	 * 
@@ -23,13 +25,17 @@ public class RandomEvents {
 	 * @param bank
 	 */
 
-	public RandomEvents(ArrayList<Location> locations, Money bank, TravelManager travel, JLabel foodMainLbl, JLabel dateMainLbl, JLabel wthrQtyLbl) {
+	public RandomEvents(ArrayList<Location> locations, Money bank, TravelManager travel,JLabel foodMainLbl,
+			JLabel dateMainLbl, JLabel wthrQtyLbl, WagonParty wagonParty, Wagon wagon) {
 		this.locations = locations;
 		this.bank = bank;
 		this.travel = travel; 
 		this.foodMainLbl = foodMainLbl;
 		this.dateMainLbl = dateMainLbl;
 		this.wthrQtyLbl = wthrQtyLbl;
+		this.wagon = wagon;
+		this.wagonParty = wagonParty;
+		people = wagonParty.getAmountOfMembers(); 
 	}
 
 	
@@ -132,7 +138,8 @@ public class RandomEvents {
 	private String injured() {
 		int random = rnd.nextInt(100)+1; //random number 1 - 100
 			if (random <= 2 ) {
-				 //how tf do i get access to the person to increase their health 
+				
+				return "Oh, no! A member broke a leg :(";
 				}
 		return "ignore";
 	}
@@ -221,7 +228,6 @@ public class RandomEvents {
 		int random = rnd.nextInt(100)+1;
 		if (foodMainLbl.getText().equals("0")){
 			if (random <= 5) {
-				//how do I add food to the wagon or whatever
 				wagon.addItemQty(food, 30);  //adds 30lbs of food; 
 				return "Local natives have decided to gift you 30lbs of food";
 					}
@@ -233,8 +239,12 @@ public class RandomEvents {
 	public boolean illness() {
 		int random = rnd.nextInt(5)+1;
 		if (random <= 5) {
-			return true;
-
+			//return true;
+			//fever
+			//scarlet fever
+			//heat stroke??
+			//poison ivy 
+			//cholera
 		}
 		return false;
 	}
