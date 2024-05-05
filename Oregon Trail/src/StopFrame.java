@@ -214,7 +214,7 @@ public class StopFrame {
 		panel.add(btnContinueTrail);
 		frame.getContentPane().add(panel);		
 		
-		JButton teaBtn = new JButton("Teatime");
+		JButton teaBtn = new JButton("Tea Time");
 		teaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				teatime.openTeaTime();

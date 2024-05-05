@@ -41,6 +41,7 @@ public class Interface {
 	private JLabel wthrQtyLbl;
 	private JLabel milesToNextLbl;
 	private JLabel healthQtyLbl;
+	private JLabel dotLbl;
 	
 	private Weather weather		 = new Weather();
 	private TravelManager travel = new TravelManager();
@@ -84,9 +85,10 @@ public class Interface {
 	
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, locations, bank);
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
-	private RiverFrame riverFrame 		= new RiverFrame(locations, bank, travel); 
+	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 	private IntroFrame introFrame		= new IntroFrame();
+	private MapDot dot					= new MapDot();
 	
 	/**
 	 * Launch the application.
@@ -146,7 +148,7 @@ public class Interface {
 		
 		initialize();
 		
-		clock = new javax.swing.Timer(2000, new ActionListener() {
+		clock = new javax.swing.Timer(1500, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				clockActionPerformed(evt);
 			}
@@ -156,7 +158,6 @@ public class Interface {
 	//Clock action event that updates the time
 	public void clockActionPerformed(ActionEvent evt) {
 		// update labels
-		milTrvlQtyLbl.setText(travel.updateMilesTravelled() + "");
 		trvlSpeedQtyLbl.setText(travel.getPace() + "");
 		rationsQtyLbl.setText(travel.displayRations());
 		dateQtyLbl.setText(travel.updateDate() + "");
@@ -191,9 +192,6 @@ public class Interface {
 		
 		
 		
-		
-		
-		
 		// Determines if the weather label needs to be updated
 		if (weather.isWeatherDifferent()) {
 			// yes it does
@@ -210,36 +208,39 @@ public class Interface {
 		}
 		
 		
-		
-		
-		
 
-		for (Location location : locations) {
+		for (int i = 0; i < locations.size(); i++) {
+		    // store the index
+			Location location = locations.get(i);
+		    
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited
+			
+			milTrvlQtyLbl.setText(travel.updateMilesTravelled(location.getMilesAway()) + "");
 		    location.updateMilesAway(travel.getPace());						  // updates the distance to the landmark
-		    if (!location.arrivedAtLandmark()) {							  // checks to see if user arrived yet
+	    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  	  // update how far away the wagon is 
+			dot.moveDot(dotLbl, travel.getMilesTravelled());				  // move the dot on the map
+		    
+	    	// checks to see if user arrived yet
+		    if (!location.arrivedAtLandmark()) {	
+		    	// they haven't
 		    	milesToNextLbl.setText("Miles to " + location.getName() + ":");
-		    	milToQtyLbl.setText(location.getMilesAway() + ""); 			  // if the user hasn't arrived update how far away the wagon is 
 		    	break;
-		    } else { 														  // checks to see if the user has arrived at a landmark/fort/river
-		        location.updatevisited();									  // updates the object/landmark to be visited by the user 
-		        clock.stop();												  // stops the days from passing
-		        //dateQtyLbl_3.setText(travel.getDate()); 					  // corrects the date 
-		        if(location instanceof River){ 								  // checks to see if it is an instance of river 
-		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl); 							  // displays river frame 
-		        	break;
+		    	
+		    } else { 			
+		    	// they have arrived at a landmark/fort/river
+		    	location.updatevisited();									  				// updates the object/landmark to be visited by the user 
+		        clock.stop();												  				// stops the days from passing
+		        
+		        if(location instanceof River){ 								  				// checks to see if it is an instance of river 
+		    		wagon.addItemQty(water, health.getAmountOfMembers() * 2);				// add water collected from the river
+		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl); 	// displays river frame 
 
-		        } else if (location instanceof Fort){						  // checks to see if it is an instance of fort 
+		        } else if (location instanceof Fort){						  		  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store, teaTime);		  // displays fort frame
-		        	break;
 
-		        }else if(location instanceof Landmarks) {
-		        	landmarkFrame.openLandmarkFrame((Landmarks)location, teaTime);
-
-		        } else if(location instanceof Landmarks) {					  // checks to see if it is an instance of landmark 
+		        } else if(location instanceof Landmarks) {					  		  // checks to see if it is an instance of landmark 
 		        	landmarkFrame.openLandmarkFrame((Landmarks)location, teaTime);	  // displays landmark frame
-
-		        	break;
+		        	
 		        } else {
 		        	// THE USER HAS WON THE GAME (arrived at the house in Oregon)
 		    		String text = "Congratulations! You successfully traveled the Oregon Trail.";
@@ -247,7 +248,11 @@ public class Interface {
 		    		int type = JOptionPane.PLAIN_MESSAGE;
 		    		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
 		    		if(response == JOptionPane.OK_OPTION) System.exit(1);
+		    		break;
 		        }
+		    	milesToNextLbl.setText("Miles to " + locations.get(i+1).getName() + ":"); 	// updates displayed info to the next fort's
+		    	milToQtyLbl.setText(locations.get(i+1).getMilesAway() + ""); 			  	// update how far away the wagon is 
+		        break;
 		    }
 		}
     }
@@ -419,6 +424,17 @@ public class Interface {
 		trailImage.setOpaque(true);
 		trailImage.setBounds(20, 90, 1233, 305);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
+		
+		dotLbl = new JLabel(".");
+		dotLbl.setVerticalTextPosition(SwingConstants.BOTTOM);
+		dotLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		dotLbl.setForeground(new Color(255, 255, 255));
+		dotLbl.setBackground(new Color(166, 107, 0));
+		dotLbl.setFont(new Font("Tw Cen MT", Font.BOLD, 99));
+		dotLbl.setBounds(1159, 69, 47, 67);
+
+		frame.getContentPane().add(dotLbl);
+		frame.getContentPane().setComponentZOrder(dotLbl, 0);
 		
 		// opens the intro frame
 		introFrame.openIntroFrame(dateQtyLbl, travel, health, store);
