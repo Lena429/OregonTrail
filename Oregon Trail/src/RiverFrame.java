@@ -25,7 +25,6 @@ import javax.swing.SwingConstants;
 public class RiverFrame {
 	
 	private Money bank;
-	private ArrayList<Location> locations;
 	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food; 
@@ -38,8 +37,7 @@ public class RiverFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public RiverFrame(ArrayList<Location> locations, Money bank, TravelManager travel, Wagon wagon, Equipment food) {
-		this.locations = locations;
+	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Equipment food) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.wagon = wagon;

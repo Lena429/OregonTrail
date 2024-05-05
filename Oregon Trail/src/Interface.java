@@ -85,7 +85,7 @@ public class Interface {
 	
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, locations, bank);
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
-	private RiverFrame riverFrame 		= new RiverFrame(locations, bank, travel, wagon, food); 
+	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 	private IntroFrame introFrame		= new IntroFrame();
 	private MapDot dot					= new MapDot();
@@ -148,7 +148,7 @@ public class Interface {
 		
 		initialize();
 		
-		clock = new javax.swing.Timer(1500, new ActionListener() {
+		clock = new javax.swing.Timer(500, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				clockActionPerformed(evt);
 			}
@@ -228,10 +228,6 @@ public class Interface {
 		    	
 		    } else { 			
 		    	// they have arrived at a landmark/fort/river
-		    	milesToNextLbl.setText("Miles to " + locations.get(i+1).getName() + ":"); 	// updates displayed info to the next fort's
-		    	milToQtyLbl.setText(locations.get(i+1).getMilesAway() + ""); 			  	  // update how far away the wagon is 
-
-		        
 		    	location.updatevisited();									  				// updates the object/landmark to be visited by the user 
 		        clock.stop();												  				// stops the days from passing
 		        
@@ -251,7 +247,10 @@ public class Interface {
 		    		int type = JOptionPane.PLAIN_MESSAGE;
 		    		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
 		    		if(response == JOptionPane.OK_OPTION) System.exit(1);
+		    		break;
 		        }
+		    	milesToNextLbl.setText("Miles to " + locations.get(i+1).getName() + ":"); 	// updates displayed info to the next fort's
+		    	milToQtyLbl.setText(locations.get(i+1).getMilesAway() + ""); 			  	// update how far away the wagon is 
 		        break;
 		    }
 		}
