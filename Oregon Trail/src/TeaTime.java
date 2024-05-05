@@ -22,6 +22,8 @@ public class TeaTime {
 	private static final int MAX_BREW_TIMES = 2; // how many times you are able to brew tea each time game is played
 	private int forageCounter;
 	private int brewCounter;
+	private Equipment water;
+	private Wagon wagon;
 	
 	private WagonParty health;
 	private JFrame frame;
@@ -30,8 +32,10 @@ public class TeaTime {
     private Random random;
     
     
- public TeaTime(WagonParty health) {
+ public TeaTime(WagonParty health, Equipment water, Wagon wagon) {
     	this.health = health;
+    	this.water = water;
+    	this.wagon = wagon;
     }
     
     private static class TeaIngredient {
@@ -149,11 +153,28 @@ public class TeaTime {
 		JButton btnNewButton_1 = new JButton("Brew Tea");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TeaIngredient brewedIngredient = brewTea();
-				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect()
-				+" \n You gain: " + brewedIngredient.getHealth() + " health");
-				health.recoverHealth(brewedIngredient.getHealth());
-				}
+				 boolean waterFound = false;
+			        for (Equipment item : wagon.getItems()) {
+			            if (item instanceof Equipment && item.getName().equals("Water")) {
+			                int waterQuantity = item.getQuantity();
+			                if (waterQuantity > 0) {
+			                    // Water is available to brew tea
+			                    waterFound = true;
+			                    TeaIngredient brewedIngredient = brewTea();
+			                    // Remove one pound of water from inventory
+			                    wagon.removeItemQty(item, 1);
+			                    lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect()
+			                            + " \n You gain: " + brewedIngredient.getHealth() + " health");
+			                    health.recoverHealth(brewedIngredient.getHealth());
+			                    break; // Stop searching for water
+			                }
+			            }
+			        }
+			        if (!waterFound) {
+			            // No water found in inventory
+			            lblNewLabel_1.setText("You don't have enough water to brew tea.");
+			        }
+			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1.setBounds(497, 505, 202, 63);

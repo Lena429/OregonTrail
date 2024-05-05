@@ -47,7 +47,6 @@ public class Interface {
 	private Wagon wagon	  		 = new Wagon();
 	private WagonParty health    = new WagonParty();
 	private Store store;
-	private TeaTime teaTime     = new TeaTime(health);
 	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 300, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
@@ -82,6 +81,7 @@ public class Interface {
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
+	private TeaTime teaTime     = new TeaTime(health, water, wagon);
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, bank);
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
 	private RiverFrame riverFrame 		= new RiverFrame(locations, bank, travel); 

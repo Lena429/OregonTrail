@@ -27,7 +27,7 @@ public class FortFrame {
 	private Equipment food;
 	private Money bank;
 	
-	private int teaTimePlayed;
+	private int teaTimePlayed; // how many total times the player plays the mini-game in a fort
 	
 	
 	
