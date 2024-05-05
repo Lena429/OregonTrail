@@ -214,10 +214,7 @@ public class Interface {
 		if(!randomEventResult.equals("ignore")) {
 		    JOptionPane.showMessageDialog(null, randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE);
 		}
-		else {
-		    JOptionPane.showMessageDialog(null, "testing");
-
-		}
+		
 
 
 
