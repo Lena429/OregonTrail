@@ -26,23 +26,28 @@ public class StopFrame {
 	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
+	private Equipment water;
 	private Money bank;
+	private WagonParty health;
 	
 	/**
 	 * 
 	 * @param travel
 	 * @param wagon
-	 * @param food
 	 * @param bank
+	 * @param health
+	 * @param food
+	 * @param water
 	 */
-	public StopFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
+	public StopFrame(TravelManager travel, Wagon wagon, Money bank, WagonParty health, Food food, Equipment water) {
 		this.travel = travel;
 		this.wagon = wagon;
-		this.food = food;
 		this.bank = bank;
+		this.health = health;
+		this.food = food;
+		this.water = water;
 	}
 	
-	// THE FOOD IN REST NEEDS TO BE BASED ON PEOPLE ALIVE
 	/**
 	 * 
 	 * @param dateMainLbl
@@ -50,7 +55,7 @@ public class StopFrame {
 	 * @param rationsMainLbl
 	 * @param paceMainLbl
 	 */
-	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl) {
+	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl, TeaTime teatime) {
 		TradeManager offer	= new TradeManager();
 		
 		JFrame frame = new JFrame();
@@ -144,7 +149,8 @@ public class StopFrame {
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * 4); 
+				wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
+				wagon.removeItemQty(water, health.getAmountOfMembers());				
 				foodMainLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl.setText(travel.getDate());
 				dateMainLbl.setText(travel.getDate());
@@ -173,15 +179,17 @@ public class StopFrame {
 		        	offer.tradeAccepted(wagon.getItems(), wagon);
 		        }
 		        
-				// day increments and food decrements
+				// day increments and food/water decrements
 				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * 4);
+				wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
+				wagon.removeItemQty(water, health.getAmountOfMembers());
+		        
+				// Update the labels so user can see correct values
 				dateMainLbl.setText(travel.getDate());
 				dateQtyLbl.setText(travel.getDate());
-		        // Update the inventory display so user can see correct values
 				inventory.setText(wagon.displayingInventory() + "\n" + bank.displayMoney());
 		        
-		        // updates the food label on frame 1
+		        // updates the food label on the main frame
 		        foodMainLbl.setText(wagon.getConsumableWeight() + "");
 			}
 		});
@@ -207,6 +215,11 @@ public class StopFrame {
 		frame.getContentPane().add(panel);		
 		
 		JButton teaBtn = new JButton("Teatime");
+		teaBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				teatime.openTeaTime();
+			}
+		});
 		teaBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		teaBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		teaBtn.setBounds(771, 133, 295, 86);

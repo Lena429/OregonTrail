@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 
@@ -72,6 +74,7 @@ public class TeaTime {
         }
         // Simulate selecting a random ingredient from inventory to brew
         TeaIngredient selectedIngredient = inventory.get(random.nextInt(inventory.size()));
+        
         // Remove the ingredient from inventory
         inventory.remove(selectedIngredient);
         return selectedIngredient;
@@ -90,21 +93,20 @@ public class TeaTime {
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
-		frame.getContentPane().setLayout(null);
 		
 		
 		JLabel lblNewLabel = new JLabel("Tea Time on the Trail");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 37));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(402, 33, 419, 45);
-		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("To make tea first you must look for herbs from around the area. Then you brew it !!");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(358, 160, 800, 200);
-		frame.getContentPane().add(lblNewLabel_1);
 		
 		JButton btnNewButton = new JButton("Forage Herbs");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -116,7 +118,6 @@ public class TeaTime {
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnNewButton.setBounds(185, 505, 202, 65);
-		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Brew Tea");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -129,7 +130,6 @@ public class TeaTime {
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1.setBounds(497, 505, 202, 63);
-		frame.getContentPane().add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("Exit");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
@@ -139,7 +139,16 @@ public class TeaTime {
 		});
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1_1.setBounds(852, 505, 202, 63);
-		frame.getContentPane().add(btnNewButton_1_1);
+		
+		JPanel teaPanel = new JPanel();
+		teaPanel.setBackground(new Color(0, 0, 0));
+		teaPanel.setLayout(null);
+		teaPanel.add(lblNewLabel);
+		teaPanel.add(lblNewLabel_1);
+		teaPanel.add(btnNewButton);
+		teaPanel.add(btnNewButton_1);
+		teaPanel.add(btnNewButton_1_1);
+		frame.getContentPane().add(teaPanel);
 		
 	}
 }

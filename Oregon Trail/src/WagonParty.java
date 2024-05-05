@@ -82,10 +82,22 @@ public class WagonParty {
 	}
 	
 	/**
+	 * gets the list of people in the wagon
+	 * @return people - the list of people in the wagon party
+	 */
+	public ArrayList<WagonMember> getMembers() {
+		return people;
+	}
+	
+	/**
 	 * recovers 10% of the wagon health
+	 * recovers the diseases/injuries of wagon members
 	 */
 	public void recoverDailyHealth() {
 		health = (int) (health * .9);
+		for(WagonMember person: people) {
+			person.recoverHealth();
+		}
 	}
 	
 	/**
@@ -105,8 +117,9 @@ public class WagonParty {
 	 * @param hasFood - if the user has food or not
 	 * @param weather - the current weather for the day
 	 * @param clothes - the sets of clothes the user has
+	 * @param water	  - the amount of water the user has
 	 */
-	public void loseHealth(TravelManager travel, boolean outOfFood, String weather, Equipment clothes ) {
+	public void loseHealth(TravelManager travel, boolean outOfFood, String weather, Equipment clothes, Equipment water) {
 		// loses health based on food status
 		if(!outOfFood) {
 			switch (travel.getRations()) {
@@ -127,6 +140,9 @@ public class WagonParty {
 				health += 6;
 			}
 		}
+		
+		// loses health if there is no water
+		if(water.getQuantity() == 0) health += 4;
 		
 		// loses health based on the weather
 		switch (weather) {
