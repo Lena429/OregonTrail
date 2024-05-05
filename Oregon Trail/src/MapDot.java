@@ -1,5 +1,12 @@
-
-
+/**
+ * MapDot.java
+ * 
+ * This class handles the movement of the dot on the map so the user can see
+ * how far they have travelled and how far they need to go
+ * 
+ * @author - Lena Frate
+ * @version 1.1.1 - May 4 2024
+ */
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
@@ -7,8 +14,16 @@ import javax.swing.JLabel;
 
 public class MapDot {
 	
+	/**
+	 * creates an instance of mapDot
+	 */
 	public MapDot() {}
 	
+	/**
+	 * updates the location of the dot on the map in the main interface
+	 * @param dotLbl - the dot label that needs to be moved
+	 * @param milesTravelled - how far the user has travelled
+	 */
 	public void moveDot(JLabel dotLbl, int milesTravelled) {
 		Scanner scr;
 		try {
