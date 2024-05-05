@@ -148,7 +148,7 @@ public class Interface {
 		
 		initialize();
 		
-		clock = new javax.swing.Timer(500, new ActionListener() {
+		clock = new javax.swing.Timer(1500, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				clockActionPerformed(evt);
 			}
@@ -232,6 +232,7 @@ public class Interface {
 		        clock.stop();												  				// stops the days from passing
 		        
 		        if(location instanceof River){ 								  				// checks to see if it is an instance of river 
+		    		wagon.addItemQty(water, health.getAmountOfMembers() * 2);				// add water collected from the river
 		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl); 	// displays river frame 
 
 		        } else if (location instanceof Fort){						  		  // checks to see if it is an instance of fort 
