@@ -1,8 +1,5 @@
-
-
 /**
  * Fort.java
-
  * 
  * The Fort class represents a fort or landmark on the journey, 
  * which the wagon party can visit during their journey. 

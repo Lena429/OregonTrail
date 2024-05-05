@@ -1,6 +1,3 @@
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 /**
  * WagonMember.java
  * 
@@ -13,6 +10,8 @@ import javax.swing.JOptionPane;
  * @author - Lena Frate
  * @version 1.1.1 - April 29 2024
  */
+import javax.swing.JOptionPane;
+
 public class WagonMember {
 	
 	private String name = "";
@@ -20,6 +19,8 @@ public class WagonMember {
 	private boolean hasInjury = false;
 	private int diseaseCount;
 	private int injuryCount;
+	private String skullEmoji = "\uD83D\uDC80"; // Skull emoji in Unicode escape sequence
+
 	
 	/**
 	 * creates a wagon member
@@ -106,7 +107,7 @@ public class WagonMember {
 	 * displays a dialogue box that lets to user know who died
 	 */
 	public void displayMemberDeath() {
-		String text = name + " has died.";
+		String text = name + " has died. " + skullEmoji;
 		String title = "OH NO!";
 		int type = JOptionPane.ERROR_MESSAGE;
 		JOptionPane.showConfirmDialog(null,  text, title, JOptionPane.DEFAULT_OPTION, type);

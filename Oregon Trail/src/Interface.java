@@ -46,9 +46,9 @@ public class Interface {
 	private Weather weather		 = new Weather();
 	private TravelManager travel = new TravelManager();
 	private Wagon wagon	  		 = new Wagon();
-	private WagonParty health    = new WagonParty();
+	private WagonParty members   = new WagonParty();
 	private Store store;
-	private TeaTime teaTime     = new TeaTime(health);
+	private TeaTime teaTime     = new TeaTime(members);
 	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 300, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
@@ -84,7 +84,7 @@ public class Interface {
 	private ArrayList<Location> locations = new ArrayList<>();
 	
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, locations, bank);
-	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
+	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, members, food, water);
 	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
 	private IntroFrame introFrame		= new IntroFrame();
@@ -139,10 +139,10 @@ public class Interface {
 		locations.add(house);
 		
 		// adding members to the wagon party
-		health.addMember(one);
-		health.addMember(two);
-		health.addMember(three);
-		health.addMember(four);
+		members.addMember(one);
+		members.addMember(two);
+		members.addMember(three);
+		members.addMember(four);
 
 		store = new Store(bank, wagon.getItems(), wagon, foodQtyLbl);
 		
@@ -164,32 +164,32 @@ public class Interface {
 		
 
 		// update water
-		wagon.removeItemQty(water, health.getAmountOfMembers());
+		wagon.removeItemQty(water, members.getAmountOfMembers());
 		
 		// update food
 		if(!food.outOfFood()) {
 			// if there is food to remove, remove it
-			wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
+			wagon.removeItemQty(food, travel.getRations() * members.getAmountOfMembers());
 		} 
 		// set the food label
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
 		
 		// update health
 		// regenerate health then lose some
-		health.recoverDailyHealth();
-		health.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes, water);
+		members.recoverDailyHealth();
+		members.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes, water);
 		
 		// check if the health is deadly
-		if(health.isHealthDeadly()) {
+		if(members.isHealthDeadly()) {
 			// update the health label and kill a random member
 			healthQtyLbl.setText("Deadly");
-			health.removeRandomMember();
+			members.removeRandomMember();
 			
-			if(!health.membersStillAlive())
+			if(!members.membersStillAlive())
 				// if they are the last member remaining, end the game
-				health.displayGameOver();
+				members.displayGameOver();
 
-		} else healthQtyLbl.setText(health.displayHealth()); // update health
+		} else healthQtyLbl.setText(members.displayHealth()); // update health
 		
 		
 		
@@ -208,7 +208,7 @@ public class Interface {
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
 		
-		RandomEvents randomEvents   = new RandomEvents(locations, bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, health, wagon);
+		RandomEvents randomEvents   = new RandomEvents(locations, bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, members, wagon);
 		String randomEventResult = randomEvents.generateRandomEvent();
 				
 		if(!randomEventResult.equals("ignore")) {
@@ -242,8 +242,9 @@ public class Interface {
 		        clock.stop();												  				// stops the days from passing
 		        
 		        if(location instanceof River){ 								  				// checks to see if it is an instance of river 
-		    		wagon.addItemQty(water, health.getAmountOfMembers() * 2);				// add water collected from the river
-		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl, wthrQtyLbl); 	// displays river frame 
+		    		wagon.addItemQty(water, members.getAmountOfMembers() * 2);				// add water collected from the river
+		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl, 
+		        			wthrQtyLbl, members.getAmountOfMembers()); 						// displays river frame 
 
 		        } else if (location instanceof Fort){						  		  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store, teaTime);		  // displays fort frame
@@ -447,6 +448,6 @@ public class Interface {
 		frame.getContentPane().setComponentZOrder(dotLbl, 0);
 		
 		// opens the intro frame
-		introFrame.openIntroFrame(dateQtyLbl, travel, health, store);
+		introFrame.openIntroFrame(dateQtyLbl, travel, members, store);
 	}
 }
