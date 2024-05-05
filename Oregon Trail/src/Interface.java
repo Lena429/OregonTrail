@@ -85,7 +85,7 @@ public class Interface {
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, bank);
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
 	private RiverFrame riverFrame 		= new RiverFrame(locations, bank, travel); 
-	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations, bank);
+	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, bank);
 	private IntroFrame introFrame		= new IntroFrame();
 	
 	/**

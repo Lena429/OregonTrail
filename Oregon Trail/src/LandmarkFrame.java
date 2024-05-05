@@ -3,7 +3,6 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,17 +16,15 @@ public class LandmarkFrame {
 	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
-	private ArrayList<Location> locations;
 	private Money bank;
 	
 
 	private int teaTimePlayed;
 	
-	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
+	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
-		this.locations = locations;
 		this.bank = bank;
 	}
 	
@@ -74,12 +71,7 @@ public class LandmarkFrame {
 		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			   for (Location location : locations) {
-				if(location instanceof Fort && !location.hasvisited()) {
-					conversationPane.setText((currentLandmark).generatePhrase());
-					break;
-				}
-			  }
+			   conversationPane.setText((currentLandmark).generatePhrase());
 			}
 		});
 		talkBtn.setBounds(31, 138, 133, 21);

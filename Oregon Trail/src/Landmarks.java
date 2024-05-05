@@ -1,4 +1,4 @@
-
+import java.util.Random;
 
 public class Landmarks extends Location{
 	
@@ -10,30 +10,34 @@ public class Landmarks extends Location{
 	// Phrases for chattering, categorized by landmark names
     private String[] phrasesLandmarkA = {"Amelia says to the group, \"that a big rock.\"" };
     private String[] phrasesLandmarkB = {"Amelia points ahead \" that a bigger rock.\""};
-    		
-   
-    		
-    // Add more fort-specific phrases as needed
-
+    private String[] phrasesLandmarkC = {"Amelia shouts out, \"that is one free rock.\""};
+    
+    
     public String generatePhrase() {
-        String phrase = "";
+        String[] selectedPhrases = null;
 
-        // Check the fort's name and select phrases accordingly
-        // More phrases can be added and selected later
-        if (getName().equals("Chimney Rock")) {
-            phrase = phrasesLandmarkA[0]; // Select the first phrase for Fort A
-        } else if (getName().equals("Scott's Bluff")) {
-            phrase = phrasesLandmarkB[0]; // Select the first phrase for Fort B
+        // Randomly select phrases based on the landmark's name
+        Random random = new Random();
+        switch (getName()) {
+            case "Chimney Rock":
+                selectedPhrases = phrasesLandmarkA;
+                break;
+            case "Scott's Bluff":
+                selectedPhrases = phrasesLandmarkB;
+                break;
+            case "Independence Rock":
+                selectedPhrases = phrasesLandmarkC;
+                break;
         }
-       
-        
-        // Add more conditions for other forts as needed
 
-        return phrase;
+        // Select a random phrase from the selected phrases
+        if (selectedPhrases != null) {
+            int index = random.nextInt(selectedPhrases.length);
+            return selectedPhrases[index];
+        } else {
+            return "No phrases available for this landmark.";
+        }
     }
-	
-	
-	
 }
 
 
