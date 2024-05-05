@@ -11,12 +11,16 @@
  */
 import java.util.Random;
 import java.util.Scanner;
+
+import javax.swing.JLabel;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class River extends Location {
 	private static Scanner scr;
 	private static InputStreamReader reader = null;
+	Random rnd = new Random();
 	
 	// Phrases for conversations
     private String[] phraseRiver1 = {"Amelia Knight says, \"We passed Pisgah and will cross Grand River soon. My head aches, but I will make tea tonight to cure it.\""};
@@ -27,7 +31,7 @@ public class River extends Location {
     private String[] phraseRiver6 = {"Amelia Knight says, \"We plan to ford the river late this afternoon by raising the wagon beds a foot, to prevent the water from running in. I wish you luck on your journey.\""};
     private String[] phraseRiver7 = {"Amelia Knight says, \"Make sure you keep an eye on the children. My son gave me a scare the other day when he fell under the wagon. Somehow he kept from under the wheels and escaped uninjured. I never was so much frightened in my life.\""};
     private String[] phraseRiver8 = {"Amelia Knight says, \"The trip so far has not been kind to me. Last night, I helped get supper and went to bed too sick to eat any myself. We suspect that the water here is bad, so watch what you drink.\""};
-    private String[] phraseRiver9 = {" "};
+    private String[] phraseRiver9 = {" bruh"};
 
 	/**
 	 * Creates a River object containing the name and miles
@@ -36,8 +40,6 @@ public class River extends Location {
 	 */
 	public River(String name, int miles) {
 		super(name, miles);
-		  // InputStreamReader isr = new InputStreamReader(this.getClass().getResourceAsStream("River.txt")); // reads in a text file
-		   //scr = new Scanner(isr);
 	}
 	
 	public River() {}  
@@ -56,9 +58,15 @@ public class River extends Location {
 	 * returns height of the water level at the river the user is at
 	 * @return height - the height of the water
 	 */
-	public int getHeight() {
+	public double getHeight(JLabel label) {
 		int height = scr.nextInt();
-		return height;
+		if (label.getText().equals("Rainy")) {
+			height = (height + (rnd.nextInt(3)+1))/12; //increments the height of the river 1-3 feet if raining
+		}
+		else if (label.getText().equals("Very Hot")) {
+			height = (height - (rnd.nextInt(3))+1)/12; //decrements the height of the river 1-3 feet if raining
+		}
+		return height; 
 	}
 	
 	/**
@@ -66,15 +74,31 @@ public class River extends Location {
 	 * @return Slow/Steady/Fast - the speed of the river associated with the number
 	 * @return Error - the speed of the river was out of bounds
 	 */
-	public String getFlow() {
+	public String getFlow(JLabel label) {
 		int flow = scr.nextInt(); // reads in next integer
+		if (label.getText().equals("Rainy")) {
+			flow = flow + (rnd.nextInt(3)+1); //increments the flow of the river
+			if (flow > 3) {
+				flow = 3;
+			}
+		} else if (label.getText().equals("Snowy")){
+			flow = flow - (rnd.nextInt(3)+1); //decrements the flow of the river
+			if (flow < 1) {
+				flow = 1;
+			}
+		} else if (label.getText().equals("Very Hot")) {
+			flow = flow - (rnd.nextInt(3)+1); //decrements the flow of the river
+			if (flow < 1) {
+				flow = 1;
+			}
+		}
 		// checks to see what number speed the river flow is at
 		switch(flow) {
 		case 1: 
 			return "Slow";
 		case 2:
 			return "Steady";
-		case 3: 
+		case 3,4,5,6: 
 			return "Fast";
 		}
 		return "Error";
@@ -84,8 +108,14 @@ public class River extends Location {
 	 * returns the width of the river
 	 * @return width - this is the width of the river the user is at 
 	 */
-	public int getWidth() {
-		int width = scr.nextInt();
+	public double getWidth(JLabel label) {
+		double width = scr.nextInt();
+		if (label.getText().equals("Rainy")) {
+			width = ((width + (rnd.nextInt(3)+1))/12); //increments the width of the river 1 to 3 feet if raining
+		}
+		else if (label.getText().equals("Very Hot")) {
+			width = ((width - (rnd.nextInt(3)+1))/12);
+		}
 		return width; 
 		
 	}
@@ -100,7 +130,6 @@ public class River extends Location {
 	 * @return "Error" - this tells the user there has been an error in the program
 	 */
 	public String randomEvtCross(Money bank) {
-		Random rnd = new Random();
 		int random = rnd.nextInt(5)+1;															   // generates a random number 1 - 5
 		switch (random)
 		{	

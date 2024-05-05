@@ -43,7 +43,7 @@ public class RiverFrame {
 	 * 
 	 * @param currentRiver
 	 */
-	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl) {
+	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl, JLabel wthrQtyLbl) {
 		
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
@@ -177,9 +177,9 @@ public class RiverFrame {
 		});
 
     	River.openFile();
-    	heightNumLbl.setText(currentRiver.getHeight()+ ""); // displays height of river user is at 
-    	flowNumLbl.setText(currentRiver.getFlow()); 		  // displays flow of river the user is at 
-    	widthNumLbl.setText(currentRiver.getWidth()+ "");   // displays width of the river the user is at
+    	heightNumLbl.setText(currentRiver.getHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
+    	flowNumLbl.setText(currentRiver.getFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 
+    	widthNumLbl.setText(currentRiver.getWidth(wthrQtyLbl)+ "");   // displays width of the river the user is at
     	River.closeFile();
 		
 		// adding components to panel and frame
