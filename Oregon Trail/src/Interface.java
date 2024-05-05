@@ -162,6 +162,7 @@ public class Interface {
 		rationsQtyLbl.setText(travel.displayRations());
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
+
 		// update water
 		wagon.removeItemQty(water, health.getAmountOfMembers());
 		
@@ -207,7 +208,18 @@ public class Interface {
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
 		
-		
+		RandomEvents randomEvents   = new RandomEvents(locations, bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl);
+		String randomEventResult = randomEvents.generateRandomEvent();
+				
+		if(!randomEventResult.equals("ignore")) {
+		    JOptionPane.showMessageDialog(null, randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else {
+		    JOptionPane.showMessageDialog(null, "testing");
+
+		}
+
+
 
 		for (int i = 0; i < locations.size(); i++) {
 		    // store the index
@@ -225,6 +237,7 @@ public class Interface {
 		    	// they haven't
 		    	milesToNextLbl.setText("Miles to " + location.getName() + ":");
 		    	break;
+
 		    	
 		    } else { 			
 		    	// they have arrived at a landmark/fort/river
@@ -233,7 +246,7 @@ public class Interface {
 		        
 		        if(location instanceof River){ 								  				// checks to see if it is an instance of river 
 		    		wagon.addItemQty(water, health.getAmountOfMembers() * 2);				// add water collected from the river
-		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl); 	// displays river frame 
+		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl, wthrQtyLbl); 	// displays river frame 
 
 		        } else if (location instanceof Fort){						  		  // checks to see if it is an instance of fort 
 		        	fortFrame.openFortFrame((Fort) location, store, teaTime);		  // displays fort frame

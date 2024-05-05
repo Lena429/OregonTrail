@@ -50,7 +50,7 @@ public class RiverFrame {
 	 * @param dateMainLbl
 	 * @param foodMainLbl
 	 */
-	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl) {
+	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl, JLabel wthrQtyLbl) {
 		
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);

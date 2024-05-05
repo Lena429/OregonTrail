@@ -22,6 +22,8 @@
 /Landmarks.class
 /Location.class
 /Money.class
+/RandomEvents.class
+/ReadRivers
 /River.class
 /River.txt
 /RiverFrame$1.class
@@ -60,6 +62,7 @@
 /teatime$1.class
 /teatime$2.class
 /teatime$3.class
+/teatime$4.class
 /teatime$TeaIngredient.class
 /teatime.class
 /TradeManager.class
