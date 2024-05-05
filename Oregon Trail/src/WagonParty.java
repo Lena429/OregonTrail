@@ -127,6 +127,14 @@ public class WagonParty {
 	}
 	
 	/**
+	 * loses health when disease/injury first strikes a member
+	 * Note: value of 20 is taken from "You Have Died of Dysentery"
+	 */
+	public void loseHealthToAilment() {
+		health += 20;
+	}
+	
+	/**
 	 * calculates how much health the wagon party loses based on factors like food, 
 	 * weather, and diseases/injuries
 	 * Note: recoverHealth should be called first

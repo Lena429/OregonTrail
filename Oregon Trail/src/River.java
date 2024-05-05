@@ -6,7 +6,6 @@
  *  
  * @author - Lena Frate
  * @author - Lillyan Stewart 
- * @author - Sarah Slusher
  * @version 1.1.1 - April 17 2024
  */
 import java.util.Random;

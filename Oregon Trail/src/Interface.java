@@ -167,7 +167,7 @@ public class Interface {
 		wagon.removeItemQty(water, health.getAmountOfMembers());
 		
 		// update food
-		if(!food.outOfFood()) {
+		if(!food.isOutOfFood()) {
 			// if there is food to remove, remove it
 			wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
 		} 
@@ -177,7 +177,7 @@ public class Interface {
 		// update health
 		// regenerate health then lose some
 		health.recoverDailyHealth();
-		health.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes, water);
+		health.loseHealth(travel, food.isOutOfFood(), weather.displayTemperature(), clothes, water);
 		
 		// check if the health is deadly
 		if(health.isHealthDeadly()) {
@@ -208,16 +208,13 @@ public class Interface {
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
 		
-		RandomEvents randomEvents   = new RandomEvents(locations, bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, health, wagon);
+		RandomEvents randomEvents   = new RandomEvents(bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, health, wagon, food);
 		String randomEventResult = randomEvents.generateRandomEvent();
 				
 		if(!randomEventResult.equals("ignore")) {
 		    JOptionPane.showMessageDialog(null, randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
-
-
-
 		for (int i = 0; i < locations.size(); i++) {
 		    // store the index
 			Location location = locations.get(i);
