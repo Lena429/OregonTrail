@@ -41,25 +41,23 @@ public class WagonParty {
 	/**
 	 * removes a member from the people arrayList and displays death
 	 * @param person - the person to be removed
-	 * @param frame - the frame to center the message on
 	 */
-	public void removeMember(WagonMember person, JFrame frame) {
-		person.displayMemberDeath(frame);
+	public void removeMember(WagonMember person) {
+		person.displayMemberDeath();
 		people.remove(person);
 	}
 	
 	/**
 	 * removes a random member from the people arrayList and displays
 	 * death message
-	 * @param frame - the frame to center the message on
 	 */
-	public void removeRandomMember(JFrame frame) {
+	public void removeRandomMember() {
 		// generates a random index
 		Random rnd = new Random();
 		int index = rnd.nextInt(people.size());
 		
 		// displays who died and remove that person
-		people.get(index).displayMemberDeath(frame);
+		people.get(index).displayMemberDeath();
 		people.remove(index);
 	}
 	
@@ -240,11 +238,11 @@ public class WagonParty {
 	 * also ends the game
 	 * @param frame - the frame to center the message on
 	 */
-	public void displayGameOver(JFrame frame) {
+	public void displayGameOver() {
 		String text = "All members of the wagon have perished :(";
 		String title = "Game Over!";
 		int type = JOptionPane.ERROR_MESSAGE;
-		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		int response = JOptionPane.showConfirmDialog(null, text, title, JOptionPane.DEFAULT_OPTION, type);
 		if(response == JOptionPane.OK_OPTION) System.exit(1);
 	}
 }

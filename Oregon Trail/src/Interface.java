@@ -183,11 +183,11 @@ public class Interface {
 		if(health.isHealthDeadly()) {
 			// update the health label and kill a random member
 			healthQtyLbl.setText("Deadly");
-			health.removeRandomMember(frame);
+			health.removeRandomMember();
 			
 			if(!health.membersStillAlive())
 				// if they are the last member remaining, end the game
-				health.displayGameOver(frame);
+				health.displayGameOver();
 
 		} else healthQtyLbl.setText(health.displayHealth()); // update health
 		

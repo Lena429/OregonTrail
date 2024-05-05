@@ -138,8 +138,11 @@ public class RandomEvents {
 	private String injured() {
 		int random = rnd.nextInt(100)+1; //random number 1 - 100
 			if (random <= 2 ) {
-				
-				return "Oh, no! A member broke a leg :(";
+				WagonMember index = wagonParty.getRandomMember();
+				if (index.isAilmentDeadly()) {
+					
+				}
+				return "Oh, no!  A member broke a leg :(";
 				}
 		return "ignore";
 	}
@@ -148,9 +151,10 @@ public class RandomEvents {
 	private String snakeBite() {
 		int random = rnd.nextInt(100)+1;
 		if (random == 1) {
-			
-			//how td do i get access to health 
-			//random member increment health 
+	        String emoji = "\uD83D\uDC0D";
+			String name = wagonParty.getRandomMember().getName();
+			wagonParty.loseHealthQty(2);
+			return name + " was bitten by a snake. " + emoji; 
 		}
 	 	
 		 return "ignore";
