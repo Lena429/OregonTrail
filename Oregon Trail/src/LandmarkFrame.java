@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -19,6 +20,9 @@ public class LandmarkFrame {
 	private ArrayList<Location> locations;
 	private Money bank;
 	
+
+	private int teaTimePlayed;
+	
 	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
@@ -27,7 +31,14 @@ public class LandmarkFrame {
 		this.bank = bank;
 	}
 	
+	public void resetTeaPlayed() {
+		teaTimePlayed = 0;
+	}
+	
 	public void openLandmarkFrame(Landmarks currentLandmark, TeaTime teaTime) {
+
+		resetTeaPlayed();
+		
 		//frame for the landmarks and the interactions to be had
 		JFrame frameFive = new JFrame();
 		frameFive.setBounds(100, 100, 1289, 767);
@@ -99,8 +110,17 @@ public class LandmarkFrame {
 		JButton teaTimeBtn = new JButton("Tea Time");
 		teaTimeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			teaTimeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {if(teaTimePlayed < 2) {
 				teaTime.openTeaTime();
+				//Increment counter when game is played
+				teaTimePlayed++;
+				//Check if button should be disabled
+				if(teaTimePlayed == 2) {
+					teaTimeBtn.setEnabled(false);
+				}
+			}else {
+				JOptionPane.showMessageDialog(frameFive, "You have drinken enough tea for today");
+			}
 			}
 		});
 		teaTimeBtn.setBounds(31,450,133,21);
