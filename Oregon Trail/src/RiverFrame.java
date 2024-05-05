@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
@@ -211,12 +212,18 @@ public class RiverFrame {
 		talkBtn.setBounds(10, 382, 158, 60);
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// generates a random phrase for the specific fort
+				/*
 				for (Location location : locations) {
 					if(location instanceof River && !location.hasvisited()) {
 						conversationPane.setText(((River) location).generatePhrase());
 						break;
 					}
 				}
+				*/
+				conversationPane.setText(currentRiver.generatePhrase());
+				// disables the button after first click
+				talkBtn.setEnabled(false);
 			}
 		});
 		panel.add(talkBtn);
@@ -224,6 +231,20 @@ public class RiverFrame {
 		JButton inventoryBtn = new JButton("Inventory");
 		inventoryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFrame riverInventory = new JFrame();
+				riverInventory.setTitle("Inventory");
+				riverInventory.setBounds(470, 317, 450, 375);
+				riverInventory.setVisible(true);
+				
+				JTextArea currentInventory = new JTextArea(wagon.displayingInventory() + bank.displayMoney());
+				currentInventory.setEditable(false);
+				currentInventory.setWrapStyleWord(true);
+				currentInventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+				
+				JPanel riverInventoryPanel = new JPanel();
+				riverInventoryPanel.setLayout(null);
+				riverInventoryPanel.add(currentInventory);
+				riverInventory.getContentPane().add(currentInventory);
 			}
 		});
 		inventoryBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -234,6 +255,31 @@ public class RiverFrame {
 		JButton tradeBtn = new JButton("Trade");
 		tradeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/*
+				// generates the trade offer
+				offer.getTrader(travel.getMilesTravelled());
+				offer.getOffer(wagon.getItems());
+				
+				// displays the trade offer in a dialogue box
+				int response = offer.displayOffer();
+				// checks if the user accepted the trade or not
+		        if (response == JOptionPane.YES_OPTION) {
+		        	// Yes, add/remove the items and update the inventory display
+		        	offer.tradeAccepted(wagon.getItems(), wagon);
+		        }
+		        
+				// day increments and food/water decrements
+				travel.updateDate();
+				wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
+				wagon.removeItemQty(water, health.getAmountOfMembers());
+		        
+				// Update the labels so user can see correct values
+				dateMainLbl.setText(travel.getDate());
+				dateQtyLbl.setText(travel.getDate());
+		        
+		        // updates the food label on the main frame
+		        foodMainLbl.setText(wagon.getConsumableWeight() + "");
+		        */
 			}
 		});
 		tradeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
