@@ -9,7 +9,7 @@ public class RandomEvents {
 	Random rnd = new Random();
 	private Money bank;
 	private ArrayList<Location> locations;
-	private Travel travel;
+	private TravelManager travel;
 	private Wagon wagon;
 	private JLabel foodMainLbl;
 	private JLabel dateMainLbl;
@@ -23,7 +23,7 @@ public class RandomEvents {
 	 * @param bank
 	 */
 
-	public RandomEvents(ArrayList<Location> locations, Money bank, Travel travel, JLabel foodMainLbl, JLabel dateMainLbl, JLabel wthrQtyLbl) {
+	public RandomEvents(ArrayList<Location> locations, Money bank, TravelManager travel, JLabel foodMainLbl, JLabel dateMainLbl, JLabel wthrQtyLbl) {
 		this.locations = locations;
 		this.bank = bank;
 		this.travel = travel; 
