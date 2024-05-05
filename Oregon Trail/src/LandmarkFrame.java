@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 public class LandmarkFrame {
@@ -14,12 +17,14 @@ public class LandmarkFrame {
 	private Wagon wagon;
 	private Equipment food;
 	private ArrayList<Location> locations;
+	private Money bank;
 	
-	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations) {
+	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
 		this.locations = locations;
+		this.bank = bank;
 	}
 	
 	public void openLandmarkFrame(Landmarks currentLandmark, TeaTime teaTime) {
@@ -35,14 +40,17 @@ public class LandmarkFrame {
 		// Greeting header for the fort frames
 	    JLabel landmarkName = new JLabel("Welcome to " + currentLandmark.getName());
 	    landmarkName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
-	    landmarkName.setBounds(343, 11, 569, 86);
+	    landmarkName.setForeground(new Color(255,255,255));
+	    landmarkName.setBounds(343, 11, 569, 95);
 		
 		JLabel dateLbl_3 = new JLabel("Date:");
 		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		dateLbl_3.setForeground(new Color(255,255,255));
 		dateLbl_3.setBounds(586, 631, 93, 51);
 		
 		JLabel dateQtyLbl_3 = new JLabel(travel.getDate());
 		dateQtyLbl_3.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		dateQtyLbl_3.setForeground(new Color(255,255,255));
 		dateQtyLbl_3.setBounds(676, 631, 284, 51);
 		
 		// Label to hold generated phrases of conversation
@@ -52,6 +60,7 @@ public class LandmarkFrame {
 		conversationPane.setBounds(178, 371, 357, 215);
 		
 		JButton talkBtn = new JButton("Talk to people");
+		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			   for (Location location : locations) {
@@ -67,6 +76,7 @@ public class LandmarkFrame {
 		// player decides to rest in the fort
 		// updates day counter while in the fort and resting
 		JButton restBtn = new JButton("Rest");
+		restBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
@@ -77,6 +87,7 @@ public class LandmarkFrame {
 		restBtn.setBounds(31, 256, 133, 21);
 		
 		JButton leaveBtn = new JButton ("Continue Trail");
+		leaveBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		leaveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameFive.dispose();
@@ -86,12 +97,35 @@ public class LandmarkFrame {
 		
 		//player decides to look for tea
 		JButton teaTimeBtn = new JButton("Tea Time");
+		teaTimeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			teaTimeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				teaTime.openTeaTime();
 			}
 		});
 		teaTimeBtn.setBounds(31,450,133,21);
+		
+		//player decides to check wagon inventory while in the fort
+		JButton inventoryBtn = new JButton("Inventory");
+		inventoryBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		inventoryBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame fortInventory = new JFrame();
+				fortInventory.setBounds(575, 108, 671, 505);
+				fortInventory.setVisible(true);
+						
+				JTextArea currentInventory = new JTextArea("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
+				currentInventory.setEditable(false);
+				currentInventory.setWrapStyleWord(true);
+				currentInventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+						
+				JPanel fortInventoryPanel = new JPanel();
+				fortInventoryPanel.setLayout(null);
+				fortInventoryPanel.add(currentInventory);
+				fortInventory.getContentPane().add(currentInventory);
+			}
+		});
+		inventoryBtn.setBounds(31, 400, 133, 21);
 		
 		
 		JPanel landPanel = new JPanel();
@@ -104,6 +138,8 @@ public class LandmarkFrame {
 		landPanel.add(talkBtn);
 		landPanel.add(leaveBtn);
 		landPanel.add(teaTimeBtn);
+		landPanel.add(inventoryBtn);
+		landPanel.setBackground(new Color(0,0,0));
 		frameFive.getContentPane().add(landPanel);
 		
 	}

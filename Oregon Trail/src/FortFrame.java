@@ -10,7 +10,6 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,7 +25,6 @@ public class FortFrame {
 	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
-	private ArrayList<Location> locations;
 	private Money bank;
 	
 	private int teaTimePlayed;
@@ -39,11 +37,10 @@ public class FortFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public FortFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
+	public FortFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
-		this.locations = locations;
 		this.bank = bank;
 	}
 	
@@ -87,6 +84,7 @@ public class FortFrame {
 		
 		JLabel dateLbl_3 = new JLabel("Date:");
 		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		dateLbl_3.setForeground(new Color(255,255,255));
 		dateLbl_3.setBounds(586, 631, 93, 51);
 		
 		JLabel dateQtyLbl_3 = new JLabel(travel.getDate());
@@ -106,12 +104,7 @@ public class FortFrame {
 		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			   for (Location location : locations) {
-				if(location instanceof Fort && !location.hasvisited()) {
-					conversationPane.setText((currentFort).generatePhrase());
-					break;
-				}
-			  }
+				conversationPane.setText((currentFort).generatePhrase());
 			}
 		});
 		talkBtn.setBounds(31, 138, 133, 21);
