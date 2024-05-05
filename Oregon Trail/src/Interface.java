@@ -85,7 +85,6 @@ public class Interface {
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, food, bank);
 	private RiverFrame riverFrame 		= new RiverFrame(locations, bank, travel); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
-	private RandomEvents randomEvents   = new RandomEvents(locations, bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl);
 	
 	/**
 	 * Launch the application.
@@ -161,6 +160,8 @@ public class Interface {
 		rationsQtyLbl.setText(travel.displayRations());
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
+		
+		
 		// update health and food
 		if(!food.outOfFood()) {
 			// if there is food to remove, remove it
@@ -202,6 +203,18 @@ public class Interface {
 				// updates label with temperature
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
+		
+		RandomEvents randomEvents   = new RandomEvents(locations, bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl);
+		String randomEventResult = randomEvents.generateRandomEvent();
+				
+		if(!randomEventResult.equals("ignore")) {
+		    JOptionPane.showMessageDialog(null, randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else {
+		    JOptionPane.showMessageDialog(null, "testing");
+
+		}
+
 
 		for (Location location : locations) {
 			if (location.hasvisited()) continue; 							  // moves to next object in ArrayList if it was already visited

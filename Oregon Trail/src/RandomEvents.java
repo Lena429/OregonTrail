@@ -31,44 +31,7 @@ public class RandomEvents {
 		this.dateMainLbl = dateMainLbl;
 		this.wthrQtyLbl = wthrQtyLbl;
 	}
-	/**
-	 * 
-	 * 
-	 * 
-	 * 
-	 * out of food 5% chance local indians give you 30 lbs
-	
-	severe thunderstorm based on average precipatition for currnet location and currnet month
-	
-	severe blizzard 15% chance each day in which the temp is cold or very cold
-	
-	heavy fog 6% chance each day except when temp is very hot. 50% chance losing a days travel
-	
-	hail storm- after fort hall a 6% chance each day ecept when the temp is very hot. 50% chance of losing a days travel
-	
-	injured/dead ox 2% each day on the prairie; 3.5% chance each day in the mountains. all oxen health- one is injured. one
-	already injured then die. 
-	
-	injured party member 2% chance on prairie; 3.5% chance each day in the mountains. person who gets injured is random 
-	
-	snake bite - 0.7% chance each day
-	
-	lose trail- 2% chance each day
-	
-	wrong trail - 1% chance each day
-	
-	rough trail - 2.5% chance each day 
-	
-	finding wild fruit- may to sept only; 
-	
-	
-	
-	bad water - 10% chance each day in which accumulated rainfall is below 0.1 inch. 
-	
-	illness - 0% to 40% chance day, depending upon helath of the party. person and disease chosen randomly
-	
-	//everyday do a random number and then pick a random event??? or should I only give that option to do a random event if that requirement is already met. 
-	*/
+
 	
 	
 	//rainy image?
@@ -207,11 +170,11 @@ public class RandomEvents {
 	 */
 	private String thiefArrives() {
 		String balance = foodMainLbl.getText();
-		int intBalance = Integer.parseInt(balance);
+        double doubleBalance = Double.parseDouble(balance);
 		int random = rnd.nextInt(100)+1;
 		if (random <= 2) {
 			if (!balance.equals("0")){
-				if (intBalance > 20) {
+				if (doubleBalance > 20.0) {
 					bank.spendMoney(20); //subtracts $20 
 					return "A thief stole some of your money!";
 				}
@@ -266,49 +229,57 @@ public class RandomEvents {
 		 return "ignore";
 		}
 	
+	//help me pls
+	public boolean illness() {
+		int random = rnd.nextInt(5)+1;
+		if (random <= 5) {
+			return true;
+
+		}
+		return false;
+	}
 	
-	public void generateRandomEvent() {
-		int random = rnd.nextInt(12)+1;
+	
+	public String generateRandomEvent() {
+		int random = rnd.nextInt(10)+1;
+		String result = "ignore";
 		switch(random)
 		{
-		case 1: 
+		//case 1: result = thunderstorm();
+		case 1: result = "1";
 			break;
-		case 2:
+		//case 2: result = blizzard();
+		case 2: result = "2";
 			break;
-		case 3:
+		//case 3: result = heavyFogOrHail();
+		case 3: result = "3";
 			break;
-		case 4:
+		//case 4: result = findBerry();
+		case 4: result = "4";
 			break;
-		case 5:
+		//case 5: result = injured();
+		case 5: result = "5";
 			break;
-		case 6:
+		//case 6: result = snakeBite();
+		case 6: result = "6";
 			break;
-		case 7:
+		//case 7: result = thiefArrives();
+		case 7: result = "7";
 			break;
-		case 8:
+		//case 8: result = lostMember();
+		case 8: result = "8";
 			break;
-		case 9:
+		//case 9: result = outOfFood();
+		case 9: result = "9";
 			break;
-		case 10:
+		//case 10: result = badWater();
+		case 10: result = "10";
 			break;
-		case 11:
-			break;
+		//case 11: result =  illness();
+		//	break;
 		}
+		return result; 
 	}
-	
-	
-	
-	
-	/**public String illness(get health) {
-	 	if (health < #){
-	 	do this 
-	 	}
-	 	else {
-	 	do this 
-	 	}
-	 return "lol";
-	}
-	*/
-	
 
 }
+

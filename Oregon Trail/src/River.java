@@ -58,13 +58,13 @@ public class River extends Location {
 	 * returns height of the water level at the river the user is at
 	 * @return height - the height of the water
 	 */
-	public double getHeight(JLabel label) {
+	public double getHeight(JLabel wthrQtyLbl) {
 		int height = scr.nextInt();
-		if (label.getText().equals("Rainy")) {
-			height = (height + (rnd.nextInt(3)+1))/12; //increments the height of the river 1-3 feet if raining
+		if (wthrQtyLbl.getText().equals("Rainy")) {
+			height = (height + (rnd.nextInt(3)+1)); //increments the height of the river 1-3 feet if raining
 		}
-		else if (label.getText().equals("Very Hot")) {
-			height = (height - (rnd.nextInt(3))+1)/12; //decrements the height of the river 1-3 feet if raining
+		else if (wthrQtyLbl.getText().equals("Very Hot")) {
+			height = (height - (rnd.nextInt(3))+1); //decrements the height of the river 1-3 feet if raining
 		}
 		return height; 
 	}
@@ -74,19 +74,19 @@ public class River extends Location {
 	 * @return Slow/Steady/Fast - the speed of the river associated with the number
 	 * @return Error - the speed of the river was out of bounds
 	 */
-	public String getFlow(JLabel label) {
+	public String getFlow(JLabel wthrQtyLbl) {
 		int flow = scr.nextInt(); // reads in next integer
-		if (label.getText().equals("Rainy")) {
+		if (wthrQtyLbl.getText().equals("Rainy")) {
 			flow = flow + (rnd.nextInt(3)+1); //increments the flow of the river
 			if (flow > 3) {
 				flow = 3;
 			}
-		} else if (label.getText().equals("Snowy")){
+		} else if (wthrQtyLbl.getText().equals("Snowy")){
 			flow = flow - (rnd.nextInt(3)+1); //decrements the flow of the river
 			if (flow < 1) {
 				flow = 1;
 			}
-		} else if (label.getText().equals("Very Hot")) {
+		} else if (wthrQtyLbl.getText().equals("Very Hot")) {
 			flow = flow - (rnd.nextInt(3)+1); //decrements the flow of the river
 			if (flow < 1) {
 				flow = 1;
@@ -111,10 +111,10 @@ public class River extends Location {
 	public double getWidth(JLabel label) {
 		double width = scr.nextInt();
 		if (label.getText().equals("Rainy")) {
-			width = ((width + (rnd.nextInt(3)+1))/12); //increments the width of the river 1 to 3 feet if raining
+			width = (width + (rnd.nextInt(3)+1)); //increments the width of the river 1 to 3 feet if raining
 		}
 		else if (label.getText().equals("Very Hot")) {
-			width = ((width - (rnd.nextInt(3)+1))/12);
+			width = (width - (rnd.nextInt(3)+1));
 		}
 		return width; 
 		
