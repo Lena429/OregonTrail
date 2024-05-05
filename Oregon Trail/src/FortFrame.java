@@ -20,7 +20,7 @@ import javax.swing.JTextPane;
 
 public class FortFrame {
 	
-	private Travel travel;
+	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
 	private ArrayList<Location> locations;
@@ -33,7 +33,7 @@ public class FortFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public FortFrame(Travel travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
+	public FortFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
@@ -47,7 +47,7 @@ public class FortFrame {
 	 * @param currentFort
 	 * @param store
 	 */
-	public void openFortFrame(Fort currentFort, Store store) {
+	public void openFortFrame(Fort currentFort, Store store, TeaTime teatime) {
         // Creates the frame for fort objects and actions
 		JFrame frameThree = new JFrame();
 		frameThree.setBounds(100, 100, 1289, 767);
@@ -140,6 +140,7 @@ public class FortFrame {
 			}
 		});
 		leaveBtn.setBounds(31, 370, 133, 21);
+		
 		//player decides to check wagon inventory while in the fort
 		JButton inventoryBtn = new JButton("Inventory");
 		inventoryBtn.addActionListener(new ActionListener() {
@@ -161,6 +162,16 @@ public class FortFrame {
 		});
 		inventoryBtn.setBounds(31, 390, 133, 21);
 		
+		
+		//player decides to look for tea
+		JButton teaTimeBtn = new JButton("Tea Time");
+		teaTimeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				teatime.openTeaTime();
+			}
+		});
+		teaTimeBtn.setBounds(31,450,133,21);
+		
 		// Greeting header for the fort frames
 	    JLabel fortName = new JLabel("Welcome to " + currentFort.getName());
 		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
@@ -180,6 +191,7 @@ public class FortFrame {
 		PanelThree.add(leaveBtn);
 		PanelThree.add(forts);
 		PanelThree.add(inventoryBtn);
+		PanelThree.add(teaTimeBtn);
 		frameThree.getContentPane().add(PanelThree);
 		
 		// panel for the fort images 

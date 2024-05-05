@@ -1,7 +1,0 @@
-Equipment - name, weight (lbs/unit), quantity
-Wagon Wheel,300,0
-Wagon Tongue,45,0
-Wagon Axle,45,0
-Clothes,5,0
-Oxen,1000,0
-Water,1,0

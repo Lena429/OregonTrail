@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.JComboBox;
 
-public class Travel {
+public class TravelManager {
 	private int rations;
 	private int speed;
 	private int milesTravelled = 0;
@@ -23,7 +23,7 @@ public class Travel {
 	/*
 	 * Creates a Travel object containing default rations (3) and speed (12) values
 	 */
-	public Travel() {	
+	public TravelManager() {	
 		rations = 3;
 		speed = 12;
 	}
@@ -115,10 +115,15 @@ public class Travel {
 	
 	/**
 	 * This updates the miles travelled. 
+	 * @param milesToLndmrk - the distance to the next landmark
 	 * @return milesTravelled - the total milesTravelled. 
 	 */
-	public int updateMilesTravelled() {
-		milesTravelled += speed;
+	public int updateMilesTravelled(int milesToLndmrk) {
+		// if the user is travelling more miles in a day than the distanco to next 
+		// landmark, only add the distance to the landmark
+		if(milesToLndmrk < speed) milesTravelled += milesToLndmrk;
+		else milesTravelled += speed;
+		
 		return milesTravelled;
 	}
 	
@@ -128,6 +133,14 @@ public class Travel {
 	 */
 	public int getMilesTravelled() {
 		return milesTravelled;
+	}
+	
+	/**
+	 * sets the start date that the user inputs (default is March
+	 * @param month - the numerical value (1-12) of the chosen month
+	 */
+	public void setMonth(int month) {
+		startDate = LocalDate.of(1853, month, 1);
 	}
 	
 	/**

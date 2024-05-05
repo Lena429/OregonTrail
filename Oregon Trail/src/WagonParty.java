@@ -14,6 +14,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class WagonParty {
 	
 	private boolean starvedPreviousDay = false;
@@ -22,9 +25,10 @@ public class WagonParty {
 	private int health = 0;
 	private ArrayList<WagonMember> people = new ArrayList<>();
 	
-	public WagonParty() {
-		
-	}
+	/**
+	 * creates a wagon party object
+	 */
+	public WagonParty() {}
 	
 	/**
 	 * adds a member to the people arrayList
@@ -35,30 +39,38 @@ public class WagonParty {
 	}
 	
 	/**
-	 * removes a member from the people arrayList
+	 * removes a member from the people arrayList and displays death
 	 * @param person - the person to be removed
+	 * @param frame - the frame to center the message on
 	 */
-	public void removeMember(WagonMember person) {
+	public void removeMember(WagonMember person, JFrame frame) {
+		person.displayMemberDeath(frame);
 		people.remove(person);
 	}
 	
 	/**
-	 * removes a random member from the people arrayList and returns
-	 * if they were the last one alive
-	 * @return true - if they were the last alive
-	 * @return false - if there are others alive
+	 * removes a random member from the people arrayList and displays
+	 * death message
+	 * @param frame - the frame to center the message on
 	 */
-	public boolean removeRandomMember() {
+	public void removeRandomMember(JFrame frame) {
 		// generates a random index
 		Random rnd = new Random();
 		int index = rnd.nextInt(people.size());
 		
-		// removes that person
+		// displays who died and remove that person
+		people.get(index).displayMemberDeath(frame);
 		people.remove(index);
-		
-		// checks if they were the last alive
-		if(people.size() == 0) return true;
-		return false;
+	}
+	
+	/**
+	 * checks if there are still people alive
+	 * @return true - if there are still others alive
+	 * @return false - if there is no one left
+	 */
+	public boolean membersStillAlive() {
+		if(people.size() == 0) return false;
+		return true;
 	}
 	
 	/**
@@ -70,25 +82,47 @@ public class WagonParty {
 	}
 	
 	/**
-	 * recovers 10% of the wagon health
+	 * gets the list of people in the wagon
+	 * @return people - the list of people in the wagon party
 	 */
-	public void recoverHealth() {
+	public ArrayList<WagonMember> getMembers() {
+		return people;
+	}
+	
+	/**
+	 * recovers 10% of the wagon health
+	 * recovers the diseases/injuries of wagon members
+	 */
+	public void recoverDailyHealth() {
 		health = (int) (health * .9);
+		for(WagonMember person: people) {
+			person.recoverHealth();
+		}
+	}
+	
+	/**
+	 * recovers the specified amount of health
+	 * @param recoveredHealth - the value to recover
+	 */
+	public void recoverHealth(int recoveredHealth) {
+		if(recoveredHealth > health) health = 0;
+		else health -= recoveredHealth;
 	}
 	
 	/**
 	 * calculates how much health the wagon party loses based on factors like food, 
 	 * weather, and diseases/injuries
 	 * Note: recoverHealth should be called first
-	 * @param rations - the consumable rate chosen by the user
+	 * @param travel  - the reference to the travel object to access pace and rations
 	 * @param hasFood - if the user has food or not
 	 * @param weather - the current weather for the day
-	 * @param pace    - the speed at which the party is travelling
+	 * @param clothes - the sets of clothes the user has
+	 * @param water	  - the amount of water the user has
 	 */
-	public void loseHealth(int rations, boolean outOfFood, String weather, int pace) {
+	public void loseHealth(TravelManager travel, boolean outOfFood, String weather, Equipment clothes, Equipment water) {
 		// loses health based on food status
 		if(!outOfFood) {
-			switch (rations) {
+			switch (travel.getRations()) {
 				case 1: health +=4; break; // Bare Bones
 				case 2: health +=2; break; // Meager
 				case 3: break;			   // Filling
@@ -100,12 +134,15 @@ public class WagonParty {
 			// starving
 			if(starvedPreviousDay) {
 				health = 6 + (STARVE_CONST * starveFactor);
-				starveFactor++;
+				starveFactor = starveFactor + 2;
 			} else {
 				starvedPreviousDay = true;
 				health += 6;
 			}
 		}
+		
+		// loses health if there is no water
+		if(water.getQuantity() == 0) health += 4;
 		
 		// loses health based on the weather
 		switch (weather) {
@@ -113,14 +150,29 @@ public class WagonParty {
 			case "Hot":		  health += 1; break;
 			case "Cool":							// cool and warm are optimal temps
 			case "Warm": 	  break;
-			case "Cold": 	  health += 2; break;
+			case "Cold":
+				// adjust health based on clothing quantity
+				if(2 * people.size() < clothes.getQuantity())
+					// adequate clothing
+					break;
+				else if(people.size() < clothes.getQuantity()) {
+					// only 1 set of clothes per person
+					health += 1;
+					break;
+				} else {
+					// not enough clothes for everyone
+					health += 2;
+					break;
+				}
 			case "Very Cold": health += 4; break;
 		}
 		
 		// loses health based on pace
-		if(pace < 15) 		health += 2;	// steady
-		else if (pace < 18) health += 4;	// strenuous
-		else 				health += 6;	// grueling
+		if(travel.getPace() < 14) 		health += 2;	// steady
+		else if (travel.getPace() < 16) health += 3;
+		else if (travel.getPace() < 18) health += 4;	// strenuous
+		else if (travel.getPace() < 19) health += 5;
+		else 							health += 6;	// grueling
 		
 		// loses health based on diseases/injuries of members
 		for(WagonMember person : people) {
@@ -142,7 +194,7 @@ public class WagonParty {
 	}
 	
 	/**
-	 * Displays the health as a string from Good to Very Poor
+	 * displays the health as a string from Good to Very Poor
 	 * @return displayHealth - the string describing health
 	 */
 	public String displayHealth() {
@@ -153,6 +205,27 @@ public class WagonParty {
 		else if(health < 105) displayHealth = "Poor";
 		else 				  displayHealth = "Very Poor";
 		
-		return health + displayHealth;
+		return displayHealth;
+	}
+	
+	/**
+	 * returns the health of the wagon
+	 * @return health - the overall health of the wagon
+	 */
+	public int getHealth() {
+		return health;
+	}
+	
+	/**
+	 * displays a dialogue box that lets the user know all the members have died.
+	 * also ends the game
+	 * @param frame - the frame to center the message on
+	 */
+	public void displayGameOver(JFrame frame) {
+		String text = "All members of the wagon have perished :(";
+		String title = "Game Over!";
+		int type = JOptionPane.ERROR_MESSAGE;
+		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		if(response == JOptionPane.OK_OPTION) System.exit(1);
 	}
 }

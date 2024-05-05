@@ -1,3 +1,6 @@
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  * WagonMember.java
  * 
@@ -12,17 +15,23 @@
  */
 public class WagonMember {
 	
-	private String name;
+	private String name = "";
 	private boolean hasDisease = false;
 	private boolean hasInjury = false;
 	private int diseaseCount;
 	private int injuryCount;
 	
 	/**
-	 * creates a wagon member with a name
+	 * creates a wagon member
+	 */
+	public WagonMember() {
+	}
+	
+	/**
+	 * sets the name of the member
 	 * @param name - the name of the member
 	 */
-	public WagonMember(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
@@ -91,5 +100,16 @@ public class WagonMember {
 	public boolean getAilmentStatus() {
 		if(hasInjury || hasDisease) return true;
 		return false;
+	}
+	
+	/**
+	 * displays a dialogue box that lets to user know who died
+	 * @param frame - the frame to center the message on
+	 */
+	public void displayMemberDeath(JFrame frame) {
+		String text = name + " has died.";
+		String title = "OH NO!";
+		int type = JOptionPane.ERROR_MESSAGE;
+		JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
 	}
 }
