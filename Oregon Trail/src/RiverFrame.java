@@ -27,8 +27,9 @@ public class RiverFrame {
 	private Money bank;
 	private TravelManager travel;
 	private Wagon wagon;
-	private Equipment food; 
-	
+	private Food food; 
+	private Equipment oxen;
+
 	/**
 	 * 
 	 * @param locations
@@ -37,11 +38,12 @@ public class RiverFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Equipment food) {
+	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.wagon = wagon;
 		this.food = food;
+		this.oxen = oxen;
 	}
 	
 	/**
@@ -51,7 +53,8 @@ public class RiverFrame {
 	 * @param foodMainLbl
 	 */
 	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl, JLabel wthrQtyLbl) {
-		
+		RandomEvents randomEvents   = new RandomEvents(wagon, oxen, food);
+
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setTitle("River");
@@ -149,7 +152,7 @@ public class RiverFrame {
 		fordBtn.setBounds(370, 654, 267, 51);
 		fordBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, currentRiver.randomEvtCross(bank)); // Displays if the user made it across safely, or with consequences
+				JOptionPane.showMessageDialog(null, randomEvents.oxAndFood(currentRiver.fording())); // Displays if the user made it across safely, or with consequences
 				frame.dispose();		  											    // closes frame after button is hit
 			}
 		});
@@ -163,7 +166,7 @@ public class RiverFrame {
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bank.spendMoney(800);									  				// removes money because user paid to cross with ferry 
-				JOptionPane.showMessageDialog(null, currentRiver.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
+				JOptionPane.showMessageDialog(null, randomEvents.oxJumped()); // Displays if the user made it across safely, or with consequences
 				frame.dispose();		   											    // closes frame after button hit
 			}
 		});
@@ -175,8 +178,8 @@ public class RiverFrame {
 		caulkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		caulkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bank.spendMoney(800);									 			    // removes money because user paid to cross with ferry 
-				JOptionPane.showMessageDialog(null, currentRiver.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
+				//randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE
+				JOptionPane.showMessageDialog(null, randomEvents.oxAndFood(currentRiver.caulking())); // Displays if the user made it across safely, or with consequences
 				frame.dispose();		   											    // closes frame after button hit
 			}
 		});
@@ -192,7 +195,17 @@ public class RiverFrame {
 				wagon.removeItemQty(food, travel.getRations() * 4); 
 				foodMainLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl.setText(travel.getDate());
-				dateMainLbl.setText(travel.getDate());			
+				dateMainLbl.setText(travel.getDate());
+				//possible check the clock ??
+				//weather.setZone(travel.getMilesTravelled());
+				//weather.calculateWeather(travel.getMonth());
+				
+				River.openFile();
+		    	heightNumLbl.setText(currentRiver.setHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
+		    	flowNumLbl.setText(currentRiver.setFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 
+		    	widthNumLbl.setText(currentRiver.setWidth(wthrQtyLbl)+ "");   // displays width of the river the user is at
+		    	River.closeFile();	
+				
 				}
 		});
 		waitBtn.setBounds(982, 654, 253, 51);
@@ -288,9 +301,9 @@ public class RiverFrame {
 		frame.getContentPane().add(panel);
 		
     	River.openFile();
-    	heightNumLbl.setText(currentRiver.getHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
-    	flowNumLbl.setText(currentRiver.getFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 
-    	widthNumLbl.setText(currentRiver.getWidth(wthrQtyLbl)+ "");   // displays width of the river the user is at
+    	heightNumLbl.setText(currentRiver.setHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
+    	flowNumLbl.setText(currentRiver.setFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 
+    	widthNumLbl.setText(currentRiver.setWidth(wthrQtyLbl)+ "");   // displays width of the river the user is at
     	River.closeFile();	
 	}
 }
