@@ -29,6 +29,7 @@ public class RiverFrame {
 	private Wagon wagon;
 	private Food food; 
 	private Equipment oxen;
+	private Weather weather;
 
 	/**
 	 * 
@@ -38,12 +39,13 @@ public class RiverFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen) {
+	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen, Weather weather) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.wagon = wagon;
 		this.food = food;
 		this.oxen = oxen;
+		this.weather = weather; 
 	}
 	
 	/**
@@ -197,8 +199,23 @@ public class RiverFrame {
 				dateQtyLbl.setText(travel.getDate());
 				dateMainLbl.setText(travel.getDate());
 				//possible check the clock ??
-				//weather.setZone(travel.getMilesTravelled());
-				//weather.calculateWeather(travel.getMonth());
+				weather.setZone(travel.getMilesTravelled());
+				weather.calculateWeather(travel.getMonth());
+				
+				/** Determines if the weather label needs to be updated
+				if (weather.isWeatherDifferent()) {
+					// yes it does
+					weather.setZone(travel.getMilesTravelled());
+					weather.calculateWeather(travel.getMonth());
+					
+					// checks for rain or snow
+					if (weather.willItRainOrSnow())
+						// updates label w/ rain or snow
+						wthrQtyLbl.setText(weather.displayRainOrSnow());
+					else 
+						// updates label with temperature
+						wthrQtyLbl.setText(weather.displayTemperature());
+				}*/
 				
 				River.openFile();
 		    	heightNumLbl.setText(currentRiver.setHeight(wthrQtyLbl)+ ""); // displays height of river user is at 

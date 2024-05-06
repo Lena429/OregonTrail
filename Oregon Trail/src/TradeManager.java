@@ -68,7 +68,7 @@ public class TradeManager {
 		String name = inventory.get(index).getName();
 		
 		// generates a random quantity to trade
-		qtyLost = (rnd.nextInt(inventory.get(index).getQuantity() + 1));
+		qtyLost = (rnd.nextInt(inventory.get(index).getQuantity()) + 1);
 		
 		// if the quantity is greater than 150, limit it (this is mainly for food)
 		if(qtyLost > 150) {
