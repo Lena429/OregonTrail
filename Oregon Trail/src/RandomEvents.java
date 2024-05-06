@@ -20,6 +20,7 @@ public class RandomEvents {
 	private JLabel dateMainLbl;
 	private JLabel wthrQtyLbl;
 	private Food food; 
+	private Equipment oxen;
 	private int people; 
 
 	
@@ -46,7 +47,55 @@ public class RandomEvents {
 		this.wagonParty = wagonParty;
 		people = wagonParty.getAmountOfMembers(); //members that are currently still alive
 	}
+	
+	public RandomEvents(Wagon wagon, Equipment oxen, Food food) {
+		this.oxen = oxen; 
+		this.wagon = wagon;
+		this.food = food;
 
+	}
+
+
+	public String oxJumped() {
+		int random = rnd.nextInt(100)+1;
+		if (random <= 3) {
+			wagon.removeItemQty(oxen, 1);
+			return "Oh no, one of your ox jumped overboard and drowned";
+		}
+		return "You made it across safely.";
+	}
+	
+	public String oxAndFood(int number) {
+		int random = rnd.nextInt(100)+1;
+		int randomQty = 0;
+		if (!food.isOutOfFood()) {
+			randomQty = (rnd.nextInt(food.getQuantity()));
+		}
+		if (number == 1) {
+			return "You made it across safely.";
+		}
+		else if (number == 2) {
+			if (random <= 10) {
+				wagon.removeItemQty(oxen, 1);
+				return "Oh no, one of your ox drowned.";
+			}
+			if (random <= 20 && !food.isOutOfFood()) {
+				wagon.removeItemQty(food, (int) (randomQty * 0.2));
+				return "Oh no, some of your food got soggy and was ruined";
+			}
+		}
+		else if (number == 3) {
+			if (random <= 20) {
+				wagon.removeItemQty(oxen, 1);
+				return "Oh no, one of your ox drowned.";
+			}
+			if (random <= 30 && !food.isOutOfFood()) {
+				wagon.removeItemQty(food, (int) (randomQty * 0.3));
+				return "Oh no, some of your food got soggy and was ruined.";
+			}	
+		}
+		return "You made it across safely.";
+	}
 	
 	
 	/**
@@ -213,7 +262,7 @@ public class RandomEvents {
 		int random = rnd.nextInt(100)+1;
 		if (random <= 25) {
 			if (moneyBalance > 20){
-					bank.spendMoney(20); //subtracts $20 
+					bank.spendMoney(200); //subtracts $20 
 					return "A thief stole $20 from you.";
 			}
 		}

@@ -86,8 +86,9 @@ public class Interface {
 	private TeaTime teaTime     = new TeaTime(health, water, wagon);
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, bank);
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
+	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen, weather); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, bank);
-	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen); 
+
 
 	private IntroFrame introFrame		= new IntroFrame();
 	private MapDot dot					= new MapDot();
