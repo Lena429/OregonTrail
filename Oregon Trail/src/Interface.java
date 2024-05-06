@@ -83,10 +83,10 @@ public class Interface {
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 
-	private TeaTime teaTime     = new TeaTime(health, water, wagon);
+	private TeaTime teaTime     = new TeaTime(members, water, wagon);
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, bank);
-	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
-	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen, weather); 
+	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, members, food, water);
+	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen, weather, water); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, bank);
 
   
@@ -180,7 +180,7 @@ public class Interface {
 		// update health
 		// regenerate health then lose some
 		members.recoverDailyHealth();
-		members.loseHealth(travel, food.outOfFood(), weather.displayTemperature(), clothes, water);
+		members.loseHealth(travel, food.isOutOfFood(), weather.displayTemperature(), clothes, water);
 		
 		// check if the health is deadly
 		if(members.isHealthDeadly()) {
@@ -211,7 +211,7 @@ public class Interface {
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
 
-		RandomEvents randomEvents   = new RandomEvents(bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, health, wagon, food);
+		RandomEvents randomEvents   = new RandomEvents(bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, members, wagon, food);
 		String randomEventResult = randomEvents.generateRandomEvent();
 				
 		if(!randomEventResult.equals("ignore")) {
