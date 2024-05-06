@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -17,6 +18,13 @@ import javax.swing.SwingConstants;
 
 
 public class TeaTime {
+	private static final int MAX_FORAGE_TIMES = 2; //how many times you are able to forage for herbs each time game is played
+	private static final int MAX_BREW_TIMES = 2; // how many times you are able to brew tea each time game is played
+	private int forageCounter;
+	private int brewCounter;
+	private Equipment water;
+	private Wagon wagon;
+	
 	private WagonParty health;
 	private JFrame frame;
 	private List<TeaIngredient> availableIngredients;
@@ -24,8 +32,10 @@ public class TeaTime {
     private Random random;
     
     
- public TeaTime(WagonParty health ) {
+ public TeaTime(WagonParty health, Equipment water, Wagon wagon) {
     	this.health = health;
+    	this.water = water;
+    	this.wagon = wagon;
     }
     
     private static class TeaIngredient {
@@ -61,7 +71,12 @@ public class TeaTime {
     
     // Method to simulate foraging for tea ingredients
     public TeaIngredient forage() {
-        // Simulate finding a random ingredient
+    	//Check if the maximum forage limit has been reached
+    	if(forageCounter >= MAX_FORAGE_TIMES) {
+    		JOptionPane.showMessageDialog(frame, "This area has no more herbs to brew.");
+    		return null;
+    	}
+    	forageCounter++;
         TeaIngredient foundIngredient = availableIngredients.get(random.nextInt(availableIngredients.size()));
         inventory.add(foundIngredient);
         return foundIngredient;
@@ -69,15 +84,31 @@ public class TeaTime {
 
     // Method to brew tea
     public TeaIngredient brewTea() {
+    	//Check if max brew limit has been reached
+    	if(brewCounter >= MAX_BREW_TIMES) {
+    		JOptionPane.showMessageDialog(frame, "You've made enough tea for now.");
+    		return null;
+    	}
+    	brewCounter++;
+    	
+    	//check if they haven't foraged yet
         if (inventory.isEmpty()) {
             return null;
         }
-        // Simulate selecting a random ingredient from inventory to brew
+        
+        
+        // Simulate selecting a random ingredient from tea inventory to brew
         TeaIngredient selectedIngredient = inventory.get(random.nextInt(inventory.size()));
         
         // Remove the ingredient from inventory
         inventory.remove(selectedIngredient);
         return selectedIngredient;
+        
+    }
+    
+    public void resetCounters() {
+    	forageCounter = 0;
+    	brewCounter = 0;
     }
     
 
@@ -85,7 +116,7 @@ public class TeaTime {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void openTeaTime() {
+	public void openTeaTime() {	
 		availableIngredients = new ArrayList<>();
         inventory = new ArrayList<>();
         random = new Random();
@@ -122,11 +153,28 @@ public class TeaTime {
 		JButton btnNewButton_1 = new JButton("Brew Tea");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TeaIngredient brewedIngredient = brewTea();
-				lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect()
-				+" \n You gain: " + brewedIngredient.getHealth() + " health");
-				health.recoverHealth(brewedIngredient.getHealth());
-				}
+				 boolean waterFound = false;
+			        for (Equipment item : wagon.getItems()) {
+			            if (item instanceof Equipment && item.getName().equals("Water")) {
+			                int waterQuantity = item.getQuantity();
+			                if (waterQuantity > 0) {
+			                    // Water is available to brew tea
+			                    waterFound = true;
+			                    TeaIngredient brewedIngredient = brewTea();
+			                    // Remove one pound of water from inventory
+			                    wagon.removeItemQty(item, 1);
+			                    lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect()
+			                            + " \n You gain: " + brewedIngredient.getHealth() + " health");
+			                    health.recoverHealth(brewedIngredient.getHealth());
+			                    break; // Stop searching for water
+			                }
+			            }
+			        }
+			        if (!waterFound) {
+			            // No water found in inventory
+			            lblNewLabel_1.setText("You don't have enough water to brew tea.");
+			        }
+			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1.setBounds(497, 505, 202, 63);
@@ -135,6 +183,7 @@ public class TeaTime {
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				resetCounters();
 			}
 		});
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));

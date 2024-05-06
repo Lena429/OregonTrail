@@ -29,6 +29,14 @@ public class Money {
 		if(spent > total) return false;
 		else return true;
 	}
+  
+ /**
+  * returns the total money the user has
+	* @return total - the amount of money the user has as an integer
+	*/
+	public int getMoney() {
+		return total;
+	}
 	
 	/**
 	 * removes the amount of money the user spent from their total

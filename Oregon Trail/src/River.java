@@ -6,7 +6,6 @@
  *  
  * @author - Lena Frate
  * @author - Lillyan Stewart 
- * @author - Sarah Slusher
  * @version 1.1.1 - April 17 2024
  */
 import java.util.Random;
@@ -22,6 +21,10 @@ public class River extends Location {
 	private static Scanner scr;
 	private static InputStreamReader reader = null;
 	Random rnd = new Random();
+	private int height;
+	private int flow;
+	private int width;
+
 	
 	// Phrases for conversations
     private String[] phraseRiver1 = {"Amelia says, \"We passed Pisgah and will cross Grand River soon. My head aches, but I will make tea tonight to cure it.\"",
@@ -60,6 +63,7 @@ public class River extends Location {
     								 "Seneca says, \"There's no good fire wood around here, so my siblings, my mother, and I were shivering throughout last night.\"",
     								 "Almira says, \"We had to split up some of the deckboards of our wagon to make a fire. There was no good firewood otherwise.\""};
 
+
 	/**
 	 * Creates a River object containing the name and miles
 	 * @param name - the name of the River
@@ -79,12 +83,13 @@ public class River extends Location {
     
     }
 	
+    
     /**
 	 * returns height of the water level at the river the user is at
 	 * @return height - the height of the water
 	 */
-	public double getHeight(JLabel wthrQtyLbl) {
-		int height = scr.nextInt();
+	public int setHeight(JLabel wthrQtyLbl) {
+		height = scr.nextInt();
 		if (wthrQtyLbl.getText().equals("Rainy")) {
 			height = (height + (rnd.nextInt(3)+1)); //increments the height of the river 1-3 feet if raining
 		}
@@ -94,13 +99,14 @@ public class River extends Location {
 		return height; 
 	}
 	
+	
 	/**
 	 * returns the speed of the river, or error if the speed is out of bounds
 	 * @return Slow/Steady/Fast - the speed of the river associated with the number
 	 * @return Error - the speed of the river was out of bounds
 	 */
-	public String getFlow(JLabel wthrQtyLbl) {
-		int flow = scr.nextInt(); // reads in next integer
+	public String setFlow(JLabel wthrQtyLbl) {
+		flow = scr.nextInt(); // reads in next integer
 		if (wthrQtyLbl.getText().equals("Rainy")) {
 			flow = flow + (rnd.nextInt(3)+1); //increments the flow of the river
 			if (flow > 3) {
@@ -129,21 +135,23 @@ public class River extends Location {
 		return "Error";
 	}
 	
+	
 	/**
 	 * returns the width of the river
 	 * @return width - this is the width of the river the user is at 
 	 */
-	public double getWidth(JLabel label) {
-		double width = scr.nextInt();
-		if (label.getText().equals("Rainy")) {
+	public int setWidth(JLabel wthrQtyLbl) {
+		width = scr.nextInt();
+		if (wthrQtyLbl.getText().equals("Rainy")) {
 			width = (width + (rnd.nextInt(3)+1)); //increments the width of the river 1 to 3 feet if raining
 		}
-		else if (label.getText().equals("Very Hot")) {
+		else if (wthrQtyLbl.getText().equals("Very Hot")) {
 			width = (width - (rnd.nextInt(3)+1));
 		}
 		return width; 
 		
 	}
+	
 	
 	/**
 	 * Can possibly generate a random event when the user crosses the river
@@ -203,7 +211,7 @@ public class River extends Location {
 					case 5:
 					case 6: 
 					case 7:
-					case 8:
+					case 8: 
 						return "You made it across safely.";
 					// you crossed safely but with consequences
 					case 9:
@@ -282,6 +290,32 @@ public class River extends Location {
                 System.out.println("Error while closing file: " + e.getMessage());
             }
         }
+    }
+  
+  
+    public int fording() {
+    	if (height < 4) {
+    		return 1;
+    	}
+    	else if (height > 3 && height < 6) {
+    		return 2;
+    	}
+    	else {
+    		return 3; 
+    	}
+    	
+    }
+    
+  
+    public int caulking() {
+    	if (flow == 1) {
+    		return 1;
+    	}
+    	else if (flow == 2) {
+    		return 2;
+    	}
+    	else
+    		return 3;
     }
 }
 

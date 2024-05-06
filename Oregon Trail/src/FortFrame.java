@@ -1,19 +1,22 @@
 /**
  * FortFrame.java
  * 
+ * 
  * @author 
  * @version
  * 
  */
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -23,8 +26,10 @@ public class FortFrame {
 	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food;
-	private ArrayList<Location> locations;
 	private Money bank;
+	
+	private int teaTimePlayed; // how many total times the player plays the mini-game in a fort
+	
 	
 	
 	/**
@@ -33,14 +38,19 @@ public class FortFrame {
 	 * @param wagon
 	 * @param food
 	 */
-	public FortFrame(TravelManager travel, Wagon wagon, Equipment food, ArrayList<Location> locations, Money bank) {
+	public FortFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
 		this.food = food;
-		this.locations = locations;
 		this.bank = bank;
 	}
-
+	
+	/**
+	 * Resets the counter for how many times the mini-game has been played to zero when a new fort frame has been entered
+	 */
+	public void resetTeaPlayed() {
+		teaTimePlayed = 0;
+	}
 	
 	/**
 	 * 
@@ -48,6 +58,9 @@ public class FortFrame {
 	 * @param store
 	 */
 	public void openFortFrame(Fort currentFort, Store store, TeaTime teatime) {
+		
+		resetTeaPlayed();
+		
         // Creates the frame for fort objects and actions
 		JFrame frameThree = new JFrame();
 		frameThree.setBounds(100, 100, 1289, 767);
@@ -74,10 +87,12 @@ public class FortFrame {
 		
 		JLabel dateLbl_3 = new JLabel("Date:");
 		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
+		dateLbl_3.setForeground(new Color(255,255,255));
 		dateLbl_3.setBounds(586, 631, 93, 51);
 		
 		JLabel dateQtyLbl_3 = new JLabel(travel.getDate());
 		dateQtyLbl_3.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		dateQtyLbl_3.setForeground(new Color(255,255,255));
 		dateQtyLbl_3.setBounds(676, 631, 284, 51);
 		
 		// Label to hold generated phrases of conversation
@@ -89,14 +104,10 @@ public class FortFrame {
 		// player talks to other people inside fort
 		// randomly selected phrases from Fort Class
 		JButton talkBtn = new JButton("Talk to people");
+		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			   for (Location location : locations) {
-				if(location instanceof Fort && !location.hasvisited()) {
-					conversationPane.setText((currentFort).generatePhrase());
-					break;
-				}
-			  }
+				conversationPane.setText((currentFort).generatePhrase());
 			}
 		});
 		talkBtn.setBounds(31, 138, 133, 21);
@@ -104,6 +115,7 @@ public class FortFrame {
 		// player decides to rest in the fort
 		// updates day counter while in the fort and resting
 		JButton restBtn = new JButton("Rest");
+		restBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
@@ -116,6 +128,7 @@ public class FortFrame {
 		
 		//player decides to look around at fort
 		JButton lookBtn = new JButton("Look Around");
+		lookBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lookBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameImage.setVisible(true);
@@ -125,6 +138,7 @@ public class FortFrame {
 
 		// player decides to shop in the store
 		JButton shopBtn = new JButton("Shop");
+		shopBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		shopBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
           store.adjustPrices(currentFort);
@@ -134,6 +148,7 @@ public class FortFrame {
 		shopBtn.setBounds(31, 310, 133, 21);
 		
 		JButton leaveBtn = new JButton ("Continue Trail");
+		leaveBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		leaveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameThree.dispose();
@@ -143,6 +158,7 @@ public class FortFrame {
 		
 		//player decides to check wagon inventory while in the fort
 		JButton inventoryBtn = new JButton("Inventory");
+		inventoryBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		inventoryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame fortInventory = new JFrame();
@@ -165,17 +181,31 @@ public class FortFrame {
 		
 		//player decides to look for tea
 		JButton teaTimeBtn = new JButton("Tea Time");
+		teaTimeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		teaTimeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				teatime.openTeaTime();
+				if(teaTimePlayed < 2) {
+					teatime.openTeaTime();
+					//Increment counter when game is played
+					teaTimePlayed++;
+					//Check if button should be disabled
+					if(teaTimePlayed == 2) {
+						teaTimeBtn.setEnabled(false);
+					}
+				}else {
+					//message for when player tries to play mini-game more than twice
+					JOptionPane.showMessageDialog(frameThree, "You have drinken enough tea for today");
+				}
+
 			}
 		});
 		teaTimeBtn.setBounds(31,450,133,21);
 		
 		// Greeting header for the fort frames
 	    JLabel fortName = new JLabel("Welcome to " + currentFort.getName());
-		fortName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
-		fortName.setBounds(343, 11, 569, 86);
+	    fortName.setForeground(new Color(255,255,255));
+		fortName.setFont(new Font("Bookma,n Old Style", Font.PLAIN, 50));
+		fortName.setBounds(343, 11, 569, 68);
 		
 		// panel to hold all fort objects to the frame
 		JPanel PanelThree = new JPanel();
@@ -192,6 +222,7 @@ public class FortFrame {
 		PanelThree.add(forts);
 		PanelThree.add(inventoryBtn);
 		PanelThree.add(teaTimeBtn);
+		PanelThree.setBackground(new Color(0,0,0));
 		frameThree.getContentPane().add(PanelThree);
 		
 		// panel for the fort images 

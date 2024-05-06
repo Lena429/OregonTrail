@@ -1,5 +1,6 @@
 /**
  * Interface.java
+
  * 
  * This is the main area for the user to play the Oregon Trail game. It includes a clock that passes and 
  * is used to represent the days changing. It opens different frames depending on how to user interacts. 
@@ -48,7 +49,6 @@ public class Interface {
 	private Wagon wagon	  		 = new Wagon();
 	private WagonParty members   = new WagonParty();
 	private Store store;
-	private TeaTime teaTime     = new TeaTime(members);
 	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 300, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
@@ -71,9 +71,9 @@ public class Interface {
 	private River river6 		= new River("Raft River", 207);
 	private River river7 		= new River("Snake River", 294);
 	private River river8 		= new River("Columbia River", 93);
-	private Landmarks landmark1 = new Landmarks("Chimney Rock", 101);
-	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48);
-	private Landmarks landmark3 = new Landmarks("Independence Rock", 327);
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 101, "/image/chimney rock1.png");
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48, "/image/scottsBluff.png");
+	private Landmarks landmark3 = new Landmarks("Independence Rock", 327, "/image/independenceRock.jpg");
 	private Location house		= new Location("New House", 53);
 	// Wagon Members
 	private WagonMember one		= new WagonMember();
@@ -82,11 +82,14 @@ public class Interface {
 	private WagonMember four	= new WagonMember();
 	
 	private ArrayList<Location> locations = new ArrayList<>();
-	
-	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, locations, bank);
-	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, members, food, water);
-	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, water); 
-	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
+
+	private TeaTime teaTime     = new TeaTime(health, water, wagon);
+	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, bank);
+	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
+	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen, weather); 
+	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, bank);
+
+  
 	private IntroFrame introFrame		= new IntroFrame();
 	private MapDot dot					= new MapDot();
 	
@@ -167,7 +170,7 @@ public class Interface {
 		wagon.removeItemQty(water, members.getAmountOfMembers());
 		
 		// update food
-		if(!food.outOfFood()) {
+		if(!food.isOutOfFood()) {
 			// if there is food to remove, remove it
 			wagon.removeItemQty(food, travel.getRations() * members.getAmountOfMembers());
 		} 
@@ -207,17 +210,14 @@ public class Interface {
 				// updates label with temperature
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
-		
-		RandomEvents randomEvents   = new RandomEvents(locations, bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, members, wagon);
+
+		RandomEvents randomEvents   = new RandomEvents(bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, health, wagon, food);
 		String randomEventResult = randomEvents.generateRandomEvent();
 				
 		if(!randomEventResult.equals("ignore")) {
 		    JOptionPane.showMessageDialog(null, randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
-
-
-
 		for (int i = 0; i < locations.size(); i++) {
 		    // store the index
 			Location location = locations.get(i);

@@ -29,9 +29,11 @@ public class RiverFrame {
 	private Money bank;
 	private TravelManager travel;
 	private Wagon wagon;
-	private Equipment food; 
-	private Equipment water;
-	
+	private Food food; 
+  private Equipment water;
+	private Equipment oxen;
+	private Weather weather;
+
 	/**
 	 * Creates an object of riverFrame that stores instances of Money, TravelManager, Wagon, and Equipment
 	 * @param bank - the amount of money the user has
@@ -39,12 +41,14 @@ public class RiverFrame {
 	 * @param wagon - an object that stores/manages the inventory
 	 * @param food - the amount of food the user has
 	 */
-	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Equipment food, Equipment water) {
+	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen, Weather weather, Equipment water) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.wagon = wagon;
 		this.food = food;
 		this.water = water;
+		this.oxen = oxen;
+		this.weather = weather; 
 	}
 	
 	/**
@@ -56,7 +60,8 @@ public class RiverFrame {
 	 */
 	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl, JLabel wthrQtyLbl, int membersAlive) {
 		TradeManager offer	= new TradeManager();
-		
+		RandomEvents randomEvents   = new RandomEvents(wagon, oxen, food);
+
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
 		frame.setTitle("River");
@@ -154,7 +159,7 @@ public class RiverFrame {
 		fordBtn.setBounds(370, 654, 267, 51);
 		fordBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, currentRiver.randomEvtCross(bank)); // Displays if the user made it across safely, or with consequences
+				JOptionPane.showMessageDialog(null, randomEvents.oxAndFood(currentRiver.fording())); // Displays if the user made it across safely, or with consequences
 				frame.dispose();		  											    // closes frame after button is hit
 			}
 		});
@@ -168,7 +173,7 @@ public class RiverFrame {
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bank.spendMoney(800);									  				// removes money because user paid to cross with ferry 
-				JOptionPane.showMessageDialog(null, currentRiver.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
+				JOptionPane.showMessageDialog(null, randomEvents.oxJumped()); // Displays if the user made it across safely, or with consequences
 				frame.dispose();		   											    // closes frame after button hit
 			}
 		});
@@ -182,8 +187,8 @@ public class RiverFrame {
 		caulkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		caulkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bank.spendMoney(800);									 			    // removes money because user paid to cross with ferry 
-				JOptionPane.showMessageDialog(null, currentRiver.randomEvtFerry(bank)); // Displays if the user made it across safely, or with consequences
+				//randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE
+				JOptionPane.showMessageDialog(null, randomEvents.oxAndFood(currentRiver.caulking())); // Displays if the user made it across safely, or with consequences
 				frame.dispose();		   											    // closes frame after button hit
 			}
 		});
@@ -199,7 +204,32 @@ public class RiverFrame {
 				wagon.removeItemQty(food, travel.getRations() * membersAlive); 
 				foodMainLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl.setText(travel.getDate());
-				dateMainLbl.setText(travel.getDate());			
+				dateMainLbl.setText(travel.getDate());
+				//possible check the clock ??
+				weather.setZone(travel.getMilesTravelled());
+				weather.calculateWeather(travel.getMonth());
+				
+				/** Determines if the weather label needs to be updated
+				if (weather.isWeatherDifferent()) {
+					// yes it does
+					weather.setZone(travel.getMilesTravelled());
+					weather.calculateWeather(travel.getMonth());
+					
+					// checks for rain or snow
+					if (weather.willItRainOrSnow())
+						// updates label w/ rain or snow
+						wthrQtyLbl.setText(weather.displayRainOrSnow());
+					else 
+						// updates label with temperature
+						wthrQtyLbl.setText(weather.displayTemperature());
+				}*/
+				
+				River.openFile();
+		    	heightNumLbl.setText(currentRiver.setHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
+		    	flowNumLbl.setText(currentRiver.setFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 
+		    	widthNumLbl.setText(currentRiver.setWidth(wthrQtyLbl)+ "");   // displays width of the river the user is at
+		    	River.closeFile();	
+				
 				}
 		});
 		waitBtn.setBounds(982, 654, 253, 51);
@@ -287,9 +317,9 @@ public class RiverFrame {
 		
 		// reads the river file and updates the river flow, height, and width 
     	River.openFile();
-    	heightNumLbl.setText(currentRiver.getHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
-    	flowNumLbl.setText(currentRiver.getFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 
-    	widthNumLbl.setText(currentRiver.getWidth(wthrQtyLbl)+ "");   // displays width of the river the user is at
+    	heightNumLbl.setText(currentRiver.setHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
+    	flowNumLbl.setText(currentRiver.setFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 
+    	widthNumLbl.setText(currentRiver.setWidth(wthrQtyLbl)+ "");   // displays width of the river the user is at
     	River.closeFile();	
 	}
 }
