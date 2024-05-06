@@ -3,9 +3,9 @@
  * 
  * The river class gets the name, height, flow, and width of a river from a txt file. It also has random events for crossing the river, 
  * as well as different options for crossing the river. 
- *  
- * @author - Lena Frate
+ * 
  * @author - Lillyan Stewart 
+ * @author - Lena Frate
  * @version 1.1.1 - April 17 2024
  */
 import java.util.Random;
@@ -304,7 +304,6 @@ public class River extends Location {
     	else {
     		return 3; 
     	}
-    	
     }
     
     /**

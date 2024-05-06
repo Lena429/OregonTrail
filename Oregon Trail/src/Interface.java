@@ -2,7 +2,7 @@
  * Interface.java
  * 
  * This is the main area for the user to play the Oregon Trail game. It includes a clock that passes and 
- * is used to represent the days changing. It opens different frames depending on how to user interacts. 
+ * is used to represent the days changing. It opens different frames depending on how the user interacts. 
  * 
  * @author - Lillyan Stewart
  * @author - Lena Frate
@@ -150,6 +150,7 @@ public class Interface {
 		
 		initialize();
 		
+		// the clock is what allows the user to "travel" and advance the days
 		clock = new javax.swing.Timer(1500, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				clockActionPerformed(evt);
@@ -164,11 +165,10 @@ public class Interface {
 		rationsQtyLbl.setText(travel.displayRations());
 		dateQtyLbl.setText(travel.updateDate() + "");
 		
-
-		// update water
+		// consume water
 		wagon.removeItemQty(water, members.getAmountOfMembers());
 		
-		// update food
+		// consume food
 		if(!food.isOutOfFood()) {
 			// if there is food to remove, remove it
 			wagon.removeItemQty(food, travel.getRations() * members.getAmountOfMembers());
@@ -209,14 +209,17 @@ public class Interface {
 				// updates label with temperature
 				wthrQtyLbl.setText(weather.displayTemperature());
 		}
-
+		
+		// potentially generates a random event
 		RandomEvents randomEvents   = new RandomEvents(bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, members, wagon, food);
 		String randomEventResult = randomEvents.generateRandomEvent();
 				
 		if(!randomEventResult.equals("ignore")) {
+			// a random event has occurred so a dialogue box appears to let the user know
 		    JOptionPane.showMessageDialog(null, randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
+		// determines whether the user has arrived at a location or not
 		for (int i = 0; i < locations.size(); i++) {
 		    // store the index
 			Location location = locations.get(i);
@@ -234,7 +237,6 @@ public class Interface {
 		    	milesToNextLbl.setText("Miles to " + location.getName() + ":");
 		    	break;
 
-		    	
 		    } else { 			
 		    	// they have arrived at a landmark/fort/river
 		    	location.updatevisited();									  				// updates the object/landmark to be visited by the user 
@@ -413,7 +415,6 @@ public class Interface {
 		frame.getContentPane().add(dateQtyLbl);
 		
 		// When this stop button is pushed, the clock is stopped and frame two auto pops up. 
-		// Displays inventory 
 		JButton stopTrvlBtn = new JButton("Stop Travel");
 		stopTrvlBtn.setForeground(new Color(255, 255, 255));
 		stopTrvlBtn.setBackground(new Color(185, 0, 0));
@@ -435,6 +436,7 @@ public class Interface {
 		trailImage.setBounds(20, 90, 1233, 305);
 		frame.getContentPane().add(trailImage, BorderLayout.PAGE_END);
 		
+		// the dot on the trail that updates every so often to let the user know where they are
 		dotLbl = new JLabel(".");
 		dotLbl.setVerticalTextPosition(SwingConstants.BOTTOM);
 		dotLbl.setHorizontalAlignment(SwingConstants.CENTER);

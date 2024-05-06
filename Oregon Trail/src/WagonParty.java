@@ -18,8 +18,10 @@ import javax.swing.JOptionPane;
 public class WagonParty {
 	
 	private boolean starvedPreviousDay = false;
-	private final int STARVE_CONST = 2;
+	private boolean dehydratedPreviousDay = false;
+	private final int STARVE_AND_DEHYDRATE_CONST = 4;
 	private int starveFactor = 1;
+	private int dehydrateFactor = 1;
 	private int health = 0;
 	private ArrayList<WagonMember> people = new ArrayList<>();
 	
@@ -97,11 +99,11 @@ public class WagonParty {
 	}
 	
 	/**
-	 * recovers 10% of the wagon health
+	 * recovers 5% of the wagon health
 	 * recovers the diseases/injuries of wagon members
 	 */
 	public void recoverDailyHealth() {
-		health = (int) (health * .9);
+		health = (int) (health * .95);
 		for(WagonMember person: people) {
 			person.recoverHealth();
 		}
@@ -155,8 +157,9 @@ public class WagonParty {
 			starveFactor = 1;
 		} else {
 			// starving
+			// amount of health lost will increase based on how long the user is starving
 			if(starvedPreviousDay) {
-				health = 6 + (STARVE_CONST * starveFactor);
+				health = 6 + (STARVE_AND_DEHYDRATE_CONST * starveFactor);
 				starveFactor = starveFactor + 2;
 			} else {
 				starvedPreviousDay = true;
@@ -165,7 +168,21 @@ public class WagonParty {
 		}
 		
 		// loses health if there is no water
-		if(water.getQuantity() == 0) health += 4;
+		// amount of health lost will increase based on how long the user is dehydrated
+		if(water.getQuantity() == 0) {
+			// dehydrated
+			if(dehydratedPreviousDay) {
+				health = 4 + (STARVE_AND_DEHYDRATE_CONST * dehydrateFactor);
+				dehydrateFactor = dehydrateFactor + 2;
+			} else {
+				dehydratedPreviousDay = true;
+				health += 4;
+			}
+		} else {
+			// reset the dehydration count
+			dehydratedPreviousDay = false;
+			dehydrateFactor = 1;
+		}
 		
 		// loses health based on the weather
 		switch (weather) {
