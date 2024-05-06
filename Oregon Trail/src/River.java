@@ -292,7 +292,10 @@ public class River extends Location {
         }
     }
   
-  
+    /**
+     * 
+     * @return
+     */
     public int fording() {
     	if (height < 4) {
     		return 1;
@@ -306,7 +309,10 @@ public class River extends Location {
     	
     }
     
-  
+    /**
+     * 
+     * @return
+     */
     public int caulking() {
     	if (flow == 1) {
     		return 1;

@@ -1,6 +1,5 @@
 /**
  * Interface.java
-
  * 
  * This is the main area for the user to play the Oregon Trail game. It includes a clock that passes and 
  * is used to represent the days changing. It opens different frames depending on how to user interacts. 

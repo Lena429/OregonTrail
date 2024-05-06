@@ -5,7 +5,6 @@
  * when the user chooses to stop travelling
  * 
  * @author Lena Frate
- * @author Lillyan Stewart
  * @version 1.2.1 May 2 2024
  */
 import java.awt.Color;

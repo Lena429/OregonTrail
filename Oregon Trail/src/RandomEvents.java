@@ -48,6 +48,12 @@ public class RandomEvents {
 		people = wagonParty.getAmountOfMembers(); //members that are currently still alive
 	}
 	
+	/**
+	 * 
+	 * @param wagon
+	 * @param oxen
+	 * @param food
+	 */
 	public RandomEvents(Wagon wagon, Equipment oxen, Food food) {
 		this.oxen = oxen; 
 		this.wagon = wagon;
@@ -55,7 +61,10 @@ public class RandomEvents {
 
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String oxJumped() {
 		int random = rnd.nextInt(100)+1;
 		if (random <= 3) {
@@ -65,6 +74,11 @@ public class RandomEvents {
 		return "You made it across safely.";
 	}
 	
+	/**
+	 * 
+	 * @param number
+	 * @return
+	 */
 	public String oxAndFood(int number) {
 		int random = rnd.nextInt(100)+1;
 		int randomQty = 0;
@@ -96,7 +110,6 @@ public class RandomEvents {
 		}
 		return "You made it across safely.";
 	}
-	
 	
 	/**
 	 * This has the random chance of their being a thunderstorm when it is rainy. 
@@ -174,7 +187,6 @@ public class RandomEvents {
 		return "ignore";
 	}
 	
-	
 	/**
 	 * You randomly found berries and they are added to your food storage. 
 	 * @return "Congrats, you found some berries" - alerts the user to what is going on 
@@ -214,8 +226,6 @@ public class RandomEvents {
 		return "ignore";
 	}
 	 	
-	
-	
 	/**
 	 * This randomly generates a member being bitten by the snake.
 	 * @return "[member] was bitten by a snake" - This alerts the user someone was bitten.
@@ -314,7 +324,6 @@ public class RandomEvents {
 		 return "ignore";
 		}
 	
-	
 	/**
 	 * This random event gives a member an illness. If they get it twice then they die.
 	 * @return "Ignore" 
@@ -361,7 +370,6 @@ public class RandomEvents {
 		}
 		return "ignore";
 	}
-	
 	
 	/**
 	 * This picks one of the random event methods to do.
