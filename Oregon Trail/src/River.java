@@ -275,7 +275,7 @@ public class River extends Location {
     }
 
     /**
-     * Close the scanner
+     * This closes the file.
      */
     public static void closeFile() {
         if (scr != null) {
@@ -291,8 +291,10 @@ public class River extends Location {
     }
   
     /**
-     * 
-     * @return
+     * This is going to be used when the user fords the river. It gets the height of the water and splits it in to three categories.
+     * @return 1- this category means the user has little chance of negative consequences. 
+     * @return 2- this category means the user has a medium chance of negative consequences. 
+     * @return 3- this category means the user has a high chance of negative consequences. 
      */
     public int fording() {
     	if (height < 4) {
@@ -307,8 +309,11 @@ public class River extends Location {
     }
     
     /**
-     * 
-     * @return
+     * This is the random event that is going to be used for the consequences as they caulk the wagon to cross the river. This just made
+     * it so that it was less confusing setting up the method in random events. 
+     * @return 1- this returns 1, which means the flow is 1. 
+     * @return 2- this returns 2, which means the flow is 2. 
+     * @return 3- this returns 3, which means the flow is 3. 
      */
     public int caulking() {
     	if (flow == 1) {
