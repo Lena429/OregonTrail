@@ -14,6 +14,13 @@
 /Interface$3.class
 /Interface$4.class
 /Interface.class
+/IntroFrame$1.class
+/IntroFrame$2.class
+/IntroFrame$3.class
+/IntroFrame$4.class
+/IntroFrame$5.class
+/IntroFrame$6.class
+/IntroFrame.class
 /LandmarkFrame$1.class
 /LandmarkFrame$2.class
 /LandmarkFrame$3.class
@@ -37,6 +44,7 @@
 /StopFrame$3.class
 /StopFrame$4.class
 /StopFrame$5.class
+/StopFrame$6.class
 /StopFrame.class
 /Store$1.class
 /Store$10.class
@@ -59,6 +67,11 @@
 /Wagon.class
 /WagonMember.class
 /WagonParty.class
+/Weather.class
+/WeatherData.csv
+/image/
+/LandmarkFrame$5.class
+
 /teatime$1.class
 /teatime$2.class
 /teatime$3.class
@@ -84,3 +97,4 @@
 /RiverFrame$6.class
 /RiverFrame$7.class
 /RiverFrame$8.class
+

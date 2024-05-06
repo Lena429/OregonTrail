@@ -48,7 +48,6 @@ public class Interface {
 	private Wagon wagon	  		 = new Wagon();
 	private WagonParty health    = new WagonParty();
 	private Store store;
-	private TeaTime teaTime     = new TeaTime(health);
 	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 300, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
@@ -71,9 +70,9 @@ public class Interface {
 	private River river6 		= new River("Raft River", 207);
 	private River river7 		= new River("Snake River", 294);
 	private River river8 		= new River("Columbia River", 93);
-	private Landmarks landmark1 = new Landmarks("Chimney Rock", 101);
-	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48);
-	private Landmarks landmark3 = new Landmarks("Independence Rock", 327);
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 101, "chimney rock1.png");
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48, "scottsBluff.png");
+	private Landmarks landmark3 = new Landmarks("Independence Rock", 327, "independenceRock.jpg");
 	private Location house		= new Location("New House", 53);
 	// Wagon Members
 	private WagonMember one		= new WagonMember();
@@ -83,10 +82,12 @@ public class Interface {
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 	
-	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, locations, bank);
+	private TeaTime teaTime     = new TeaTime(health, water, wagon);
+	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, bank);
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, health, food, water);
+	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, bank);
 	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food); 
-	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, locations);
+
 	private IntroFrame introFrame		= new IntroFrame();
 	private MapDot dot					= new MapDot();
 	
