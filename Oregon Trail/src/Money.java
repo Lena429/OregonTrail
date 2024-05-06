@@ -19,6 +19,14 @@ public class Money {
 	}
 	
 	/**
+	 * returns the total money the user has
+	 * @return total - the amount of money the user has as an integer
+	 */
+	public int getMoney() {
+		return total;
+	}
+	
+	/**
 	 * 
 	 * @param spent
 	 * @return

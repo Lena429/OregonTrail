@@ -104,12 +104,11 @@ public class WagonMember {
 	
 	/**
 	 * displays a dialogue box that lets to user know who died
-	 * @param frame - the frame to center the message on
 	 */
-	public void displayMemberDeath(JFrame frame) {
+	public void displayMemberDeath() {
 		String text = name + " has died.";
 		String title = "OH NO!";
 		int type = JOptionPane.ERROR_MESSAGE;
-		JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		JOptionPane.showConfirmDialog(null,  text, title, JOptionPane.DEFAULT_OPTION, type);
 	}
 }

@@ -41,26 +41,35 @@ public class WagonParty {
 	/**
 	 * removes a member from the people arrayList and displays death
 	 * @param person - the person to be removed
-	 * @param frame - the frame to center the message on
 	 */
-	public void removeMember(WagonMember person, JFrame frame) {
-		person.displayMemberDeath(frame);
+	public void removeMember(WagonMember person) {
+		person.displayMemberDeath();
 		people.remove(person);
 	}
 	
 	/**
 	 * removes a random member from the people arrayList and displays
 	 * death message
-	 * @param frame - the frame to center the message on
 	 */
-	public void removeRandomMember(JFrame frame) {
+	public void removeRandomMember() {
 		// generates a random index
 		Random rnd = new Random();
 		int index = rnd.nextInt(people.size());
 		
 		// displays who died and remove that person
-		people.get(index).displayMemberDeath(frame);
+		people.get(index).displayMemberDeath();
 		people.remove(index);
+	}
+	
+	/**
+	 * gets a random member
+	 * @return people.get(index) - the random party member
+	 */
+	public WagonMember getRandomMember() {
+		Random rnd = new Random();
+		int index = rnd.nextInt(people.size());
+		
+		return people.get(index);
 	}
 	
 	/**
@@ -110,6 +119,22 @@ public class WagonParty {
 	}
 	
 	/**
+	 * loses a specific amount of health
+	 * @param amountToLose - the amount of health to lose
+	 */
+	public void loseHealthQty(int amountToLose) {
+		health += amountToLose;
+	}
+	
+	/**
+	 * loses health when disease/injury first strikes a member
+	 * Note: value of 20 is taken from "You Have Died of Dysentery"
+	 */
+	public void loseHealthToAilment() {
+		health += 20;
+	}
+	
+	/**
 	 * calculates how much health the wagon party loses based on factors like food, 
 	 * weather, and diseases/injuries
 	 * Note: recoverHealth should be called first
@@ -134,7 +159,7 @@ public class WagonParty {
 			// starving
 			if(starvedPreviousDay) {
 				health = 6 + (STARVE_CONST * starveFactor);
-				starveFactor++;
+				starveFactor = starveFactor + 2;
 			} else {
 				starvedPreviousDay = true;
 				health += 6;
@@ -168,8 +193,10 @@ public class WagonParty {
 		}
 		
 		// loses health based on pace
-		if(travel.getPace() < 15) 		health += 2;	// steady
+		if(travel.getPace() < 14) 		health += 2;	// steady
+		else if (travel.getPace() < 16) health += 3;
 		else if (travel.getPace() < 18) health += 4;	// strenuous
+		else if (travel.getPace() < 19) health += 5;
 		else 							health += 6;	// grueling
 		
 		// loses health based on diseases/injuries of members
@@ -219,11 +246,11 @@ public class WagonParty {
 	 * also ends the game
 	 * @param frame - the frame to center the message on
 	 */
-	public void displayGameOver(JFrame frame) {
+	public void displayGameOver() {
 		String text = "All members of the wagon have perished :(";
 		String title = "Game Over!";
 		int type = JOptionPane.ERROR_MESSAGE;
-		int response = JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		int response = JOptionPane.showConfirmDialog(null, text, title, JOptionPane.DEFAULT_OPTION, type);
 		if(response == JOptionPane.OK_OPTION) System.exit(1);
 	}
 }
