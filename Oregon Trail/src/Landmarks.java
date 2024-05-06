@@ -1,12 +1,19 @@
 import java.util.Random;
 
 public class Landmarks extends Location{
+	private String imagePath;
 	
-	
-	public Landmarks(String name, int miles) {
+	public Landmarks(String name, int miles, String imagePath) {
 		super(name, miles);
+		this.imagePath = imagePath;
     
   }
+	
+	public String getImagePath() {
+        return imagePath;
+    }	
+	
+	
 	// Phrases for chattering, categorized by landmark names
     private String[] phrasesLandmarkA = {"Amelia says to the group, \"that a big rock.\"" };
     private String[] phrasesLandmarkB = {"Amelia points ahead \" that a bigger rock.\""};
@@ -38,6 +45,10 @@ public class Landmarks extends Location{
             return "No phrases available for this landmark.";
         }
     }
+    
+    
+    
+    
 }
 
 

@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,7 +44,12 @@ public class LandmarkFrame {
 		frameFive.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameFive.setVisible(true);
 		
-		//landmark images
+		// Retrieve the image file path for the current landmark
+	    String imagePath = currentLandmark.getImagePath();
+	    ImageIcon landmarkImage = new ImageIcon(getClass().getResource(imagePath));
+	    JLabel landmarkLabel = new JLabel(landmarkImage);
+	    landmarkLabel.setBounds(50, 100, 500, 500);
+	    
 		
 		// Greeting header for the fort frames
 	    JLabel landmarkName = new JLabel("Welcome to " + currentLandmark.getName());
@@ -151,6 +157,7 @@ public class LandmarkFrame {
 		landPanel.add(leaveBtn);
 		landPanel.add(teaTimeBtn);
 		landPanel.add(inventoryBtn);
+		landPanel.add(landmarkLabel);
 		landPanel.setBackground(new Color(0,0,0));
 		frameFive.getContentPane().add(landPanel);
 		

@@ -69,9 +69,9 @@ public class Interface {
 	private River river6 		= new River("Raft River", 207);
 	private River river7 		= new River("Snake River", 294);
 	private River river8 		= new River("Columbia River", 93);
-	private Landmarks landmark1 = new Landmarks("Chimney Rock", 101);
-	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48);
-	private Landmarks landmark3 = new Landmarks("Independence Rock", 327);
+	private Landmarks landmark1 = new Landmarks("Chimney Rock", 101, "chimney rock1.png");
+	private Landmarks landmark2 = new Landmarks("Scott's Bluff", 48, "scottsBluff.png");
+	private Landmarks landmark3 = new Landmarks("Independence Rock", 327, "independenceRock.jpg");
 	private Location house		= new Location("New House", 53);
 	// Wagon Members
 	private WagonMember one		= new WagonMember();
