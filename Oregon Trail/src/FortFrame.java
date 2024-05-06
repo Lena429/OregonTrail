@@ -102,12 +102,15 @@ public class FortFrame {
 		conversationPane.setBounds(178, 371, 357, 215);
 		
 		// player talks to other people inside fort
+		
 		// randomly selected phrases from Fort Class
 		JButton talkBtn = new JButton("Talk to people");
 		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conversationPane.setText((currentFort).generatePhrase());
+				//disables button so you can only talk once at each fort 
+				talkBtn.setEnabled(false);
 			}
 		});
 		talkBtn.setBounds(31, 138, 133, 21);
@@ -184,12 +187,13 @@ public class FortFrame {
 		teaTimeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		teaTimeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(teaTimePlayed < 2) {
+				if(teaTimePlayed < 1) {
 					teatime.openTeaTime();
 					//Increment counter when game is played
 					teaTimePlayed++;
+					
 					//Check if button should be disabled
-					if(teaTimePlayed == 2) {
+					if(teaTimePlayed == 1) {
 						teaTimeBtn.setEnabled(false);
 					}
 				}else {

@@ -131,12 +131,13 @@ public class LandmarkFrame {
 		JButton teaTimeBtn = new JButton("Tea Time");
 		teaTimeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			teaTimeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {if(teaTimePlayed < 2) {
+			public void actionPerformed(ActionEvent e) {
+				if(teaTimePlayed < 1) {
 				teaTime.openTeaTime();
 				//Increment counter when game is played
 				teaTimePlayed++;
 				//Check if button should be disabled
-				if(teaTimePlayed == 2) {
+				if(teaTimePlayed == 1) {
 					teaTimeBtn.setEnabled(false);
 				}
 			}else {

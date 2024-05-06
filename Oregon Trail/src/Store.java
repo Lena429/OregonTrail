@@ -38,14 +38,14 @@ public class Store {
 	private int waterCost = 0;
 	private int totalCost;
 	
-	//trying something with prices
+	//The base prices for all the store items
 	private int foodPrice = 20;
 	private int oxPrice = 2000;
 	private int clothesPrice = 25;
 	private int wheelPrice = 1000;
 	private int tonguePrice = 1000;
 	private int axlePrice = 1000;
-	private int waterPrice = 100;
+	private int waterPrice = 30;
 	
 	
 	private JSlider clothesSlider;
@@ -128,7 +128,7 @@ public class Store {
 		clothes.setBounds(10, 156, 205, 24);
 		storeWindow.getContentPane().add(clothes);
 		
-		JLabel waterItem = new JLabel("Water $" + (waterPrice / 100.0) + "/ gal");
+		JLabel waterItem = new JLabel("Water $" + (waterPrice / 100.0) + "0/gal");
 		waterItem.setForeground(new Color(255, 255, 255));
 		waterItem.setHorizontalAlignment(SwingConstants.RIGHT);
 		waterItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));

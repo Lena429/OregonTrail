@@ -231,12 +231,12 @@ public class StopFrame {
 		JButton teaBtn = new JButton("Tea Time");
 		teaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(teaTimePlayed < 2) {
+				if(teaTimePlayed < 1) {
 					teatime.openTeaTime();
 					//Increment counter when game is played
 					teaTimePlayed++;
 					//Check if button should be disabled
-					if(teaTimePlayed == 2) {
+					if(teaTimePlayed == 1) {
 						teaBtn.setEnabled(false);
 					}
 				}else {
