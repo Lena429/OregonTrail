@@ -1,9 +1,12 @@
 /**
  * StopFrame.java
  * 
- * @author 
- * @version
+ * The stop frame class handles the GUI for the frame that appears
+ * when the user chooses to stop travelling
  * 
+ * @author Lena Frate
+ * @author Lillyan Stewart
+ * @version 1.2.1 May 2 2024
  */
 import java.awt.Color;
 import java.awt.Cursor;
@@ -33,13 +36,13 @@ public class StopFrame {
 	private int teaTimePlayed;
 	
 	/**
-	 * 
-	 * @param travel
-	 * @param wagon
-	 * @param bank
-	 * @param health
-	 * @param food
-	 * @param water
+	 * Creates an object of stop frame containing the necessary variables for the frame
+	 * @param travel - needed to access pace, rations, and date
+	 * @param wagon - needed for access to the inventory
+	 * @param bank - needed to display the user's money
+	 * @param health - needed to access the amount of members
+	 * @param food - needed to update the food total
+	 * @param water - needed to update the water total
 	 */
 	public StopFrame(TravelManager travel, Wagon wagon, Money bank, WagonParty health, Food food, Equipment water) {
 		this.travel = travel;
@@ -56,11 +59,11 @@ public class StopFrame {
 	}
 	
 	/**
-	 * 
-	 * @param dateMainLbl
-	 * @param foodMainLbl
-	 * @param rationsMainLbl
-	 * @param paceMainLbl
+	 * opens the stop frame so the user can access things like inventory, change pace, change rations, and rest
+	 * @param dateMainLbl - the date label from the main frame
+	 * @param foodMainLbl - the food label from the main frame
+	 * @param rationsMainLbl - the rations label from the main frame
+	 * @param paceMainLbl - the pace label from the main frame
 	 */
 	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl, TeaTime teatime) {
 		TradeManager offer	= new TradeManager();
@@ -149,7 +152,7 @@ public class StopFrame {
 		dateQtyLbl.setBounds(821, 469, 318, 51);
 		panel.add(dateQtyLbl);
 		
-		// A button that will allow you to rest.
+		// A button that will allow the user to rest.
 		// When you rest food decreases and a day will pass every time button is pushed.
 		JButton restBtn = new JButton("Rest");
 		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
@@ -169,7 +172,8 @@ public class StopFrame {
 			}
 		});
 		panel.add(restBtn);
-
+		
+		// a button that allows the user to trade
 		JButton tradeBtn = new JButton("Trade");
 		tradeBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		tradeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -211,12 +215,14 @@ public class StopFrame {
 		titleLbl.setBounds(227, 21, 797, 69);
 		panel.add(titleLbl);
 		
+		// a button that allows the user to go back to the main frame
 		JButton btnContinueTrail = new JButton("Continue Trail");
 		btnContinueTrail.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		btnContinueTrail.setBounds(48, 630, 1170, 75);
 		btnContinueTrail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnContinueTrail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// closes the frame
 				frame.dispose();
 			}
 		});

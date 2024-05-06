@@ -1,6 +1,8 @@
 /**
  * IntroFrame.java
  * 
+ * The intro frame class creates the intro frame to be displayed
+ * at the beginning of the game
  * 
  * @author Lena Frate
  * @version 1.1.1 - May 1 2024
@@ -30,18 +32,18 @@ public class IntroFrame {
 	private JTextField name4Txt;
 	
 	/**
-	 * 
+	 * creates an object of IntroFrame
 	 */
 	public IntroFrame() {}
 	
 	/**
-	 * 
-	 * @param mainDateLbl
-	 * @param travel
-	 * @param health
-	 * @param store
+	 * Opens the intro frame 
+	 * @param mainDateLbl - the date label on the main frame to update
+	 * @param travel - the object that keeps track of the date
+	 * @param members - the members in the wagon
+	 * @param store - an object of store
 	 */
-	public void openIntroFrame(JLabel mainDateLbl, TravelManager travel, WagonParty health, Store store) {
+	public void openIntroFrame(JLabel mainDateLbl, TravelManager travel, WagonParty members, Store store) {
 		
 		introFrame = new JFrame();
 		introFrame.getContentPane().setBackground(new Color(0, 0, 0));
@@ -50,23 +52,27 @@ public class IntroFrame {
 		introFrame.setTitle("Setup");
 		introFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Disable close operation
 		introFrame.setVisible(true);
-
+		
+		// A text area with a brief introduction to Amelia Knight
 		JTextArea introBlurb = new JTextArea();
 		introBlurb.setForeground(new Color(255, 255, 255));
 		introBlurb.setBackground(new Color(0, 0, 0));
 		introBlurb.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
 		introBlurb.setLineWrap(true);
 		introBlurb.setEditable(false);
-		introBlurb.setText("Welcome to the Oregon Trail as told by a female's perspective." +  
-							"Your path \r\ntoday is based off of diarist Amelia Knight. Amelia " +
-							"travelled the trail from \r\nMarch 1853 to September 1853. She and " +
-							"her husband travelled with their \r\nseven children from Iowa to " +
-							"their new home in Oregon. She will be in the \r\nsame wagon train " +
-							"as you so you may converse with her along the way and \r\nhear more " +
-							"about her journey. ");
-		introBlurb.setBounds(23, 82, 1226, 249);
+		introBlurb.setText("Welcome to the Oregon Trail as told by a female's perspective. "
+							+ "Your path \r\ntoday is based off of diarist Amelia Knight. "
+							+ "Amelia travelled the trail from \r\nMarch 1853 to September "
+							+ "1853. She and her husband travelled with their \r\nseven children "
+							+ "from Iowa to their new home in Oregon. She will be in the \r\nsame "
+							+ "wagon train as you so you can converse with her and some of "
+							+ "her\r\nchildren (Almira, Plutarch, Lucy, Seneca) along the way "
+							+ "to hear more \r\nabout their journey.");
+
+		introBlurb.setBounds(50, 71, 1226, 277);
 		introFrame.getContentPane().add(introBlurb);
 		
+		// create radio buttons that allow the user to choose the start month
 		JRadioButton marchRadioBtn = new JRadioButton("March");
 		marchRadioBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,14 +131,15 @@ public class IntroFrame {
 		monthQLbl.setBounds(45, 356, 494, 45);
 		introFrame.getContentPane().add(monthQLbl);
 		
+		// closes the intro frame and opens the store frame
 		JButton startBtn = new JButton("Start Game");
 		startBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// set the names of the agon members
-				health.getMembers().get(0).setName(name1Txt.getText());
-				health.getMembers().get(1).setName(name2Txt.getText());
-				health.getMembers().get(2).setName(name3Txt.getText());
-				health.getMembers().get(3).setName(name4Txt.getText());
+				// set the names of the wagon members
+				members.getMembers().get(0).setName(name1Txt.getText());
+				members.getMembers().get(1).setName(name2Txt.getText());
+				members.getMembers().get(2).setName(name3Txt.getText());
+				members.getMembers().get(3).setName(name4Txt.getText());
 				
 				// set date label on main frame
 				mainDateLbl.setText(travel.getDate());
@@ -140,7 +147,7 @@ public class IntroFrame {
 				// open the store
 				store.openStoreWindow(true);
 				
-				System.out.println(health.getMembers().get(0).getName());
+				System.out.println(members.getMembers().get(0).getName());
 				
 				introFrame.dispose();
 			}
@@ -157,6 +164,7 @@ public class IntroFrame {
 		lblWhatAreThe.setBounds(607, 355, 627, 45);
 		introFrame.getContentPane().add(lblWhatAreThe);
 		
+		// allows the user to enter four separate names for the members of their wagons
 		JTextArea txtrName = new JTextArea();
 		txtrName.setEditable(false);
 		txtrName.setOpaque(false);

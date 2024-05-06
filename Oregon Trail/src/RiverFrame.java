@@ -1,16 +1,18 @@
 /**
  * RiverFrame.java
  * 
- * @author 
- * @version
+ * Creates the GUI for the river frame that is to be displayed when the user arrives
+ * at a river
  * 
+ * @author - Lillyan Stewart
+ * @author - Lena Frate
+ * @version 1.1.5 - May 4 2024
  */
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,33 +30,36 @@ public class RiverFrame {
 	private TravelManager travel;
 	private Wagon wagon;
 	private Food food; 
+  private Equipment water;
 	private Equipment oxen;
 	private Weather weather;
 
 	/**
-	 * 
-	 * @param locations
-	 * @param bank
-	 * @param travel
-	 * @param wagon
-	 * @param food
+	 * Creates an object of riverFrame that stores instances of Money, TravelManager, Wagon, and Equipment
+	 * @param bank - the amount of money the user has
+	 * @param travel - an object that stores date, rations, miles, and pace
+	 * @param wagon - an object that stores/manages the inventory
+	 * @param food - the amount of food the user has
 	 */
-	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen, Weather weather) {
+	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen, Weather weather, Equipment water) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.wagon = wagon;
 		this.food = food;
+		this.water = water;
 		this.oxen = oxen;
 		this.weather = weather; 
 	}
 	
 	/**
-	 * 
-	 * @param currentRiver
-	 * @param dateMainLbl
-	 * @param foodMainLbl
+	 * creates a river frame that cannot be closed until a way to cross the river has been chosen
+	 * @param currentRiver - the river being crossed
+	 * @param dateMainLbl - the date label from the main frame to update
+	 * @param foodMainLbl - the food label from the main frame to update
+	 * @param membersAlive - the mount of members alive
 	 */
-	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl, JLabel wthrQtyLbl) {
+	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl, JLabel wthrQtyLbl, int membersAlive) {
+		TradeManager offer	= new TradeManager();
 		RandomEvents randomEvents   = new RandomEvents(wagon, oxen, food);
 
 		JFrame frame = new JFrame();
@@ -173,6 +178,8 @@ public class RiverFrame {
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		// the user does not have enough money to pay for the ferry so disable the option
+		if(!bank.isMoneyAvailable(8)) ferryBtn.setEnabled(false);
 		panel.add(ferryBtn);
 
 		JButton caulkBtn = new JButton("Caulk the wagon");
@@ -194,7 +201,7 @@ public class RiverFrame {
 		waitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * 4); 
+				wagon.removeItemQty(food, travel.getRations() * membersAlive); 
 				foodMainLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl.setText(travel.getDate());
 				dateMainLbl.setText(travel.getDate());
@@ -241,14 +248,6 @@ public class RiverFrame {
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// generates a random phrase for the specific fort
-				/*
-				for (Location location : locations) {
-					if(location instanceof River && !location.hasvisited()) {
-						conversationPane.setText(((River) location).generatePhrase());
-						break;
-					}
-				}
-				*/
 				conversationPane.setText(currentRiver.generatePhrase());
 				// disables the button after first click
 				talkBtn.setEnabled(false);
@@ -259,6 +258,7 @@ public class RiverFrame {
 		JButton inventoryBtn = new JButton("Inventory");
 		inventoryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// creates a new small frame to display the inventory
 				JFrame riverInventory = new JFrame();
 				riverInventory.setTitle("Inventory");
 				riverInventory.setBounds(470, 317, 450, 375);
@@ -283,7 +283,6 @@ public class RiverFrame {
 		JButton tradeBtn = new JButton("Trade");
 		tradeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
 				// generates the trade offer
 				offer.getTrader(travel.getMilesTravelled());
 				offer.getOffer(wagon.getItems());
@@ -298,8 +297,8 @@ public class RiverFrame {
 		        
 				// day increments and food/water decrements
 				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
-				wagon.removeItemQty(water, health.getAmountOfMembers());
+				wagon.removeItemQty(food, travel.getRations() * membersAlive);
+				wagon.removeItemQty(water, membersAlive);
 		        
 				// Update the labels so user can see correct values
 				dateMainLbl.setText(travel.getDate());
@@ -307,7 +306,6 @@ public class RiverFrame {
 		        
 		        // updates the food label on the main frame
 		        foodMainLbl.setText(wagon.getConsumableWeight() + "");
-		        */
 			}
 		});
 		tradeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -317,6 +315,7 @@ public class RiverFrame {
 		
 		frame.getContentPane().add(panel);
 		
+		// reads the river file and updates the river flow, height, and width 
     	River.openFile();
     	heightNumLbl.setText(currentRiver.setHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
     	flowNumLbl.setText(currentRiver.setFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 

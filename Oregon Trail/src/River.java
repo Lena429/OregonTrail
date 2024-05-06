@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class River extends Location {
+	
 	private static Scanner scr;
 	private static InputStreamReader reader = null;
 	Random rnd = new Random();
@@ -26,15 +27,42 @@ public class River extends Location {
 
 	
 	// Phrases for conversations
-    private String[] phraseRiver1 = {"Amelia Knight says, \"We passed Pisgah and will cross Grand River soon. My head aches, but I will make tea tonight to cure it.\""};
-    private String[] phraseRiver2 = {"Amelia Knight says, \"I hope there are grassy lands nearby. We have run out of feed for the stock.\""};
-    private String[] phraseRiver3 = {"Amelia Knight says, \"A man drowned at Elkhorn River today. I pity his wife and children who are mourning near their wagon.\""};
-    private String[] phraseRiver4 = {"Amelia Knight says, \"We hear there are nearly 700 wagons here! I hope I'll be able to find a spot to wash and cook this afternoon.\""};
-    private String[] phraseRiver5 = {"Amelia Knight says, \"Platte is a beautiful river about a mile across, full of islands and sand bars. There are also an abundance of prickly pears growing along it.\""};
-    private String[] phraseRiver6 = {"Amelia Knight says, \"We plan to ford the river late this afternoon by raising the wagon beds a foot, to prevent the water from running in. I wish you luck on your journey.\""};
-    private String[] phraseRiver7 = {"Amelia Knight says, \"Make sure you keep an eye on the children. My son gave me a scare the other day when he fell under the wagon. Somehow he kept from under the wheels and escaped uninjured. I never was so much frightened in my life.\""};
-    private String[] phraseRiver8 = {"Amelia Knight says, \"The trip so far has not been kind to me. Last night, I helped get supper and went to bed too sick to eat any myself. We suspect that the water here is bad, so watch what you drink.\""};
-    private String[] phraseRiver9 = {"bruh"};
+    private String[] phraseRiver1 = {"Amelia says, \"We passed Pisgah and will cross Grand River soon. My head aches, but I will make tea tonight to cure it.\"",
+    								 "Almira says, \"I already miss my old home. I hope this long journey is worth the wait\"",
+    								 "Plutarch says, \"Getting stuck in mud is the worst. It takes a lot of work to get the wagon moving again.\""};
+    
+    private String[] phraseRiver2 = {"Amelia says, \"I hope there are grassy lands nearby. We have run out of feed for the stock.\"",
+    								 "Plutarch says, \"I can't wait to take the Hindoo across the river. I hope our cattle cooperates\"",
+    								 "Lucy says, \"I was very sad about the young calf we had to leave behind a few days ago\""};
+    
+    private String[] phraseRiver3 = {"Amelia says, \"We hear there are nearly 700 wagons here! I hope I'll be able to find a spot to wash and cook this afternoon.\",",
+    								 "Plutarch says, \"I hope are cattle are more cooperative this time around. One jump into the water the last time we tried to cross a river and it came out looking like a drowned rat\"",
+    								 "Lucy says, \"My mom told me we have to wait our turn to cross the river. I hope it is our turn soon.\""};
+    
+    private String[] phraseRiver4 = {"Amelia says, \"A man drowned at Elkhorn River today. I pity his wife and children who are mourning near their wagon.\"",
+	 								 "Seneca says, \"We plan to make a ferry out of our wagon using our water-proof wagon bed.\"",
+	 								 "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"};
+    
+    private String[] phraseRiver5 = {"Amelia says, \"Platte is a beautiful river about a mile across, full of islands and sand bars. There are also an abundance of prickly pears growing along it.\"",
+    								 "Plutarch says, \"I finally got over my sickness. I can drive the wagon again now.\"",
+    								 "Seneca says, \"My brothers and I helped our mom do some washing today while we have access to water.\""};
+    
+    private String[] phraseRiver6 = {"Amelia says, \"We plan to ford the river late this afternoon by raising the wagon beds a foot, to prevent the water from running in. I wish you luck on your journey.\"",
+    								 "Lucy says, \"I worry about my mom. She hasn't been feeling well, and she passed out earlier today after taking care of my younger brother Chatfield.\"",
+    								 "Almira says, \"I have so many bug bites. The air seems to be filled with gnats and mosquitoes."};
+    
+    private String[] phraseRiver7 = {"Amelia says, \"Make sure you keep an eye on the children. My son gave me a scare the other day when he fell under the wagon. Somehow he kept from under the wheels and escaped uninjured. I never was so much frightened in my life.\"",
+    								 "Seneca says, \"We had to travel down a steep bank earlier to get to water, but the cattle were so tired they couldn't even drink\"",
+    								 "Plutarch says, \"We have to swim the stock across the river. It is a very hard job for such a wide river.\""};
+    
+    private String[] phraseRiver8 = {"Amelia says, \"The trip so far has not been kind to me. Last night, I helped get supper and went to bed too sick to eat any myself. We suspect that the water here is bad, so watch what you drink.\"",
+    								 "Lucy says, \"My mom told be to be wary of the water here. The bottom may be full of poison water.\"",
+    								 "Almira says, \"One of our best milk cows died today. It seems like our cattle has been dying off very fast recently.\""};
+    
+    private String[] phraseRiver9 = {"Amelia says, \"I was able to trade with some Native Americans to get some salmon for a nice dinner.\"",
+    								 "Seneca says, \"There's no good fire wood around here, so my siblings, my mother, and I were shivering throughout last night.\"",
+    								 "Almira says, \"We had to split up some of the deckboards of our wagon to make a fire. There was no good firewood otherwise.\""};
+
 
 	/**
 	 * Creates a River object containing the name and miles
@@ -45,8 +73,6 @@ public class River extends Location {
 		super(name, miles);
 	}
 	
-	public River() {}  
-
 	/**
 	 * returns the name of the river. (this method is for future use)
 	 * @return name - the name of the river the user is at
@@ -199,40 +225,45 @@ public class River extends Location {
 				}
 				return "Error";
 		}
-
-
-    // Add more river-specific phrases as needed
+	
+	/**
+	 * generates a randomly chosen phrase based on the current river
+	 * @return phrase - the phrase to be displayed
+	 */
     public String generatePhrase() {
         String phrase = "";
-
+        
+        Random rnd = new Random();
+        int index = rnd.nextInt(3);
+        
         // Check the river's name and select phrases accordingly
         if (getName().equals("Grand River")) {
-            phrase = phraseRiver1[0]; 
+            phrase = phraseRiver1[index]; 
         } else if (getName().equals("Missouri River")) {
-            phrase = phraseRiver2[0]; 
+            phrase = phraseRiver2[index]; 
         } else if(getName().equals("Loup Fork")) {
-        	phrase = phraseRiver3[0];
+        	phrase = phraseRiver3[index];
         } else if(getName().equals("Elkhorn River")) {
-        	phrase = phraseRiver4[0];
+        	phrase = phraseRiver4[index];
         } else if(getName().equals("Platte River")) {
-        	phrase = phraseRiver5[0];
+        	phrase = phraseRiver5[index];
         } else if(getName().equals("Raft River")) {
-        	phrase = phraseRiver6[0];
+        	phrase = phraseRiver6[index];
         } else if(getName().equals("Salmon River")) {
-        	phrase = phraseRiver7[0];
+        	phrase = phraseRiver7[index];
         } else if(getName().equals("Snake River")) {
-        	phrase = phraseRiver8[0];
+        	phrase = phraseRiver8[index];
         } else if(getName().equals("Columbia River")) {
-        	phrase = phraseRiver9[0];
+        	phrase = phraseRiver9[index];
         }
         
-        // Add more conditions for other forts as needed
-
         return phrase;
     }
 	
 
-//Open the text file and initialize the scanner
+    /**
+     * Open the text file and initialize the scanner
+     */
     public static void openFile() {
         try {
             InputStream inputStream = River.class.getResourceAsStream("River.txt");
@@ -245,7 +276,9 @@ public class River extends Location {
         }
     }
 
-// Close the scanner
+    /**
+     * Close the scanner
+     */
     public static void closeFile() {
         if (scr != null) {
             scr.close();
@@ -258,8 +291,8 @@ public class River extends Location {
             }
         }
     }
-
-    
+  
+  
     public int fording() {
     	if (height < 4) {
     		return 1;
@@ -273,6 +306,7 @@ public class River extends Location {
     	
     }
     
+  
     public int caulking() {
     	if (flow == 1) {
     		return 1;
@@ -283,9 +317,5 @@ public class River extends Location {
     	else
     		return 3;
     }
-    
-    
-    
-
 }
 

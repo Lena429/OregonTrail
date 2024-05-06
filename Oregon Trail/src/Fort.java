@@ -2,7 +2,6 @@ import java.util.Random;
 
 /**
  * Fort.java
-
  * 
  * The Fort class represents a fort on the journey, 
  * which the wagon party can visit during their journey. 
