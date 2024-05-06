@@ -10,9 +10,7 @@
  */
 import java.util.Random;
 import java.util.Scanner;
-
 import javax.swing.JLabel;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -41,7 +39,7 @@ public class River extends Location {
     
     private String[] phraseRiver4 = {"Amelia says, \"A man drowned at Elkhorn River today. I pity his wife and children who are mourning near their wagon.\"",
 	 								 "Seneca says, \"We plan to make a ferry out of our wagon using our water-proof wagon bed.\"",
-	 								 "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"};
+	 								 "Lucy says, \"I am glad the Native Americans let us use their bridge to cross that small creek a couple of days ago. It saved us from having to wade through the water.\""};
     
     private String[] phraseRiver5 = {"Amelia says, \"Platte is a beautiful river about a mile across, full of islands and sand bars. There are also an abundance of prickly pears growing along it.\"",
     								 "Plutarch says, \"I finally got over my sickness. I can drive the wagon again now.\"",
