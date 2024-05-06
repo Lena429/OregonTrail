@@ -30,6 +30,7 @@ public class RiverFrame {
 	private TravelManager travel;
 	private Wagon wagon;
 	private Equipment food; 
+	private Equipment water;
 	
 	/**
 	 * Creates an object of riverFrame that stores instances of Money, TravelManager, Wagon, and Equipment
@@ -38,11 +39,12 @@ public class RiverFrame {
 	 * @param wagon - an object that stores/manages the inventory
 	 * @param food - the amount of food the user has
 	 */
-	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Equipment food) {
+	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Equipment food, Equipment water) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.wagon = wagon;
 		this.food = food;
+		this.water = water;
 	}
 	
 	/**
@@ -53,6 +55,7 @@ public class RiverFrame {
 	 * @param membersAlive - the mount of members alive
 	 */
 	public void openRiverFrame(River currentRiver, JLabel dateMainLbl, JLabel foodMainLbl, JLabel wthrQtyLbl, int membersAlive) {
+		TradeManager offer	= new TradeManager();
 		
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 1289, 767);
@@ -250,7 +253,6 @@ public class RiverFrame {
 		JButton tradeBtn = new JButton("Trade");
 		tradeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
 				// generates the trade offer
 				offer.getTrader(travel.getMilesTravelled());
 				offer.getOffer(wagon.getItems());
@@ -265,8 +267,8 @@ public class RiverFrame {
 		        
 				// day increments and food/water decrements
 				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * health.getAmountOfMembers());
-				wagon.removeItemQty(water, health.getAmountOfMembers());
+				wagon.removeItemQty(food, travel.getRations() * membersAlive);
+				wagon.removeItemQty(water, membersAlive);
 		        
 				// Update the labels so user can see correct values
 				dateMainLbl.setText(travel.getDate());
@@ -274,7 +276,6 @@ public class RiverFrame {
 		        
 		        // updates the food label on the main frame
 		        foodMainLbl.setText(wagon.getConsumableWeight() + "");
-		        */
 			}
 		});
 		tradeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
