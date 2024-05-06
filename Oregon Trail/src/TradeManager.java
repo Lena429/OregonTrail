@@ -43,10 +43,11 @@ public class TradeManager {
 			case 1: trader = "A trapper"; break;
 			case 2: 
 				// Native American traders are determined by miles travelled because of their territories
-				if (milesTravelled < 500) trader = "A Pawnee Native American";
-				else if (milesTravelled < 1000) trader = "A Souis Native American";
-				else if (milesTravelled < 1500) trader = "A Siou Native American";
-				else trader = "A Kayuse Native American";
+				if (milesTravelled < 400) trader = "A Pawnee Native American";
+				else if (milesTravelled < 800) trader = "A Souix Native American";
+				else if (milesTravelled < 1200) trader = "A Cayuse Native American";
+				else if (milesTravelled < 1600) trader = "A Nex Perce Native American";
+				else trader = "A Nez Perce Native American";
 				break;
 		}
 		
