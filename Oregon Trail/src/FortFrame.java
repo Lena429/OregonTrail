@@ -1,6 +1,7 @@
 /**
  * FortFrame.java
  * 
+ * 
  * @author 
  * @version
  * 
@@ -44,7 +45,9 @@ public class FortFrame {
 		this.bank = bank;
 	}
 	
-	
+	/**
+	 * Resets the counter for how many times the mini-game has been played to zero when a new fort frame has been entered
+	 */
 	public void resetTeaPlayed() {
 		teaTimePlayed = 0;
 	}
@@ -190,6 +193,7 @@ public class FortFrame {
 						teaTimeBtn.setEnabled(false);
 					}
 				}else {
+					//message for when player tries to play mini-game more than twice
 					JOptionPane.showMessageDialog(frameThree, "You have drinken enough tea for today");
 				}
 

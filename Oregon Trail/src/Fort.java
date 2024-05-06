@@ -4,10 +4,10 @@ import java.util.Random;
  * Fort.java
 
  * 
- * The Fort class represents a fort or landmark on the journey, 
+ * The Fort class represents a fort on the journey, 
  * which the wagon party can visit during their journey. 
  * It contains information about the fort's name, distance away from the wagon party, 
- * and whether it has been visited or not.
+ * and whether it has been visited or not. Along with possible conversations to be had in each fort.
  * 
  * @author - Sarah Slusher
  * @author - Lena Frate

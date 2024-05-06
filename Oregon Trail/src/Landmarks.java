@@ -1,3 +1,10 @@
+/**
+ * Landmark.java
+ * 
+ * @author
+ * @version - 1.1.1 April , 2024
+ */
+
 import java.util.Random;
 
 public class Landmarks extends Location{

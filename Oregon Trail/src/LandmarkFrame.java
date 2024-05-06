@@ -1,9 +1,18 @@
+/**
+ * LandmarkFrame.java
+ * 
+ * The LandmarkFrame class opens when the player reaches a landmark on their journey. It has interactions such as talking, looking around
+ * and playing the mini-game
+ * 
+ * @author -
+ * @version - 1.1.1 May 6, 2024
+ */
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,10 +27,15 @@ public class LandmarkFrame {
 	private Wagon wagon;
 	private Equipment food;
 	private Money bank;
+	private int teaTimePlayed; 
 	
-
-	private int teaTimePlayed;
-	
+	/**
+	 *@param travel 
+	 *@param wagon 
+	 *@param food 
+	 *@param bank 
+	 * 
+	 */
 	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
 		this.travel = travel;
 		this.wagon = wagon;
@@ -29,10 +43,19 @@ public class LandmarkFrame {
 		this.bank = bank;
 	}
 	
+	
+	/**
+	 * Resets the counter for how many times the mini-game has been played to zero when a new landmark has been entered
+	 */
 	public void resetTeaPlayed() {
 		teaTimePlayed = 0;
 	}
 	
+	/**
+	 * Opens the frame that holds all the landmark components including buttons, images and labels
+	 * @param currentLandmark  
+	 * @param teaTime  
+	 */
 	public void openLandmarkFrame(Landmarks currentLandmark, TeaTime teaTime) {
 
 		resetTeaPlayed();
@@ -48,7 +71,7 @@ public class LandmarkFrame {
 	    String imagePath = currentLandmark.getImagePath();
 	    ImageIcon landmarkImage = new ImageIcon(getClass().getResource(imagePath));
 	    JLabel landmarkLabel = new JLabel(landmarkImage);
-	    landmarkLabel.setBounds(50, 100, 500, 500);
+	    landmarkLabel.setBounds(562,108,684,511);
 	    
 		
 		// Greeting header for the fort frames
@@ -117,13 +140,14 @@ public class LandmarkFrame {
 					teaTimeBtn.setEnabled(false);
 				}
 			}else {
+				//message that pops up when player tries to play mini-game more than twice
 				JOptionPane.showMessageDialog(frameFive, "You have drinken enough tea for today");
-			}
+				}
 			}
 		});
 		teaTimeBtn.setBounds(31,450,133,21);
 		
-		//player decides to check wagon inventory while in the fort
+		//player decides to check wagon inventory while at the landmark
 		JButton inventoryBtn = new JButton("Inventory");
 		inventoryBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		inventoryBtn.addActionListener(new ActionListener() {
@@ -145,7 +169,7 @@ public class LandmarkFrame {
 		});
 		inventoryBtn.setBounds(31, 400, 133, 21);
 		
-		
+		//panel that hold all of the landmark components to the frame
 		JPanel landPanel = new JPanel();
 		landPanel.setLayout(null);
 		landPanel.add(restBtn);
