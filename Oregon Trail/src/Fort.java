@@ -47,8 +47,7 @@ public class Fort extends Location {
 	        
 	        "Seneca observes, \"There sure are a lot of graves here, I guess that’s why it’s called the mormon graveyard. I’d bet that there are around 350 unfortunate travelers buried here.\"",
 	        
-	        "Amelia says, looking out at all the wagons, \" We’ve merged with another wagon company making us a rather large group, there are now 24 men, with 10 wagons in total. It’s rather noisy now but we have "
-	        + "enough people to guard the cattle at night.\"",
+	        "Amelia says, looking out at all the wagons, \" We’ve merged with another wagon company making us a rather large group, there are now 24 men, with 10 wagons in total. It’s rather noisy now.\"",
 
 	    };
 	    private String[] phrasesForFortC = {
