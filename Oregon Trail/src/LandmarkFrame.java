@@ -4,8 +4,10 @@
  * The LandmarkFrame class opens when the player reaches a landmark on their journey. It has interactions such as talking, looking around
  * and playing the mini-game
  * 
- * @author -
- * @version - 1.1.1 May 6, 2024
+ * @author - Lena Frate
+ * @author - Lillyan Stewart
+ * @author - Sarah Slusher
+ * @version - 1.1.1 April 20, 2024
  */
 
 import java.awt.Color;
@@ -30,10 +32,11 @@ public class LandmarkFrame {
 	private int teaTimePlayed; 
 	
 	/**
-	 *@param travel 
-	 *@param wagon 
-	 *@param food 
-	 *@param bank 
+	 * Creates on object of landmark frame that holds all the components for landmark interaction
+	 *@param travel - needed to access date
+	 *@param wagon - needed for access to the inventory
+	 *@param food - needed to update the food total
+	 *@param bank - needed to display the user's money
 	 * 
 	 */
 	public LandmarkFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
@@ -53,11 +56,12 @@ public class LandmarkFrame {
 	
 	/**
 	 * Opens the frame that holds all the landmark components including buttons, images and labels
-	 * @param currentLandmark  
-	 * @param teaTime  
+	 * @param currentLandmark - the landmark that the player is currently in
+	 * @param teaTime - the instance of the mini-game to make tea
 	 */
 	public void openLandmarkFrame(Landmarks currentLandmark, TeaTime teaTime) {
-
+		//resets the amount of times the player plays the mini-game
+		//makes it so the button is re enabled when frame first pops up
 		resetTeaPlayed();
 		
 		//frame for the landmarks and the interactions to be had
@@ -67,18 +71,18 @@ public class LandmarkFrame {
 		frameFive.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameFive.setVisible(true);
 		
-		// Retrieve the image file path for the current landmark
+		// Retrieve the image file path for the current landmark drawing
 	    String imagePath = currentLandmark.getImagePath();
 	    ImageIcon landmarkImage = new ImageIcon(getClass().getResource(imagePath));
 	    JLabel landmarkLabel = new JLabel(landmarkImage);
 	    landmarkLabel.setBounds(562,108,684,511);
 	    
 		
-		// Greeting header for the fort frames
+		// Greeting header for the landmark frames
 	    JLabel landmarkName = new JLabel("Welcome to " + currentLandmark.getName());
 	    landmarkName.setFont(new Font("Bookman Old Style", Font.PLAIN, 50));
 	    landmarkName.setForeground(new Color(255,255,255));
-	    landmarkName.setBounds(343, 11, 569, 95);
+	    landmarkName.setBounds(343, 11, 700, 95);
 		
 		JLabel dateLbl_3 = new JLabel("Date:");
 		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
@@ -96,11 +100,13 @@ public class LandmarkFrame {
 		conversationPane.setFont(new Font("Bookman Old Style", Font.PLAIN, 22));
 		conversationPane.setBounds(178, 371, 357, 215);
 		
+		//player decides to talk to others 
 		JButton talkBtn = new JButton("Talk to people");
 		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			   conversationPane.setText((currentLandmark).generatePhrase());
+			   talkBtn.setEnabled(false);
 			}
 		});
 		talkBtn.setBounds(31, 138, 133, 21);
@@ -153,19 +159,22 @@ public class LandmarkFrame {
 		inventoryBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		inventoryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame fortInventory = new JFrame();
-				fortInventory.setBounds(575, 108, 671, 505);
-				fortInventory.setVisible(true);
-						
+				//the frame to view the current inventory
+				JFrame landInventory = new JFrame();
+				landInventory.setBounds(575, 108, 671, 505);
+				landInventory.setVisible(true);
+				
+				//how the inventory is displayed
 				JTextArea currentInventory = new JTextArea("Wagon Contents: \n" + wagon.displayingInventory() + bank.displayMoney());
 				currentInventory.setEditable(false);
 				currentInventory.setWrapStyleWord(true);
 				currentInventory.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-						
-				JPanel fortInventoryPanel = new JPanel();
-				fortInventoryPanel.setLayout(null);
-				fortInventoryPanel.add(currentInventory);
-				fortInventory.getContentPane().add(currentInventory);
+				
+				//panel to hold inventory viewing objects
+				JPanel landInventoryPanel = new JPanel();
+				landInventoryPanel.setLayout(null);
+				landInventoryPanel.add(currentInventory);
+				landInventory.getContentPane().add(currentInventory);
 			}
 		});
 		inventoryBtn.setBounds(31, 400, 133, 21);

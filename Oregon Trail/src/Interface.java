@@ -429,7 +429,7 @@ public class Interface {
 		stopTrvlBtn.setBounds(20, 582, 298, 125);
 		frame.getContentPane().add(stopTrvlBtn);
 		
-		//Picture of the trail that the wagon is travelling
+		//Picture of the trail that the wagon is traveling
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/image/final map.png"));
 		JLabel trailImage = new JLabel(icon);
 		trailImage.setOpaque(true);

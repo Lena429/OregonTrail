@@ -21,12 +21,18 @@ public class Fort extends Location {
 		this.priceFactor = priceFactor;
 	}
 	
+	/**
+	 * gets the price multiplier from the fort to be used in the store
+	 * @return the amount that the base store prices get multiplied by at each fort
+	 */
 	public int getPriceFactor() {
 		return priceFactor;
 	}
 	
 	
-	
+	/**
+	 * The phrase arrays that hold the conversations possible at each fort
+	 */
 	private String[] phrasesForFortA = {
 	        "Amelia says to the group, \"We are sleeping in a lane while waiting to cross a river nearby and still can't feed our cows properly. I hope we can find feed or grass for them soon.\"",
 	        
@@ -46,7 +52,7 @@ public class Fort extends Location {
 
 	    };
 	    private String[] phrasesForFortC = {
-	        "Frances points to her new shoes, \"My mom traded with the native americans for some moccasins and beads. They wanted some bread so my mom gave them all she had made for a couple pairs of shoes. This is great, my old pair were killing my feet.\"",
+	        "Frances points to her new shoes, \"My mom traded with the native americans for some moccasins and beads. They wanted some bread so my mom gave them all she had made for a couple pairs of shoes.\"",
 	        
 	        "Amelia, \"My husband made a mistake trading expired crackers with some people and now we have to give back Everything we just traded for. This is really upsetting because I just got some new pairs moccasins and beads for the bread I had made.\"",
 	        
@@ -60,7 +66,11 @@ public class Fort extends Location {
 	    	
 	    	"Amelia says, \"The Boise river wasn’t too far back so I can safely say that that river is much more beautiful than this fort. I can’t wait to be out of here and in our new home. We shouldn’t be that far now.\"",
 	    };
-
+	    
+	    /**
+	     * generates the fort conversation by grabbing a random phrase from the correct string array
+	     * @return a message for if there is no conversation at a given fort
+	     */
 	    public String generatePhrase() {
 	        String[] selectedPhrases = null;
 

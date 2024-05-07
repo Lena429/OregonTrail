@@ -2,8 +2,10 @@
  * FortFrame.java
  * 
  * 
- * @author 
- * @version
+ * @author - Sarah Slusher
+ * @author - Lena Frate
+ * @author - Lillyan Stewart
+ * @version 1.1.1 April 20, 2024
  * 
  */
 import java.awt.Color;
@@ -83,7 +85,7 @@ public class FortFrame {
 		// image for look around at fort
 		ImageIcon image = new ImageIcon(this.getClass().getResource("/image/lookaround copy.png"));
 		JLabel fortImage = new JLabel(image);
-		fortImage.setBounds(562, 108, 684, 511);
+		fortImage.setBounds(100, 100, 1289, 767);
 		
 		JLabel dateLbl_3 = new JLabel("Date:");
 		dateLbl_3.setFont(new Font("Bookman Old Style", Font.ITALIC, 32));
@@ -179,7 +181,7 @@ public class FortFrame {
 				fortInventory.getContentPane().add(currentInventory);
 			}
 		});
-		inventoryBtn.setBounds(31, 390, 133, 21);
+		inventoryBtn.setBounds(31, 420, 133, 21);
 		
 		
 		//player decides to look for tea
@@ -229,10 +231,22 @@ public class FortFrame {
 		PanelThree.setBackground(new Color(0,0,0));
 		frameThree.getContentPane().add(PanelThree);
 		
+		JButton stopLookBtn = new JButton ("Stop Looking");
+		stopLookBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		stopLookBtn.setFont(new Font("Felix Titling", Font.PLAIN, 55));
+		stopLookBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameImage.dispose();
+			}
+		});
+		stopLookBtn.setBounds(351, 0, 480, 70);
+		
 		// panel for the fort images 
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(null);
+		imagePanel.setBackground(new Color(0,0,0));
 		imagePanel.add(fortImage);
+		imagePanel.add(stopLookBtn);
 		frameImage.getContentPane().add(imagePanel);	
 	}
 }
