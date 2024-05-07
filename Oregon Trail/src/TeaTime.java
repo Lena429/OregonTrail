@@ -66,7 +66,7 @@ public class TeaTime {
             this.recover = recover;
         }
         /**
-         * 
+         * gets the name of the tea
          * @return the name of the tea
          */
 
@@ -75,7 +75,7 @@ public class TeaTime {
         }
         
         /**
-         * 
+         * gets the correct effect the tea has on the player
          * @return the effect of the tea
          */
         public String getEffect() {
@@ -83,7 +83,7 @@ public class TeaTime {
         }
         
         /**
-         * 
+         * gets the correct health to recover
          * @return how much health the tea gives the player
          */
         public int getHealth() {
@@ -91,7 +91,9 @@ public class TeaTime {
         }
     }
     
-    // Initialize tea ingredients
+    /**
+     * Initialize the tea ingredients
+     */
     private void initializeIngredients() {
         availableIngredients.add(new TeaIngredient("Lavender", "You feel relaxed", 1));
         availableIngredients.add(new TeaIngredient("Hyssop", "You feel energized", 2));
@@ -169,80 +171,72 @@ public class TeaTime {
 		frame.setVisible(true);
 		
 		
-		JLabel lblNewLabel = new JLabel("Tea Time on the Trail");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Felix Titling", Font.PLAIN, 50));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(31, 33, 1200, 45);
+		JLabel teaTitle = new JLabel("Tea Time on the Trail");
+		teaTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		teaTitle.setFont(new Font("Felix Titling", Font.PLAIN, 50));
+		teaTitle.setForeground(new Color(255, 255, 255));
+		teaTitle.setBounds(31, 33, 1200, 45);
 		
-		JLabel lblNewLabel_1 = new JLabel("To make tea first you must look for herbs from around the area. Then you brew it!!");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
-		lblNewLabel_1.setBounds(31, 50, 1200, 200);
+		JLabel infoText = new JLabel("To make tea first you must look for herbs from around the area. Then you brew it!!");
+		infoText.setFont(new Font("Tahoma", Font.BOLD, 18));
+		infoText.setHorizontalAlignment(SwingConstants.CENTER);
+		infoText.setForeground(new Color(255, 255, 255));
+		infoText.setBounds(31, 50, 1200, 200);
 		
 		//button for when player wants to look for herbs
-		JButton btnNewButton = new JButton("Forage");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton forageBtn = new JButton("Forage");
+		forageBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TeaIngredient herb = forage();
-				lblNewLabel_1.setText("You found: " + herb.getName());
+				infoText.setText("You found: " + herb.getName());
 			}
 		});
-		btnNewButton.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		btnNewButton.setBounds(185, 505, 202, 65);
+		forageBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		forageBtn.setBounds(185, 505, 202, 65);
 		
 		//button for when player wants to brew their teas
-		JButton btnNewButton_1 = new JButton("Brew Tea");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton brewBtn = new JButton("Brew Tea");
+		brewBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 boolean waterFound = false;
-			        for (Equipment item : wagon.getItems()) {
-			            if (item instanceof Equipment && item.getName().equals("Water")) {
-			                int waterQuantity = item.getQuantity();
-			                if (waterQuantity > 0) {
-			                    // Water is available to brew tea
-			                    waterFound = true;
-			                    TeaIngredient brewedIngredient = brewTea();
-			                    // Remove one pound of water from inventory
-			                    wagon.removeItemQty(item, 1);
-			                    lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea. " + brewedIngredient.getEffect()
-			                            + " \n You gain: " + brewedIngredient.getHealth() + " health");
-			                    health.recoverHealth(brewedIngredient.getHealth());
-			                    break; // Stop searching for water
-			                }
-			            }
-			        }
-			        if (!waterFound) {
-			        	
-			            // No water found in inventory
-			            lblNewLabel_1.setText("You don't have enough water to brew tea.");
-			        }
+				// checks water availability
+                int waterQuantity = water.getQuantity();
+                if (waterQuantity > 0) {
+                    // Water is available to brew tea
+                    TeaIngredient brewedIngredient = brewTea();
+                    // Remove one gallon of water from inventory
+                    wagon.removeItemQty(water, 1);
+                    infoText.setText("You brew a cup of " + brewedIngredient.getName() + " tea. " + brewedIngredient.getEffect()
+                            + ". You gain: " + brewedIngredient.getHealth() + " health");
+                    health.recoverHealth(brewedIngredient.getHealth());
+                } else {
+		            // No water in inventory
+		            infoText.setText("You don't have enough water to brew tea.");
+		        }
 			}
 		});
-		btnNewButton_1.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		btnNewButton_1.setBounds(497, 505, 202, 63);
+		brewBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		brewBtn.setBounds(497, 505, 202, 63);
 		
 		//button to close mini-game after player is done
-		JButton btnNewButton_1_1 = new JButton("Exit");
-		btnNewButton_1_1.addActionListener(new ActionListener() {
+		JButton exitBtn = new JButton("Exit");
+		exitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 				resetCounters();
 			}
 		});
-		btnNewButton_1_1.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
-		btnNewButton_1_1.setBounds(852, 505, 202, 63);
+		exitBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
+		exitBtn.setBounds(852, 505, 202, 63);
 		
 		//panel to hold all tea related components
 		JPanel teaPanel = new JPanel();
 		teaPanel.setBackground(new Color(0, 0, 0));
 		teaPanel.setLayout(null);
-		teaPanel.add(lblNewLabel);
-		teaPanel.add(lblNewLabel_1);
-		teaPanel.add(btnNewButton);
-		teaPanel.add(btnNewButton_1);
-		teaPanel.add(btnNewButton_1_1);
+		teaPanel.add(teaTitle);
+		teaPanel.add(infoText);
+		teaPanel.add(forageBtn);
+		teaPanel.add(brewBtn);
+		teaPanel.add(exitBtn);
 		frame.getContentPane().add(teaPanel);
 		
 	}
