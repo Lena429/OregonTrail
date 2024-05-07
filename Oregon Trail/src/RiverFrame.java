@@ -73,7 +73,7 @@ public class RiverFrame {
 		panel.setBackground(new Color(0, 0, 0));
 		panel.setLayout(null);
         
-        //Image of a river for the frame
+        // Image of a river for the frame
         ImageIcon riverImage = new ImageIcon(this.getClass().getResource("/image/river image.png"));
         JLabel riverImg = new JLabel(riverImage);
         riverImg.setText("");
@@ -133,12 +133,14 @@ public class RiverFrame {
 		widthNumLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		panel.add(widthNumLbl);
 		
+		// this asks the users what how they would like to traverse the river. 
 		JLabel crossingLbl = new JLabel("How would you like to traverse the river?");
 		crossingLbl.setForeground(new Color(255, 255, 255));
 		crossingLbl.setBounds(23, 592, 741, 58);
 		crossingLbl.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		panel.add(crossingLbl);
 		
+		// This displays the actual date 
 		JLabel 	dateQtyLbl = new JLabel(travel.getDate());
 		dateQtyLbl.setForeground(new Color(255, 255, 255));
 		dateQtyLbl.setHorizontalAlignment(SwingConstants.LEFT);
@@ -146,6 +148,7 @@ public class RiverFrame {
 		dateQtyLbl.setBounds(902, 592, 333, 51);
 		panel.add(dateQtyLbl);
 		
+		// this tells the user what the number represent
 		JLabel dateLbl = new JLabel ("Date:");
 		dateLbl.setForeground(new Color(255, 255, 255));
 		dateLbl.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,7 +163,7 @@ public class RiverFrame {
 		fordBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, randomEvents.oxAndFood(currentRiver.fording())); // Displays if the user made it across safely, or with consequences
-				frame.dispose();		  											    // closes frame after button is hit
+				frame.dispose();		  											                 // closes frame after button is hit
 			}
 		});
 		fordBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
@@ -172,9 +175,9 @@ public class RiverFrame {
 		ferryBtn.setBounds(40, 654, 320, 51);
 		ferryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bank.spendMoney(800);									  				// removes money because user paid to cross with ferry 
+				bank.spendMoney(800);									  	  // removes money because user paid to cross with ferry 
 				JOptionPane.showMessageDialog(null, randomEvents.oxJumped()); // Displays if the user made it across safely, or with consequences
-				frame.dispose();		   				// closes frame after button hit
+				frame.dispose();		   				                      // closes frame after button hit
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
@@ -187,9 +190,8 @@ public class RiverFrame {
 		caulkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		caulkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE
 				JOptionPane.showMessageDialog(null, randomEvents.oxAndFood(currentRiver.caulking())); // Displays if the user made it across safely, or with consequences
-				frame.dispose();		   											    // closes frame after button hit
+				frame.dispose();		   											                  // closes frame after button hit
 			}
 		});
 		caulkBtn.setBounds(647, 654, 308, 51);
@@ -200,30 +202,13 @@ public class RiverFrame {
 		waitBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));
 		waitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Passes one day and does everything for when a day passes. 
 				travel.updateDate();
 				wagon.removeItemQty(food, travel.getRations() * membersAlive); 
 				foodMainLbl.setText(wagon.getConsumableWeight() + "");
 				dateQtyLbl.setText(travel.getDate());
 				dateMainLbl.setText(travel.getDate());
-				//possible check the clock ??
-				weather.setZone(travel.getMilesTravelled());
-				weather.calculateWeather(travel.getMonth());
-				
-				/** Determines if the weather label needs to be updated
-				if (weather.isWeatherDifferent()) {
-					// yes it does
-					weather.setZone(travel.getMilesTravelled());
-					weather.calculateWeather(travel.getMonth());
-					
-					// checks for rain or snow
-					if (weather.willItRainOrSnow())
-						// updates label w/ rain or snow
-						wthrQtyLbl.setText(weather.displayRainOrSnow());
-					else 
-						// updates label with temperature
-						wthrQtyLbl.setText(weather.displayTemperature());
-				}*/
-				
+	
 				River.openFile();
 		    	heightNumLbl.setText(currentRiver.setHeight(wthrQtyLbl)+ ""); // displays height of river user is at 
 		    	flowNumLbl.setText(currentRiver.setFlow(wthrQtyLbl)); 		  // displays flow of river the user is at 

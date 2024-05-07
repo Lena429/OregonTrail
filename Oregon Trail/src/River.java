@@ -1,8 +1,8 @@
 /**
  * River.java
  * 
- * The river class gets the name, height, flow, and width of a river from a txt file. It also has random events for crossing the river, 
- * as well as different options for crossing the river. 
+ * The river class gets the name, height, flow, and width of a river from a txt file. It also displays the different conversations that 
+ * are at the rivers. 
  * 
  * @author - Lillyan Stewart 
  * @author - Lena Frate
@@ -90,10 +90,10 @@ public class River extends Location {
 		height = scr.nextInt();
 		int random = rnd.nextInt(3)+1;
 		if (random == 1) {
-			height = (height + (rnd.nextInt(3)+1)); //increments the height of the river 1-3 feet if raining
+			height = (height + (rnd.nextInt(3)+1)); //increments the height of the river 1-3 feet
 		}
 		else if (random == 2) {
-			height = (height - (rnd.nextInt(3))+1); //decrements the height of the river 1-3 feet if raining
+			height = (height - (rnd.nextInt(3))+1); //decrements the height of the river 1-3 feet
 		}
 		return height; 
 	}
@@ -144,88 +144,15 @@ public class River extends Location {
 		width = scr.nextInt();
 		int random = rnd.nextInt(3)+1;
 		if (random == 1) {
-			width = (width + (rnd.nextInt(3)+1)); //increments the width of the river 1 to 3 feet if raining
+			width = (width + (rnd.nextInt(3)+1)); //increments the width of the river 1 to 3 feet
 		}
 		else if (random == 2) {
-			width = (width - (rnd.nextInt(3)+1));
+			width = (width - (rnd.nextInt(3)+1)); //decrements the width of the river 1 to 3 feet
 		}
 		return width; 
 		
 	}
 	
-	
-	/**
-	 * Can possibly generate a random event when the user crosses the river
-	 * Since the user chose to cross the river without the ferry, the chance of negative
-	 * consequences is higher. 
-	 * @param money - this accesses the users money so a random event can impact the user
-	 * @return "You made it across safely." - This string tells the user they have no consequences
-	 * @return "You made it, but $22 fell out of your pocket." - This string tells the user their consequence
-	 * @return "Error" - this tells the user there has been an error in the program
-	 */
-	public String randomEvtCross(Money bank) {
-		int random = rnd.nextInt(5)+1;															   // generates a random number 1 - 5
-		switch (random)
-		{	
-		// you safely crossed with no consequences 
-		case 1:
-		case 2: 
-		case 3:
-		case 4:
-			return "You made it across safely.";
-			//JOptionPane.showMessageDialog(null, "You made it across safely"); 				   // displays message
-			//break;
-			
-		// you safely crossed but with consequences
-		case 5: 
-			
-			// this needs to have a check
-			bank.spendMoney(2200);													   // subtracts from money total 
-			
-			
-			return "You made it, but $22 fell out of your pocket.";
-			//JOptionPane.showMessageDialog(null, "You made it, but $22 fell out of your pocket"); // displays message
-			//break;
-		}	
-		return "Error";
-	}
-	
-	/**
-	 * Can possibly generate a random event when the user crosses the river
-	 * Since the user chose to cross the river with the ferry, the chance of negative
-	 * consequences is lower. 
-	 * @param money - this accesses the users money so a random event can impact the user
-	 * @return "You made it across safely." - This string tells the user they have no consequences
-	 * @return "You made it, but $22 fell out of your pocket." - This string tells the user their consequence
-	 * @return "Error" - this tells the user there has been an error in the program
-	 */
-	public String randomEvtFerry(Money bank) {
-				Random rnd = new Random(); 
-				int random = rnd.nextInt(9)+1; 		 // generates a random number 1 - 9
-				switch (random)
-				{	
-					// you safely crosses with no consequences
-					case 1: 
-					case 2: 
-					case 3: 	
-					case 4: 
-					case 5:
-					case 6: 
-					case 7:
-					case 8: 
-						return "You made it across safely.";
-					// you crossed safely but with consequences
-					case 9:
-						
-						
-						// this needs to have a check
-						bank.spendMoney(2200);													   // subtracts from money total 
-						
-						
-						return "You made it, but $22 fell out of your pocket.";
-				}
-				return "Error";
-		}
 	
 	/**
 	 * generates a randomly chosen phrase based on the current river

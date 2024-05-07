@@ -60,7 +60,7 @@ public class RandomEvents {
 	
 	
 	/**
-	 * This is a constructor that is used just for the river, random events. 
+	 * This is a constructor that is used just for the river random events. 
 	 * @param wagon
 	 * @param oxen
 	 * @param food
@@ -299,7 +299,7 @@ public class RandomEvents {
 	 * A random wagon member was lost and a day is spent trying to find them. 
 	 * @param foodMainLbl - food label display that is set/updated
 	 * @param dateMainLbl - date label display that is set/updated
-	 * @return "You've lost a member of your wagon...go find them." - this tells the user what happend
+	 * @return "You've lost a member of your wagon...go find them." - this tells the user what happened
 	 * @return "ignore" nothing happens to the user. 
 	 */
 	private String lostMember() {
