@@ -26,7 +26,7 @@ public class Landmarks extends Location{
     private String[] phrasesLandmarkB = {"Amelia points ahead \" that a bigger rock.\""};
     private String[] phrasesLandmarkC = {"Amelia shouts out, \"that is one free rock.\""};
     
-    
+
     public String generatePhrase() {
         String[] selectedPhrases = null;
 
