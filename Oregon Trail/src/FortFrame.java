@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 
 public class FortFrame {
 	
@@ -101,7 +102,7 @@ public class FortFrame {
 		JTextPane conversationPane = new JTextPane();
 		conversationPane.setEditable(false);
 		conversationPane.setFont(new Font("Bookman Old Style", Font.PLAIN, 22));
-		conversationPane.setBounds(178, 371, 357, 215);
+		conversationPane.setBounds(177, 138, 357, 226);
 		
 		// player talks to other people inside fort
 		
@@ -115,7 +116,7 @@ public class FortFrame {
 				talkBtn.setEnabled(false);
 			}
 		});
-		talkBtn.setBounds(31, 138, 133, 21);
+		talkBtn.setBounds(31, 138, 133, 60);
 		
 		// player decides to rest in the fort
 		// updates day counter while in the fort and resting
@@ -129,7 +130,7 @@ public class FortFrame {
 				dateQtyLbl_3.setText(travel.getDate());
 			}
 		});
-		restBtn.setBounds(31, 256, 133, 21);
+		restBtn.setBounds(31, 390, 251, 60);
 		
 		//player decides to look around at fort
 		JButton lookBtn = new JButton("Look Around");
@@ -139,7 +140,7 @@ public class FortFrame {
 				frameImage.setVisible(true);
 			}
 		});
-		lookBtn.setBounds(31, 194, 133, 21);
+		lookBtn.setBounds(31, 470, 251, 60);
 
 		// player decides to shop in the store
 		JButton shopBtn = new JButton("Shop");
@@ -150,7 +151,7 @@ public class FortFrame {
 				  store.openStoreWindow(false);
 			}
 		});
-		shopBtn.setBounds(31, 310, 133, 21);
+		shopBtn.setBounds(31, 570, 503, 60);
 		
 		JButton leaveBtn = new JButton ("Continue Trail");
 		leaveBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -159,7 +160,7 @@ public class FortFrame {
 				frameThree.dispose();
 			}
 		});
-		leaveBtn.setBounds(31, 370, 133, 21);
+		leaveBtn.setBounds(31, 642, 503, 60);
 		
 		//player decides to check wagon inventory while in the fort
 		JButton inventoryBtn = new JButton("Inventory");
@@ -181,7 +182,7 @@ public class FortFrame {
 				fortInventory.getContentPane().add(currentInventory);
 			}
 		});
-		inventoryBtn.setBounds(31, 420, 133, 21);
+		inventoryBtn.setBounds(290, 390, 248, 60);
 		
 		
 		//player decides to look for tea
@@ -205,13 +206,14 @@ public class FortFrame {
 
 			}
 		});
-		teaTimeBtn.setBounds(31,450,133,21);
+		teaTimeBtn.setBounds(290,470,248,60);
 		
 		// Greeting header for the fort frames
 	    JLabel fortName = new JLabel("Welcome to " + currentFort.getName());
 	    fortName.setForeground(new Color(255,255,255));
-		fortName.setFont(new Font("Bookma,n Old Style", Font.PLAIN, 50));
-		fortName.setBounds(343, 11, 569, 68);
+	    fortName.setHorizontalAlignment(SwingConstants.CENTER);
+		fortName.setFont(new Font("Felix Titling", Font.PLAIN, 50));
+		fortName.setBounds(81, 11, 1111, 95);
 		
 		// panel to hold all fort objects to the frame
 		JPanel PanelThree = new JPanel();
