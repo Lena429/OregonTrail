@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+
 public class Store {
 	private Money bank;
 	private ArrayList<Equipment> inventory = new ArrayList<>();
@@ -38,16 +39,16 @@ public class Store {
 	private int waterCost = 0;
 	private int totalCost;
 	
-	//trying something with prices
+	//The base prices for all the store items
 	private int foodPrice = 20;
 	private int oxPrice = 2000;
 	private int clothesPrice = 25;
 	private int wheelPrice = 1000;
 	private int tonguePrice = 1000;
 	private int axlePrice = 1000;
-	private int waterPrice = 100;
+	private int waterPrice = 30;
 	
-	
+	//All of the sliders to select the amount of each item the player wants to buy
 	private JSlider clothesSlider;
 	private JSlider foodSlider;
 	private JSlider wheelSlider;
@@ -128,7 +129,7 @@ public class Store {
 		clothes.setBounds(10, 156, 205, 24);
 		storeWindow.getContentPane().add(clothes);
 		
-		JLabel waterItem = new JLabel("Water $" + (waterPrice / 100.0) + "/ gal");
+		JLabel waterItem = new JLabel("Water $" + (waterPrice / 100.0) + "0/gal");
 		waterItem.setForeground(new Color(255, 255, 255));
 		waterItem.setHorizontalAlignment(SwingConstants.RIGHT);
 		waterItem.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
@@ -393,6 +394,7 @@ public class Store {
 		});
 		storeWindow.getContentPane().add(waterSlider);
 		
+		//button to complete the buying process of the store
 		JButton buyButton = new JButton("Buy");
 		buyButton.setBackground(new Color(252, 252, 252));
 		buyButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -445,7 +447,7 @@ public class Store {
 	}
 	
 	/**
-	 * 
+	 * resets the prices for the store 
 	 */
 	public void resetPrices() {
 		foodPrice = 20;
@@ -454,7 +456,7 @@ public class Store {
 		wheelPrice = 1000;
 		tonguePrice = 1000;
 		axlePrice = 1000;
-		waterPrice = 100;
+		waterPrice = 30;
 	}
 	
 	/**

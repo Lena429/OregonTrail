@@ -58,11 +58,12 @@ public class StopFrame {
 	}
 	
 	/**
-	 * opens the stop frame so the user can access things like inventory, change pace, change rations, and rest
+	 * opens the stop frame so the user can access things like inventory, change pace, change rations, and rest or make tea
 	 * @param dateMainLbl - the date label from the main frame
 	 * @param foodMainLbl - the food label from the main frame
 	 * @param rationsMainLbl - the rations label from the main frame
 	 * @param paceMainLbl - the pace label from the main frame
+	 * @param teatime - the mini-game from the TeaTime class
 	 */
 	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl, TeaTime teatime) {
 		TradeManager offer	= new TradeManager();
@@ -231,12 +232,12 @@ public class StopFrame {
 		JButton teaBtn = new JButton("Tea Time");
 		teaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(teaTimePlayed < 2) {
+				if(teaTimePlayed < 1) {
 					teatime.openTeaTime();
 					//Increment counter when game is played
 					teaTimePlayed++;
 					//Check if button should be disabled
-					if(teaTimePlayed == 2) {
+					if(teaTimePlayed == 1) {
 						teaBtn.setEnabled(false);
 					}
 				}else {

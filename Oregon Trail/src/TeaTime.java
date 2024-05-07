@@ -1,4 +1,12 @@
-
+/**
+ * TeaTime.java
+ * 
+ * TeaTime class takes place for the mini-game component of the main game.
+ * Lets players look for and brew random teas to regain a bit of health
+ * 
+ * @author - Sarah Slusher
+ * @version 1.1.1 April 30, 2024
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,9 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
-
-
 public class TeaTime {
 	private static final int MAX_FORAGE_TIMES = 2; //how many times you are able to forage for herbs each time game is played
 	private static final int MAX_BREW_TIMES = 2; // how many times you are able to brew tea each time game is played
@@ -31,31 +36,56 @@ public class TeaTime {
     private List<TeaIngredient> inventory;
     private Random random;
     
-    
+ /**
+  * The mini-game taking place instead of the hunting mini-game from the original
+  * @param health - need to have access to people's health
+  * @param water - it takes water to make the tea
+  * @param wagon - need to look at wagon for inventory reasons
+  */
  public TeaTime(WagonParty health, Equipment water, Wagon wagon) {
     	this.health = health;
     	this.water = water;
     	this.wagon = wagon;
     }
+ 
     
     private static class TeaIngredient {
         private String name;
         private String effect;
         private int recover;
         
+        /**
+         * Creates the teas that a player can possibly find and consume
+         * @param name - the name of the tea or herb
+         * @param effect - what effect the tea has on a player
+         * @param recover - how much health the player gains from drinking the tea
+         */
         public TeaIngredient(String name, String effect, int recover) {
             this.name = name;
             this.effect = effect;
             this.recover = recover;
         }
+        /**
+         * 
+         * @return the name of the tea
+         */
 
         public String getName() {
             return name;
         }
-
+        
+        /**
+         * 
+         * @return the effect of the tea
+         */
         public String getEffect() {
             return effect;
         }
+        
+        /**
+         * 
+         * @return how much health the tea gives the player
+         */
         public int getHealth() {
         	return recover;
         }
@@ -66,11 +96,15 @@ public class TeaTime {
         availableIngredients.add(new TeaIngredient("Lavender", "You feel relaxed", 1));
         availableIngredients.add(new TeaIngredient("Hyssop", "You feel energized", 2));
         availableIngredients.add(new TeaIngredient("Lemon Balm", "Your stomach feels better", 3));
-        // Add more ingredients as needed
+        
     }
     
-    // Method to simulate foraging for tea ingredients
+    /**
+     * Method to simulate foraging for tea ingredients
+     * @return foundIngredient - what random tea or herb the player has found
+     */
     public TeaIngredient forage() {
+    	
     	//Check if the maximum forage limit has been reached
     	if(forageCounter >= MAX_FORAGE_TIMES) {
     		JOptionPane.showMessageDialog(frame, "This area has no more herbs to brew.");
@@ -82,7 +116,11 @@ public class TeaTime {
         return foundIngredient;
     }
 
-    // Method to brew tea
+    
+    /**
+     * Brews the tea and takes it out of tea inventory
+     * @return selectedIngredient - the tea that the player has brewed
+     */
     public TeaIngredient brewTea() {
     	//Check if max brew limit has been reached
     	if(brewCounter >= MAX_BREW_TIMES) {
@@ -106,6 +144,9 @@ public class TeaTime {
         
     }
     
+    /**
+     * resets the counters for how many times a player can forage and brew tea
+     */
     public void resetCounters() {
     	forageCounter = 0;
     	brewCounter = 0;
@@ -139,17 +180,18 @@ public class TeaTime {
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(358, 160, 800, 200);
 		
+		//button for when player wants to look for herbs
 		JButton btnNewButton = new JButton("Forage Herbs");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TeaIngredient herb = forage();
 				lblNewLabel_1.setText("You found: " + herb.getName());
-				
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnNewButton.setBounds(185, 505, 202, 65);
 		
+		//button for when player wants to brew their teas
 		JButton btnNewButton_1 = new JButton("Brew Tea");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -171,6 +213,7 @@ public class TeaTime {
 			            }
 			        }
 			        if (!waterFound) {
+			        	
 			            // No water found in inventory
 			            lblNewLabel_1.setText("You don't have enough water to brew tea.");
 			        }
@@ -179,6 +222,7 @@ public class TeaTime {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1.setBounds(497, 505, 202, 63);
 		
+		//button to close mini-game after player is done
 		JButton btnNewButton_1_1 = new JButton("Exit");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,6 +233,7 @@ public class TeaTime {
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewButton_1_1.setBounds(852, 505, 202, 63);
 		
+		//panel to hold all tea related components
 		JPanel teaPanel = new JPanel();
 		teaPanel.setBackground(new Color(0, 0, 0));
 		teaPanel.setLayout(null);
