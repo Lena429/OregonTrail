@@ -109,7 +109,6 @@ public class LandmarkFrame {
 	
 		JButton talkBtn = new JButton("Talk");
 		talkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
-
 		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
