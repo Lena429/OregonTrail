@@ -88,10 +88,11 @@ public class River extends Location {
 	 */
 	public int setHeight(JLabel wthrQtyLbl) {
 		height = scr.nextInt();
-		if (wthrQtyLbl.getText().equals("Rainy")) {
+		int random = rnd.nextInt(3)+1;
+		if (random == 1) {
 			height = (height + (rnd.nextInt(3)+1)); //increments the height of the river 1-3 feet if raining
 		}
-		else if (wthrQtyLbl.getText().equals("Very Hot")) {
+		else if (random == 2) {
 			height = (height - (rnd.nextInt(3))+1); //decrements the height of the river 1-3 feet if raining
 		}
 		return height; 
@@ -105,17 +106,18 @@ public class River extends Location {
 	 */
 	public String setFlow(JLabel wthrQtyLbl) {
 		flow = scr.nextInt(); // reads in next integer
-		if (wthrQtyLbl.getText().equals("Rainy")) {
+		int random = rnd.nextInt(4)+1;
+		if (random == 1) {
 			flow = flow + (rnd.nextInt(3)+1); //increments the flow of the river
 			if (flow > 3) {
 				flow = 3;
 			}
-		} else if (wthrQtyLbl.getText().equals("Snowy")){
+		} else if (random == 2){
 			flow = flow - (rnd.nextInt(3)+1); //decrements the flow of the river
 			if (flow < 1) {
 				flow = 1;
 			}
-		} else if (wthrQtyLbl.getText().equals("Very Hot")) {
+		} else if (random == 3) {
 			flow = flow - (rnd.nextInt(3)+1); //decrements the flow of the river
 			if (flow < 1) {
 				flow = 1;
@@ -140,10 +142,11 @@ public class River extends Location {
 	 */
 	public int setWidth(JLabel wthrQtyLbl) {
 		width = scr.nextInt();
-		if (wthrQtyLbl.getText().equals("Rainy")) {
+		int random = rnd.nextInt(3)+1;
+		if (random == 1) {
 			width = (width + (rnd.nextInt(3)+1)); //increments the width of the river 1 to 3 feet if raining
 		}
-		else if (wthrQtyLbl.getText().equals("Very Hot")) {
+		else if (random == 2) {
 			width = (width - (rnd.nextInt(3)+1));
 		}
 		return width; 

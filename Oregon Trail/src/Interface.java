@@ -42,12 +42,17 @@ public class Interface {
 	private JLabel milesToNextLbl;
 	private JLabel healthQtyLbl;
 	private JLabel dotLbl;
+	private boolean mainWheelNeedsFixed = false;
+	private boolean mainAxleNeedsFixed = false;
+	private boolean mainTongNeedsFixed = false; 
 	
 	private Weather weather		 = new Weather();
 	private TravelManager travel = new TravelManager();
 	private Wagon wagon	  		 = new Wagon();
 	private WagonParty members   = new WagonParty();
 	private Store store;
+	private RandomEvents randomEvents;
+
 	// Equipment
 	private Equipment wagWheel 	= new Equipment("Wagon Wheel", 300, 0);
 	private Equipment wagAxle 	= new Equipment("Wagon Axle", 45, 0);
@@ -87,7 +92,6 @@ public class Interface {
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, members, food, water);
 	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen, weather, water); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, bank);
-
   
 	private IntroFrame introFrame		= new IntroFrame();
 	private MapDot dot					= new MapDot();
@@ -160,6 +164,7 @@ public class Interface {
 
 	//Clock action event that updates the time
 	public void clockActionPerformed(ActionEvent evt) {
+		
 		// update labels
 		trvlSpeedQtyLbl.setText(travel.getPace() + "");
 		rationsQtyLbl.setText(travel.displayRations());
@@ -175,6 +180,7 @@ public class Interface {
 		} 
 		// set the food label
 		foodQtyLbl.setText(wagon.getConsumableWeight() + "");
+		
 		
 		// update health
 		// regenerate health then lose some
@@ -211,12 +217,40 @@ public class Interface {
 		}
 		
 		// potentially generates a random event
-		RandomEvents randomEvents   = new RandomEvents(bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, members, wagon, food);
+		randomEvents = new RandomEvents(bank, travel, foodQtyLbl, dateQtyLbl, wthrQtyLbl, members, wagon, food, wagWheel, wagAxle, wagTong);
+			
 		String randomEventResult = randomEvents.generateRandomEvent();
 				
 		if(!randomEventResult.equals("ignore")) {
 			// a random event has occurred so a dialogue box appears to let the user know
 		    JOptionPane.showMessageDialog(null, randomEventResult, "Random Event Occurred", JOptionPane.INFORMATION_MESSAGE);
+		    
+		    mainWheelNeedsFixed = randomEvents.getWheelNeedsFixed();
+		    mainAxleNeedsFixed = randomEvents.getAxleNeedsFixed();
+		    mainTongNeedsFixed = randomEvents.getTongNeedsFixed();
+		    
+		    
+		    //if the user has a broken wagon then they cannot travel
+			if(mainWheelNeedsFixed || mainAxleNeedsFixed|| mainTongNeedsFixed) {
+					if (wagWheel.getQuantity() > 0) {
+						wagon.removeItemQty(wagWheel, 1);
+						randomEvents.setWheelNeedsFixed(false);
+					}
+					else if (wagAxle.getQuantity() > 0) {
+						wagon.removeItemQty(wagAxle, 1);
+						randomEvents.setAxleNeedsFixed(false);
+					}
+					else if (wagTong.getQuantity() > 0) {
+						wagon.removeItemQty(wagTong, 1);
+						randomEvents.setTongNeedsFixed(false);
+					} else {
+					String text = "A wagon part is broken. Try trading for some...";
+		    		String title = "Uh-oh";
+		    		int type = JOptionPane.ERROR_MESSAGE;
+		    		JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+		    		clock.stop();
+					}	
+			}
 		}
 		
 		// determines whether the user has arrived at a location or not
@@ -290,13 +324,38 @@ public class Interface {
 		startTrvlBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		startTrvlBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// if the user doesn't have any oxen to pull the wagon then they cannot travel
 				if(oxen.getQuantity() == 0) {
 		    		String text = "You do not have any oxen to pull the wagon. Try trading for some...";
 		    		String title = "Uh-oh";
 		    		int type = JOptionPane.ERROR_MESSAGE;
 		    		JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
-				} else clock.start();
+				} else if(mainWheelNeedsFixed || mainAxleNeedsFixed || mainTongNeedsFixed) { //checks to see if wagon is broken 
+						if (wagWheel.getQuantity() > 0) {								     //fixes wagon wheel if we have the part
+							wagon.removeItemQty(wagWheel, 1);
+							randomEvents.setWheelNeedsFixed(false);
+							clock.start();
+						}
+						else if (wagAxle.getQuantity() > 0) {								 //fixes wagon axle if we have the part
+							wagon.removeItemQty(wagAxle, 1);
+							randomEvents.setAxleNeedsFixed(false);
+							clock.start();
+						}
+						else if (wagTong.getQuantity() > 0) {								 //fixes wagon tong if we have the part
+							wagon.removeItemQty(wagTong, 1);
+							randomEvents.setTongNeedsFixed(false);
+							clock.start();
+						} else {															 //cant fix so you have to trade for one
+						String text = "A wagon part is broken. Try trading for some...";
+			    		String title = "Uh-oh";
+			    		int type = JOptionPane.ERROR_MESSAGE;
+			    		JOptionPane.showConfirmDialog(frame,  text, title, JOptionPane.DEFAULT_OPTION, type);
+						}	
+					}		
+				
+				else clock.start();
+				
+			
+				
 			}
 		});
 		startTrvlBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 40));

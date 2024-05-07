@@ -37,6 +37,7 @@ public class Landmarks extends Location{
 	
 	
 	// Phrases for chattering, categorized by landmark names
+
     private String[] phrasesLandmarkA = {
     	"Amelia says to the group, \" It is always hard to watch the little ones shiver when we have to "
     	+ "shut ourselves in the wagon while it's raining. I just keep in mind that all of this suffering is for Oregon.\"", 
