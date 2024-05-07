@@ -99,11 +99,11 @@ public class WagonParty {
 	}
 	
 	/**
-	 * recovers 5% of the wagon health
+	 * recovers 10% of the wagon health
 	 * recovers the diseases/injuries of wagon members
 	 */
 	public void recoverDailyHealth() {
-		health = (int) (health * .95);
+		health = (int) (health * .9);
 		for(WagonMember person: people) {
 			person.recoverHealth();
 		}
