@@ -60,7 +60,7 @@ public class FortFrame {
 	 * @param currentFort
 	 * @param store
 	 */
-	public void openFortFrame(Fort currentFort, Store store, TeaTime teatime) {
+	public void openFortFrame(Fort currentFort, Store store, TeaTime teatime, int membersAlive) {
 		
 		resetTeaPlayed();
 		
@@ -107,8 +107,9 @@ public class FortFrame {
 		// player talks to other people inside fort
 		
 		// randomly selected phrases from Fort Class
-		JButton talkBtn = new JButton("Talk to people");
+		JButton talkBtn = new JButton("Talk");
 		talkBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		talkBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
 		talkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conversationPane.setText((currentFort).generatePhrase());
@@ -122,11 +123,11 @@ public class FortFrame {
 		// updates day counter while in the fort and resting
 		JButton restBtn = new JButton("Rest");
 		restBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		restBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
 		restBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				travel.updateDate();
-				wagon.removeItemQty(food, travel.getRations() * 4);
-				//dateQtyLbl.setText(travel.getDate());
+				wagon.removeItemQty(food, travel.getRations() * membersAlive);
 				dateQtyLbl_3.setText(travel.getDate());
 			}
 		});
@@ -135,6 +136,7 @@ public class FortFrame {
 		//player decides to look around at fort
 		JButton lookBtn = new JButton("Look Around");
 		lookBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lookBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
 		lookBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameImage.setVisible(true);
@@ -145,6 +147,7 @@ public class FortFrame {
 		// player decides to shop in the store
 		JButton shopBtn = new JButton("Shop");
 		shopBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		shopBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
 		shopBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
           store.adjustPrices(currentFort);
@@ -155,6 +158,7 @@ public class FortFrame {
 		
 		JButton leaveBtn = new JButton ("Continue Trail");
 		leaveBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		leaveBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
 		leaveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameThree.dispose();
@@ -165,6 +169,7 @@ public class FortFrame {
 		//player decides to check wagon inventory while in the fort
 		JButton inventoryBtn = new JButton("Inventory");
 		inventoryBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		inventoryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
 		inventoryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame fortInventory = new JFrame();
@@ -188,6 +193,7 @@ public class FortFrame {
 		//player decides to look for tea
 		JButton teaTimeBtn = new JButton("Tea Time");
 		teaTimeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		teaTimeBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
 		teaTimeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(teaTimePlayed < 1) {

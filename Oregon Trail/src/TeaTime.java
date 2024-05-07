@@ -206,7 +206,7 @@ public class TeaTime {
 			                    TeaIngredient brewedIngredient = brewTea();
 			                    // Remove one pound of water from inventory
 			                    wagon.removeItemQty(item, 1);
-			                    lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea." + brewedIngredient.getEffect()
+			                    lblNewLabel_1.setText("You brew a cup of " + brewedIngredient.getName() + " tea. " + brewedIngredient.getEffect()
 			                            + " \n You gain: " + brewedIngredient.getHealth() + " health");
 			                    health.recoverHealth(brewedIngredient.getHealth());
 			                    break; // Stop searching for water

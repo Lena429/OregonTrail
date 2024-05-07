@@ -281,8 +281,8 @@ public class Interface {
 		        	riverFrame.openRiverFrame((River) location, dateQtyLbl, foodQtyLbl, 
 		        			wthrQtyLbl, members.getAmountOfMembers()); 						// displays river frame 
 
-		        } else if (location instanceof Fort){						  		  // checks to see if it is an instance of fort 
-		        	fortFrame.openFortFrame((Fort) location, store, teaTime);		  // displays fort frame
+		        } else if (location instanceof Fort){						  		  							// checks to see if it is an instance of fort 
+		        	fortFrame.openFortFrame((Fort) location, store, teaTime, members.getAmountOfMembers());		// displays fort frame
 
 		        } else if(location instanceof Landmarks) {					  		  // checks to see if it is an instance of landmark 
 		        	landmarkFrame.openLandmarkFrame((Landmarks)location, teaTime);	  // displays landmark frame

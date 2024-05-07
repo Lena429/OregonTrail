@@ -427,7 +427,6 @@ public class Store {
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					// closes store window without purchasing anything
-					totalCost = 0;
 					resetPrices();
 					storeWindow.dispose();
 				}
@@ -457,6 +456,14 @@ public class Store {
 		tonguePrice = 1000;
 		axlePrice = 1000;
 		waterPrice = 30;
+		totalCost = 0;
+		foodCost = 0;
+		wheelCost = 0;
+		clothesCost = 0; 
+		oxCost = 0;
+		tongueCost = 0; 
+		axleCost = 0; 
+		waterCost = 0;
 	}
 	
 	/**
