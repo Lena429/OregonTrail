@@ -174,7 +174,7 @@ public class RiverFrame {
 			public void actionPerformed(ActionEvent e) {
 				bank.spendMoney(800);									  				// removes money because user paid to cross with ferry 
 				JOptionPane.showMessageDialog(null, randomEvents.oxJumped()); // Displays if the user made it across safely, or with consequences
-				frame.dispose();		   											    // closes frame after button hit
+				frame.dispose();		   				// closes frame after button hit
 			}
 		});
 		ferryBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 32));

@@ -21,6 +21,12 @@ public class RandomEvents {
 	private JLabel wthrQtyLbl;
 	private Food food; 
 	private Equipment oxen;
+	private Equipment wagWheel;
+	private Equipment wagAxle;
+	private Equipment wagTong;
+	private boolean wheelNeedsFixed = false;
+	private boolean axleNeedsFixed = false;
+	private boolean tongNeedsFixed = false;
 	private int people; 
 
 	
@@ -36,7 +42,8 @@ public class RandomEvents {
 	 * @param wagonParty - gives us access to the members of the wagon.
 	 */
 	public RandomEvents(Money bank, TravelManager travel,JLabel foodMainLbl,
-			JLabel dateMainLbl, JLabel wthrQtyLbl, WagonParty wagonParty, Wagon wagon, Food food) {
+			JLabel dateMainLbl, JLabel wthrQtyLbl, WagonParty wagonParty, 
+			Wagon wagon, Food food, Equipment wagWheel, Equipment wagAxle, Equipment wagTong) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.foodMainLbl = foodMainLbl;
@@ -45,11 +52,15 @@ public class RandomEvents {
 		this.wagon = wagon;
 		this.food = food;
 		this.wagonParty = wagonParty;
+		this.wagWheel = wagWheel;
+		this.wagAxle = wagAxle;
+		this.wagTong = wagTong;
 		people = wagonParty.getAmountOfMembers(); //members that are currently still alive
 	}
 	
+	
 	/**
-	 * 
+	 * This is a constructor that is used just for the river, random events. 
 	 * @param wagon
 	 * @param oxen
 	 * @param food
@@ -62,8 +73,9 @@ public class RandomEvents {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * This is a random event that an oxen will jump off the ferry into the water and drown. 
+	 * @return "Oh no, one of your ox jumped overboard and drowned." - this means the random event has occurred
+	 * @return "You made it across safely" - this means that the random event didn't occur. 
 	 */
 	public String oxJumped() {
 		int random = rnd.nextInt(100)+1;
@@ -75,9 +87,12 @@ public class RandomEvents {
 	}
 	
 	/**
-	 * 
-	 * @param number
-	 * @return
+	 * This is the random event that occurs when caulking the wagon to cross the river or just to ford the river. 
+	 * There is a chance that an ox will drown or that food will get soggy. 
+	 * @param number - this number will determine how high the chance of a negative consequence occurring. 
+	 * @return "You made it across safely" - This means the negative event didn't occur.
+	 * @return "Oh no, one of your ox drowned." - This means the random event of an ox dying occurred. 
+	 * @return "Oh no, some of your food got soggy and was ruined" - This means the random event of food going bad occurred. 
 	 */
 	public String oxAndFood(int number) {
 		int random = rnd.nextInt(100)+1;
@@ -233,7 +248,7 @@ public class RandomEvents {
 	 */
 	private String snakeBite() {
 		int random = rnd.nextInt(100)+1;
-		if (random <= 20) {
+		if (random <= 15) {
 	        String marvinTheSnake = "\uD83D\uDC0D";
 			String name = wagonParty.getRandomMember().getName();
 			wagonParty.loseHealthQty(2);
@@ -251,7 +266,7 @@ public class RandomEvents {
 	private String badWater() {
 		int random = rnd.nextInt(100)+1;{
 		if (wthrQtyLbl.getText().equals("Hot") || wthrQtyLbl.getText().equals("Very Hot"))
-			if (random <= 25) {
+			if (random <= 15) {
 				wagonParty.loseHealthQty(10);
 				return "Oh, no! Bad water was consumed.";
 			}
@@ -270,9 +285,9 @@ public class RandomEvents {
 	private String thiefArrives() {
 		int moneyBalance = bank.getMoney();
 		int random = rnd.nextInt(100)+1;
-		if (random <= 25) {
-			if (moneyBalance > 20){
-					bank.spendMoney(200); //subtracts $20 
+		if (random <= 14) {
+			if (moneyBalance > 2000){
+					bank.spendMoney(2000); //subtracts $20 
 					return "A thief stole $20 from you.";
 			}
 		}
@@ -289,7 +304,7 @@ public class RandomEvents {
 	 */
 	private String lostMember() {
 		int random = rnd.nextInt(100)+1;
-		if (random == 30) {
+		if (random <= 1) {
 			//do we need to add a check here to see how many people are left in the wagon 
 			int daysLost = rnd.nextInt(5)+1;
 				for (;daysLost > 0; daysLost--) {
@@ -371,12 +386,46 @@ public class RandomEvents {
 		return "ignore";
 	}
 	
+	
+	/**
+	 * This is the random event that a wagon part breaks.
+	 * @return "Oh no, your wagon wheel broke."- Wagon wheel broke
+	 * @return "Oh no, your wagon axle broke."- wagon axle broke
+	 * @return "Oh no, your wagon tongue broke."- wagon tongue broke
+	 */
+	private String wagonMishaps() {
+		int random = rnd.nextInt(100))+1;
+		if (random <= 2) {
+			if (wagWheel.getQuantity() > 0) {
+				wagon.removeItemQty(wagWheel, 1);
+			} else {
+				wheelNeedsFixed = true;
+			}
+			return "Oh no, your wagon wheel broke.";
+		} else if (random <= 4) {
+			if (wagAxle.getQuantity() > 0) {
+				wagon.removeItemQty(wagAxle, 1);
+			} else {
+				axleNeedsFixed = true;
+			}
+			return "Oh no, your wagon axle broke.";
+		} else if (random <= 6) {
+			if (wagTong.getQuantity() > 0) {
+				wagon.removeItemQty(wagTong, 1);
+			} else {
+				tongNeedsFixed = true;
+			}
+			return "Oh no, your wagon tongue broke.";
+		}
+		return "ignore";
+	}
+	
 	/**
 	 * This picks one of the random event methods to do.
 	 * @return result- the result holds the return of the selected method. This is then displayed to the user. 
 	 */
 	public String generateRandomEvent() {
-		int random = rnd.nextInt(9)+1;
+		int random = rnd.nextInt(10)+1;
 		String result = "ignore";
 		switch(random)
 		{
@@ -400,10 +449,65 @@ public class RandomEvents {
 			break;
 		case 9:result =  illness();
 			break;
-		
+		case 10: result = wagonMishaps();
+			break;
 		}
 		return result; 
 	}
-
+	
+	
+	/**
+	 * This gets the variable 
+	 * @return wheelNeedsFixed- returns whether the wagon needs fixed or not. 
+	 */
+	public boolean getWheelNeedsFixed(){
+		return wheelNeedsFixed;
+	}
+	
+	
+	/**
+	 * This gets the variable 
+	 * @return axleNeedsFixed- returns whether the wagon needs fixed or not. 
+	 */
+	public boolean getAxleNeedsFixed(){
+		return axleNeedsFixed;
+	}
+	
+	
+	/**
+	 * This gets the variable 
+	 * @return tongNeedsFixed- returns whether the wagon needs fixed or not. 
+	 */
+	public boolean getTongNeedsFixed() {
+		return tongNeedsFixed;
+	}
+	
+	
+	/**
+	 * This sets the wagon to be fixed or not (false or true)
+	 * @param fixed- sets the variable to be fixed or not. 
+	 */
+	public void setWheelNeedsFixed(boolean fixed){
+		wheelNeedsFixed = fixed;
+	}
+	
+	
+	/**
+	 * This sets the wagon to be fixed or not (false or true)
+	 * @param fixed- sets the variable to be fixed or not. 
+	 */
+	public void setAxleNeedsFixed(boolean fixed){
+		axleNeedsFixed = fixed;
+	}
+	
+	
+	/**
+	 * This sets the wagon to be fixed or not (false or true)
+	 * @param fixed- sets the variable to be fixed or not. 
+	 */
+	public void setTongNeedsFixed(boolean fixed) {
+		tongNeedsFixed = fixed;
+	}
+	
 }
 
