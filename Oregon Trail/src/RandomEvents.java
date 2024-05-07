@@ -394,7 +394,7 @@ public class RandomEvents {
 	 * @return "Oh no, your wagon tongue broke."- wagon tongue broke
 	 */
 	private String wagonMishaps() {
-		int random = rnd.nextInt(100))+1;
+		int random = rnd.nextInt(100)+1;
 		if (random <= 2) {
 			if (wagWheel.getQuantity() > 0) {
 				wagon.removeItemQty(wagWheel, 1);
