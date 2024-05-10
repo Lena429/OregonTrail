@@ -4,9 +4,10 @@
  * Landmark class holds the name, miles and specific images for each landmark the player visits. 
  * Also holds all the conversations to be had in landmarks.
  * 
+ * Note: Conversations are based off of events and phrases from Amelia Knight's diary 
+ * 
  * @author - Sarah Slusher
  * @author - Lena Frate
- * @author - Lillyan Stewart
  * @version - 1.1.1 April 20 , 2024
  */
 
@@ -16,7 +17,7 @@ public class Landmarks extends Location{
 	private String imagePath;
 	
 	/**
-	 * 
+	 * creates an instance of a landmark with a name, miles away value, and image
 	 * @param name - the name of the landmark 
 	 * @param miles - gets from Location class how far from previous location landmark is
 	 * @param imagePath - the drawing connected to a landmark
@@ -25,10 +26,10 @@ public class Landmarks extends Location{
 		super(name, miles);
 		this.imagePath = imagePath;
     
-  }
+	}
 	
 	/**
-	 * 
+	 * gets the image path
 	 * @return image path of the specific drawing for a landmark
 	 */
 	public String getImagePath() {
@@ -96,10 +97,4 @@ public class Landmarks extends Location{
             return "No phrases available for this landmark.";
         }
     }
-    
-    
-    
-    
 }
-
-

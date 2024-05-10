@@ -87,10 +87,10 @@ public class Interface {
 	
 	private ArrayList<Location> locations = new ArrayList<>();
 
-	private TeaTime teaTime     = new TeaTime(members, water, wagon);
+	private TeaTime teaTime     		= new TeaTime(members, water, wagon);
 	private FortFrame fortFrame 	    = new FortFrame(travel, wagon, food, bank);
 	private StopFrame trvlStoppedFrame  = new StopFrame(travel, wagon, bank, members, food, water);
-	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen, weather, water); 
+	private RiverFrame riverFrame 		= new RiverFrame(bank, travel, wagon, food, oxen, water); 
 	private LandmarkFrame landmarkFrame = new LandmarkFrame(travel, wagon, food, bank);
   
 	private IntroFrame introFrame		= new IntroFrame();

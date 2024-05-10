@@ -1,10 +1,11 @@
 /**
  * FortFrame.java
  * 
+ * The fort frame class creates the user interface for the user to interact with
+ * the various choices on the fort frame
  * 
  * @author - Sarah Slusher
  * @author - Lena Frate
- * @author - Lillyan Stewart
  * @version 1.1.1 April 20, 2024
  * 
  */
@@ -34,12 +35,13 @@ public class FortFrame {
 	private int teaTimePlayed; // how many total times the player plays the mini-game in a fort
 	
 	
-	
 	/**
-	 * 
-	 * @param travel
-	 * @param wagon
-	 * @param food
+	 * Creates an instance of the fort that contains the objects needed to update food and get 
+	 * inventory
+	 * @param travel - required for rations
+	 * @param wagon - required for the inventory
+	 * @param food - amount of food the user has
+	 * @param bank - amount of money the user has
 	 */
 	public FortFrame(TravelManager travel, Wagon wagon, Equipment food, Money bank) {
 		this.travel = travel;
@@ -56,9 +58,11 @@ public class FortFrame {
 	}
 	
 	/**
-	 * 
-	 * @param currentFort
-	 * @param store
+	 * opens the fort frame with the proper title and conversations to cycle through
+	 * @param currentFort - the current fort the user is visiting
+	 * @param store - allows access to the store frame
+	 * @param teatime - allows access to the tea frame
+	 * @param membersAlive - needed to determine food to remove
 	 */
 	public void openFortFrame(Fort currentFort, Store store, TeaTime teatime, int membersAlive) {
 		

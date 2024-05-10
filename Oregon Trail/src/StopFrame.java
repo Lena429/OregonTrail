@@ -31,8 +31,6 @@ public class StopFrame {
 	private Equipment water;
 	private Money bank;
 	private WagonParty health;
-
-	private int teaTimePlayed;
 	
 	/**
 	 * Creates an object of stop frame containing the necessary variables for the frame
@@ -52,11 +50,6 @@ public class StopFrame {
 		this.water = water;
 	}
 	
-	
-	public void resetTeaPlayed() {
-		teaTimePlayed = 0;
-	}
-	
 	/**
 	 * opens the stop frame so the user can access things like inventory, change pace, change rations, and rest or make tea
 	 * @param dateMainLbl - the date label from the main frame
@@ -67,9 +60,7 @@ public class StopFrame {
 	 */
 	public void openStopFrame(JLabel dateMainLbl, JLabel foodMainLbl, JLabel rationsMainLbl, JLabel paceMainLbl, TeaTime teatime) {
 		TradeManager offer	= new TradeManager();
-		
-		resetTeaPlayed();
-		
+				
 		JFrame frame = new JFrame();
 		frame.setBounds(100,100,1289,767);
 		frame.setTitle("OPTIONS");
@@ -232,17 +223,9 @@ public class StopFrame {
 		JButton teaBtn = new JButton("Tea Time");
 		teaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(teaTimePlayed < 1) {
-					teatime.openTeaTime();
-					//Increment counter when game is played
-					teaTimePlayed++;
-					//Check if button should be disabled
-					if(teaTimePlayed == 1) {
-						teaBtn.setEnabled(false);
-					}
-				}else {
-					JOptionPane.showMessageDialog(frame, "You have drinken enough tea for today");
-				}
+				teatime.openTeaTime();
+				// disable button to prohibit spamming of health 
+				teaBtn.setEnabled(false);
 			}
 		});
 		teaBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

@@ -4,6 +4,8 @@
  * The river class gets the name, height, flow, and width of a river from a txt file. It also displays the different conversations that 
  * are at the rivers. 
  * 
+ * Note: Conversations are based off of events and phrases from Amelia Knight's diary 
+ * 
  * @author - Lillyan Stewart 
  * @author - Lena Frate
  * @version 1.1.1 - April 17 2024

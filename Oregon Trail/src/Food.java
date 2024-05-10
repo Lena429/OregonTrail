@@ -3,9 +3,10 @@
  * 
  * The Food class extends the Item class to store if the food is nutritional or not.
  * 
+ * Note: This class is not super beneficial for our current set-up but future 
+ * iterations of the game would ideally have different foods
+ * 
  * @author - Lena Frate
- * @author - Lillyan Stewart
- * @author - Sarah Slusher
  * @version 1.1.1 - April 7 2024
  */
 public class Food extends Equipment {

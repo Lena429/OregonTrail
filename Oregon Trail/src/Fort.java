@@ -8,9 +8,9 @@ import java.util.Random;
  * It contains information about the fort's name, distance away from the wagon party, 
  * and whether it has been visited or not. Along with possible conversations to be had in each fort.
  * 
+ * Note: Conversations are based off of events and phrases from Amelia Knight's diary 
+ * 
  * @author - Sarah Slusher
- * @author - Lena Frate
- * @author - Lillyan Stewart
  * @version- 1.1 April 8 2024 
  */
 

@@ -1,21 +1,17 @@
-
-
 /**
  * Location.java
+ * 
  * Holds all information for different locations throughout the trail
+ * 
  * @author - Sarah Slusher
  * @author - Lena Frate
  * @author - Lillyan Stewart
  * @version- 1.1 April 8 2024 
  */
-
-
 public class Location {
 	private String name;        // The name of the fort
 	private boolean visited;    // Indicates if the fort has been visited or not
 	private int milesAway;      // Distance of the fort from the wagon party
-	
-
 
     /**
      * Constructs a new Fort object with the specified name, distance, and associated wagon.

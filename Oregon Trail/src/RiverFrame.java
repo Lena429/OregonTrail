@@ -30,9 +30,8 @@ public class RiverFrame {
 	private TravelManager travel;
 	private Wagon wagon;
 	private Food food; 
-  private Equipment water;
+	private Equipment water;
 	private Equipment oxen;
-	private Weather weather;
 
 	/**
 	 * Creates an object of riverFrame that stores instances of Money, TravelManager, Wagon, and Equipment
@@ -41,14 +40,13 @@ public class RiverFrame {
 	 * @param wagon - an object that stores/manages the inventory
 	 * @param food - the amount of food the user has
 	 */
-	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen, Weather weather, Equipment water) {
+	public RiverFrame(Money bank, TravelManager travel, Wagon wagon, Food food, Equipment oxen, Equipment water) {
 		this.bank = bank;
 		this.travel = travel; 
 		this.wagon = wagon;
 		this.food = food;
 		this.water = water;
 		this.oxen = oxen;
-		this.weather = weather; 
 	}
 	
 	/**
